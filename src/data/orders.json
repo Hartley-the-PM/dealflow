@@ -1,0 +1,47 @@
+[
+  {
+    "id": "order-001",
+    "orderNumber": "ORD-2026-001",
+    "offerId": "offer-007",
+    "dealId": "deal-003",
+    "customerId": "cust-003",
+    "status": "Delivered",
+    "createdAt": "2026-01-26T09:00:00Z"
+  },
+  {
+    "id": "order-002",
+    "orderNumber": "ORD-2026-002",
+    "offerId": "offer-013",
+    "dealId": "deal-007",
+    "customerId": "cust-008",
+    "status": "Shipped",
+    "createdAt": "2026-02-06T10:30:00Z"
+  },
+  {
+    "id": "order-003",
+    "orderNumber": "ORD-2026-003",
+    "offerId": "offer-003",
+    "dealId": "deal-001",
+    "customerId": "cust-001",
+    "status": "Confirmed",
+    "createdAt": "2026-02-16T08:00:00Z"
+  },
+  {
+    "id": "order-004",
+    "orderNumber": "ORD-2026-004",
+    "offerId": "offer-004",
+    "dealId": "deal-002",
+    "customerId": "cust-002",
+    "status": "Confirmed",
+    "createdAt": "2026-03-03T10:00:00Z"
+  },
+  {
+    "id": "order-005",
+    "orderNumber": "ORD-2026-005",
+    "offerId": "offer-008",
+    "dealId": "deal-004",
+    "customerId": "cust-005",
+    "status": "Shipped",
+    "createdAt": "2026-02-20T14:30:00Z"
+  }
+]

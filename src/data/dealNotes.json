@@ -1,0 +1,72 @@
+[
+  {
+    "id": "dnote-001",
+    "dealId": "deal-001",
+    "body": "Customer confirmed volume commitment for Q1. They need at least 500 MT of PP grades to meet their production schedule. Pricing needs to be competitive with local suppliers.",
+    "category": "Call Summary",
+    "priority": "High",
+    "createdBy": "John Mitchell",
+    "createdAt": "2026-01-15T10:30:00Z",
+    "updatedAt": "2026-01-15T10:30:00Z"
+  },
+  {
+    "id": "dnote-002",
+    "dealId": "deal-001",
+    "body": "MSP for Borealis PP grade is $1,540/MT but customer is pushing for $1,510. Need to discuss with sales manager before committing below floor.",
+    "category": "Price Discussion",
+    "priority": "High",
+    "createdBy": "John Mitchell",
+    "createdAt": "2026-01-20T14:15:00Z",
+    "updatedAt": "2026-01-20T14:15:00Z"
+  },
+  {
+    "id": "dnote-003",
+    "dealId": "deal-002",
+    "body": "AutoPoly mentioned they are evaluating a competitor's LDPE offering. We should emphasize our faster delivery times and technical support.",
+    "category": "Customer Feedback",
+    "priority": "Medium",
+    "createdBy": "Sarah Chen",
+    "createdAt": "2026-02-25T09:00:00Z",
+    "updatedAt": "2026-02-25T09:00:00Z"
+  },
+  {
+    "id": "dnote-004",
+    "dealId": "deal-002",
+    "body": "V2 offer includes an additional Borealis PP grade per customer request. Need to follow up next week for approval status.",
+    "category": "Internal Note",
+    "priority": "Medium",
+    "createdBy": "Sarah Chen",
+    "createdAt": "2026-03-01T11:30:00Z",
+    "updatedAt": "2026-03-01T11:30:00Z"
+  },
+  {
+    "id": "dnote-005",
+    "dealId": "deal-003",
+    "body": "Deal closed successfully. Van der Berg pleased with pricing. They want to discuss a potential H2 extension deal in April.",
+    "category": "Call Summary",
+    "priority": "Low",
+    "createdBy": "Marco Rodriguez",
+    "createdAt": "2026-01-25T16:30:00Z",
+    "updatedAt": "2026-01-25T16:30:00Z"
+  },
+  {
+    "id": "dnote-006",
+    "dealId": "deal-004",
+    "body": "Plastipack needs HDPE and PVC grades for their packaging line expansion. Timing is critical - they need delivery by end of February.",
+    "category": "Customer Feedback",
+    "priority": "High",
+    "createdBy": "John Mitchell",
+    "createdAt": "2026-01-10T08:45:00Z",
+    "updatedAt": "2026-01-10T08:45:00Z"
+  },
+  {
+    "id": "dnote-007",
+    "dealId": "deal-005",
+    "body": "Monthly deal for BrasilFilm. Standard product mix - LDPE film grades. No special requirements this time.",
+    "category": "Internal Note",
+    "priority": "Low",
+    "createdBy": "Marco Rodriguez",
+    "createdAt": "2026-02-05T13:00:00Z",
+    "updatedAt": "2026-02-05T13:00:00Z"
+  }
+]

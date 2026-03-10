@@ -1,0 +1,40 @@
+[
+  {
+    "id": "ovr-001",
+    "customerId": "cust-001",
+    "productId": "prod-001",
+    "overridePrice": 1280,
+    "currency": "USD",
+    "validFrom": "2026-01-01",
+    "note": "Strategic long-term contract pricing for Plastipack"
+  },
+  {
+    "id": "ovr-002",
+    "customerId": "cust-002",
+    "productId": "prod-004",
+    "overridePrice": 1350,
+    "currency": "USD",
+    "validFrom": "2026-02-01",
+    "validTo": "2026-06-30",
+    "note": "H1 2026 automotive supply agreement"
+  },
+  {
+    "id": "ovr-003",
+    "customerId": "cust-003",
+    "productId": "prod-006",
+    "overridePrice": 1490,
+    "currency": "USD",
+    "validFrom": "2026-01-15",
+    "note": "Preferred pricing for Van der Berg"
+  },
+  {
+    "id": "ovr-004",
+    "customerId": "cust-010",
+    "productId": "prod-023",
+    "overridePrice": 1380,
+    "currency": "USD",
+    "validFrom": "2026-03-01",
+    "validTo": "2026-12-31",
+    "note": "Annual volume commitment from Sterling Mouldings"
+  }
+]

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "act-001",
+    "entityType": "deal",
+    "entityId": "deal-001",
+    "dealId": "deal-001",
+    "action": "deal_created",
+    "details": "Created deal: Q1 2026 Supply Agreement for Plastipack GmbH",
+    "userId": "John Mitchell",
+    "timestamp": "2025-12-10T09:00:00Z"
+  },
+  {
+    "id": "act-002",
+    "entityType": "offer",
+    "entityId": "offer-001",
+    "dealId": "deal-001",
+    "action": "offer_created",
+    "details": "Created offer V1 for Plastipack GmbH \u2013 Q1 2026 (3 lines, $349,600 total)",
+    "userId": "John Mitchell",
+    "timestamp": "2025-12-10T09:30:00Z"
+  },
+  {
+    "id": "act-003",
+    "entityType": "offer",
+    "entityId": "offer-001",
+    "dealId": "deal-001",
+    "action": "offer_sent",
+    "details": "Sent offer V1 to Plastipack GmbH via email",
+    "userId": "John Mitchell",
+    "timestamp": "2025-12-12T08:00:00Z"
+  },
+  {
+    "id": "act-004",
+    "entityType": "offer",
+    "entityId": "offer-001",
+    "dealId": "deal-001",
+    "action": "pdf_generated",
+    "details": "Generated PDF for offer V1: Plastipack_GmbH_Q1_2026_V1.pdf",
+    "userId": "John Mitchell",
+    "timestamp": "2025-12-12T07:55:00Z"
+  },
+  {
+    "id": "act-005",
+    "entityType": "offer",
+    "entityId": "offer-001",
+    "dealId": "deal-001",
+    "action": "offer_rejected",
+    "details": "Offer V1 rejected by customer. Reason: LDPE pricing too high vs. competitor quotes.",
+    "userId": "John Mitchell",
+    "timestamp": "2025-12-20T14:00:00Z"
+  },
+  {
+    "id": "act-006",
+    "entityType": "deal",
+    "entityId": "deal-003",
+    "dealId": "deal-003",
+    "action": "deal_created",
+    "details": "Created deal: Q1 2026 Film Resins for Van der Berg Plastics B.V.",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2025-12-18T08:30:00Z"
+  },
+  {
+    "id": "act-007",
+    "entityType": "offer",
+    "entityId": "offer-006",
+    "dealId": "deal-003",
+    "action": "offer_created",
+    "details": "Created offer V1 for Van der Berg Plastics \u2013 Q1 Film Resins (2 lines, $475,500 total)",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2025-12-18T09:00:00Z"
+  },
+  {
+    "id": "act-008",
+    "entityType": "offer",
+    "entityId": "offer-006",
+    "dealId": "deal-003",
+    "action": "offer_sent",
+    "details": "Sent offer V1 to Van der Berg Plastics B.V.",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2025-12-19T08:00:00Z"
+  },
+  {
+    "id": "act-009",
+    "entityType": "offer",
+    "entityId": "offer-007",
+    "dealId": "deal-003",
+    "action": "offer_created",
+    "details": "Created offer V2 for Van der Berg Plastics \u2013 Q1 Film Resins (3 lines, $702,000 total)",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2026-01-05T10:00:00Z"
+  },
+  {
+    "id": "act-010",
+    "entityType": "offer",
+    "entityId": "offer-007",
+    "dealId": "deal-003",
+    "action": "offer_sent",
+    "details": "Sent offer V2 to Van der Berg Plastics B.V. with strategic pricing",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2026-01-06T09:00:00Z"
+  },
+  {
+    "id": "act-011",
+    "entityType": "offer",
+    "entityId": "offer-003",
+    "dealId": "deal-001",
+    "action": "offer_approved",
+    "details": "Offer V3 approved by Plastipack GmbH. Net 45 terms accepted. Q1 supply confirmed.",
+    "userId": "John Mitchell",
+    "timestamp": "2026-02-15T14:30:00Z"
+  },
+  {
+    "id": "act-012",
+    "entityType": "offer",
+    "entityId": "offer-007",
+    "dealId": "deal-003",
+    "action": "offer_approved",
+    "details": "Offer V2 approved by Van der Berg Plastics. Strategic pricing accepted for 530 MT total.",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2026-01-25T16:00:00Z"
+  },
+  {
+    "id": "act-013",
+    "entityType": "order",
+    "entityId": "order-001",
+    "dealId": "deal-003",
+    "action": "order_created",
+    "details": "Order ORD-2026-001 created from approved offer V2 for Van der Berg Plastics B.V.",
+    "userId": "Marco Rodriguez",
+    "timestamp": "2026-01-26T09:00:00Z"
+  },
+  {
+    "id": "act-014",
+    "entityType": "offer",
+    "entityId": "offer-013",
+    "dealId": "deal-007",
+    "action": "offer_approved",
+    "details": "Offer V1 approved by EuroPipe Sp. z o.o. for Feb 2026 pipe supply.",
+    "userId": "John Mitchell",
+    "timestamp": "2026-02-05T11:00:00Z"
+  },
+  {
+    "id": "act-015",
+    "entityType": "order",
+    "entityId": "order-002",
+    "dealId": "deal-007",
+    "action": "order_created",
+    "details": "Order ORD-2026-002 created from approved offer for EuroPipe Sp. z o.o.",
+    "userId": "John Mitchell",
+    "timestamp": "2026-02-06T10:30:00Z"
+  },
+  {
+    "id": "act-016",
+    "entityType": "order",
+    "entityId": "order-003",
+    "dealId": "deal-001",
+    "action": "order_created",
+    "details": "Order ORD-2026-003 created from approved offer V3 for Plastipack GmbH.",
+    "userId": "John Mitchell",
+    "timestamp": "2026-02-16T08:00:00Z"
+  },
+  {
+    "id": "act-017",
+    "entityType": "deal",
+    "entityId": "deal-002",
+    "dealId": "deal-002",
+    "action": "deal_created",
+    "details": "Created deal: Monthly Mar 2026 for AutoPoly Solutions Inc.",
+    "userId": "Sarah Chen",
+    "timestamp": "2026-02-20T11:00:00Z"
+  },
+  {
+    "id": "act-018",
+    "entityType": "offer",
+    "entityId": "offer-004",
+    "dealId": "deal-002",
+    "action": "offer_sent",
+    "details": "Sent offer V1 to AutoPoly Solutions Inc. for Mar 2026 spot order",
+    "userId": "Sarah Chen",
+    "timestamp": "2026-02-21T10:00:00Z"
+  },
+  {
+    "id": "act-019",
+    "entityType": "offer",
+    "entityId": "offer-005",
+    "dealId": "deal-002",
+    "action": "offer_created",
+    "details": "Created offer V2 for AutoPoly Solutions \u2013 Mar 2026 (4 lines, added Borealis PP grade)",
+    "userId": "Sarah Chen",
+    "timestamp": "2026-03-01T09:00:00Z"
+  },
+  {
+    "id": "act-020",
+    "entityType": "offer",
+    "entityId": "offer-012",
+    "dealId": "deal-006",
+    "action": "offer_rejected",
+    "details": "Offer V2 rejected by Reliant Polymers. Customer selected local Indian supplier on price.",
+    "userId": "Sarah Chen",
+    "timestamp": "2026-01-20T10:30:00Z"
+  }
+]

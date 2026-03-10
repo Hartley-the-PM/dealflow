@@ -1,0 +1,177 @@
+[
+  {
+    "id": "prod-001",
+    "name": "ExxonMobil\u2122 LD 03322.BW1",
+    "legacyName": "ExxonMobil\u2122 LDPE LD 165BW1",
+    "code": "EM-LD-03322",
+    "category": "LDPE"
+  },
+  {
+    "id": "prod-002",
+    "name": "SABIC\u00ae HDPE B5429",
+    "legacyName": "SABIC\u00ae HDPE B5429-OLD",
+    "code": "SAB-HD-5429",
+    "category": "HDPE"
+  },
+  {
+    "id": "prod-003",
+    "name": "LyondellBasell Lupolen\u00ae 1840H",
+    "legacyName": "LyondellBasell Lupolen\u00ae 1840H-A",
+    "code": "LYB-LD-1840H",
+    "category": "LDPE"
+  },
+  {
+    "id": "prod-004",
+    "name": "INEOS Rigidex\u00ae HD5218EA",
+    "legacyName": "INEOS Rigidex\u00ae HD5218",
+    "code": "INE-HD-5218",
+    "category": "HDPE"
+  },
+  {
+    "id": "prod-005",
+    "name": "Dow\u2122 DOWLEX 2045G",
+    "legacyName": "Dow\u2122 DOWLEX 2045.01G",
+    "code": "DOW-LD-2045G",
+    "category": "LDPE"
+  },
+  {
+    "id": "prod-006",
+    "name": "Borealis Bormod\u2122 BH345MO",
+    "legacyName": "Borealis Bormod\u2122 BH345MO-R",
+    "code": "BOR-PP-345MO",
+    "category": "PP"
+  },
+  {
+    "id": "prod-007",
+    "name": "TotalEnergies PPH 3060",
+    "legacyName": "Total PPH 3060-A",
+    "code": "TOT-PP-3060",
+    "category": "PP"
+  },
+  {
+    "id": "prod-008",
+    "name": "Braskem TS-0644",
+    "legacyName": "Braskem TigerStar TS-0644",
+    "code": "BRK-HD-0644",
+    "category": "HDPE"
+  },
+  {
+    "id": "prod-009",
+    "name": "Formosa HDPE Taisox\u00ae 8001",
+    "legacyName": "Formosa Taisox\u00ae HDPE 8001-B",
+    "code": "FOR-HD-8001",
+    "category": "HDPE"
+  },
+  {
+    "id": "prod-010",
+    "name": "Reliance REPOL\u2122 H030SG",
+    "legacyName": "Reliance REPOL\u2122 H030SG-V1",
+    "code": "REL-HD-030SG",
+    "category": "HDPE"
+  },
+  {
+    "id": "prod-011",
+    "name": "SABIC\u00ae PP 500P",
+    "legacyName": "SABIC\u00ae PP 500P-Legacy",
+    "code": "SAB-PP-500P",
+    "category": "PP"
+  },
+  {
+    "id": "prod-012",
+    "name": "LyondellBasell Moplen\u00ae HP501M",
+    "legacyName": "LyondellBasell Moplen\u00ae HP501M-X",
+    "code": "LYB-PP-501M",
+    "category": "PP"
+  },
+  {
+    "id": "prod-013",
+    "name": "INEOS Styrolution\u00ae PS 486N",
+    "legacyName": "INEOS Styrolution\u00ae PS 486N-1",
+    "code": "INE-PS-486N",
+    "category": "PS"
+  },
+  {
+    "id": "prod-014",
+    "name": "Dow\u2122 ENGAGE 8180",
+    "legacyName": "Dow\u2122 ENGAGE 8180-POE",
+    "code": "DOW-PP-8180",
+    "category": "PP"
+  },
+  {
+    "id": "prod-015",
+    "name": "ExxonMobil\u2122 PP3155E6",
+    "legacyName": "ExxonMobil\u2122 PP3155-E6",
+    "code": "EM-PP-3155E6",
+    "category": "PP"
+  },
+  {
+    "id": "prod-016",
+    "name": "TotalEnergies PVC S-7102",
+    "legacyName": "Total Arkema PVC S-7102",
+    "code": "TOT-PVC-7102",
+    "category": "PVC"
+  },
+  {
+    "id": "prod-017",
+    "name": "INEOS Evipol\u00ae SH6520",
+    "legacyName": "INEOS Evipol\u00ae SH6520-PVC",
+    "code": "INE-PVC-6520",
+    "category": "PVC"
+  },
+  {
+    "id": "prod-018",
+    "name": "Braskem PET Cleartuf\u00ae 8006",
+    "legacyName": "Braskem Cleartuf\u00ae PET 8006-A",
+    "code": "BRK-PET-8006",
+    "category": "PET"
+  },
+  {
+    "id": "prod-019",
+    "name": "Reliance RELPET\u2122 G5801",
+    "legacyName": "Reliance RELPET\u2122 G5801-X",
+    "code": "REL-PET-5801",
+    "category": "PET"
+  },
+  {
+    "id": "prod-020",
+    "name": "Formosa PET Formolene\u00ae 5305",
+    "legacyName": "Formosa Formolene\u00ae PET 5305",
+    "code": "FOR-PET-5305",
+    "category": "PET"
+  },
+  {
+    "id": "prod-021",
+    "name": "Borealis Daplen\u2122 EE001AI",
+    "legacyName": "Borealis Daplen\u2122 EE001AI-PP",
+    "code": "BOR-PP-EE001",
+    "category": "PP"
+  },
+  {
+    "id": "prod-022",
+    "name": "SABIC\u00ae LDPE 2100TN00",
+    "legacyName": "SABIC\u00ae LDPE 2100TN-00",
+    "code": "SAB-LD-2100T",
+    "category": "LDPE"
+  },
+  {
+    "id": "prod-023",
+    "name": "LyondellBasell Hostalen\u00ae ACP5831D",
+    "legacyName": "LyondellBasell Hostalen\u00ae ACP5831",
+    "code": "LYB-HD-5831D",
+    "category": "HDPE"
+  },
+  {
+    "id": "prod-024",
+    "name": "Dow\u2122 STYRON 685D",
+    "legacyName": "Dow\u2122 STYRON 685D-PS",
+    "code": "DOW-PS-685D",
+    "category": "PS"
+  },
+  {
+    "id": "prod-025",
+    "name": "ExxonMobil\u2122 PVC E6834",
+    "legacyName": "ExxonMobil\u2122 PVC E6834-L",
+    "code": "EM-PVC-6834",
+    "category": "PVC"
+  }
+]

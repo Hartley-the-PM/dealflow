@@ -1,0 +1,34 @@
+[
+  {
+    "id": "gr-001",
+    "name": "Minimum Margin vs Cost",
+    "type": "min_margin_pct",
+    "threshold": 10,
+    "action": "require_approval",
+    "active": true
+  },
+  {
+    "id": "gr-002",
+    "name": "MSP Floor Warning",
+    "type": "below_msp",
+    "threshold": 0,
+    "action": "warn",
+    "active": true
+  },
+  {
+    "id": "gr-003",
+    "name": "Maximum Discount Cap",
+    "type": "max_discount_pct",
+    "threshold": 15,
+    "action": "block",
+    "active": true
+  },
+  {
+    "id": "gr-004",
+    "name": "Below Cost Block",
+    "type": "below_cost",
+    "threshold": 0,
+    "action": "block",
+    "active": true
+  }
+]

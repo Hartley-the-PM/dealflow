@@ -1,0 +1,2402 @@
+[
+  {
+    "id": "msp-001",
+    "productId": "prod-001",
+    "month": "2025-04",
+    "price": 1265,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-002",
+    "productId": "prod-001",
+    "month": "2025-05",
+    "price": 1285,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-003",
+    "productId": "prod-001",
+    "month": "2025-06",
+    "price": 1295,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-004",
+    "productId": "prod-001",
+    "month": "2025-07",
+    "price": 1285,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-005",
+    "productId": "prod-001",
+    "month": "2025-08",
+    "price": 1295,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-006",
+    "productId": "prod-001",
+    "month": "2025-09",
+    "price": 1295,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-007",
+    "productId": "prod-001",
+    "month": "2025-10",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-008",
+    "productId": "prod-001",
+    "month": "2025-11",
+    "price": 1310,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-009",
+    "productId": "prod-001",
+    "month": "2025-12",
+    "price": 1315,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-010",
+    "productId": "prod-001",
+    "month": "2026-01",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-011",
+    "productId": "prod-001",
+    "month": "2026-02",
+    "price": 1335,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-012",
+    "productId": "prod-001",
+    "month": "2026-03",
+    "price": 1340,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-013",
+    "productId": "prod-002",
+    "month": "2025-04",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-014",
+    "productId": "prod-002",
+    "month": "2025-05",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-015",
+    "productId": "prod-002",
+    "month": "2025-06",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-016",
+    "productId": "prod-002",
+    "month": "2025-07",
+    "price": 1420,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-017",
+    "productId": "prod-002",
+    "month": "2025-08",
+    "price": 1415,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-018",
+    "productId": "prod-002",
+    "month": "2025-09",
+    "price": 1415,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-019",
+    "productId": "prod-002",
+    "month": "2025-10",
+    "price": 1420,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-020",
+    "productId": "prod-002",
+    "month": "2025-11",
+    "price": 1425,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-021",
+    "productId": "prod-002",
+    "month": "2025-12",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-022",
+    "productId": "prod-002",
+    "month": "2026-01",
+    "price": 1450,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-023",
+    "productId": "prod-002",
+    "month": "2026-02",
+    "price": 1460,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-024",
+    "productId": "prod-002",
+    "month": "2026-03",
+    "price": 1475,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-025",
+    "productId": "prod-003",
+    "month": "2025-04",
+    "price": 1240,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-026",
+    "productId": "prod-003",
+    "month": "2025-05",
+    "price": 1260,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-027",
+    "productId": "prod-003",
+    "month": "2025-06",
+    "price": 1260,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-028",
+    "productId": "prod-003",
+    "month": "2025-07",
+    "price": 1270,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-029",
+    "productId": "prod-003",
+    "month": "2025-08",
+    "price": 1270,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-030",
+    "productId": "prod-003",
+    "month": "2025-09",
+    "price": 1255,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-031",
+    "productId": "prod-003",
+    "month": "2025-10",
+    "price": 1270,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-032",
+    "productId": "prod-003",
+    "month": "2025-11",
+    "price": 1265,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-033",
+    "productId": "prod-003",
+    "month": "2025-12",
+    "price": 1275,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-034",
+    "productId": "prod-003",
+    "month": "2026-01",
+    "price": 1280,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-035",
+    "productId": "prod-003",
+    "month": "2026-02",
+    "price": 1290,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-036",
+    "productId": "prod-003",
+    "month": "2026-03",
+    "price": 1295,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-037",
+    "productId": "prod-004",
+    "month": "2025-04",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-038",
+    "productId": "prod-004",
+    "month": "2025-05",
+    "price": 1325,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-039",
+    "productId": "prod-004",
+    "month": "2025-06",
+    "price": 1330,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-040",
+    "productId": "prod-004",
+    "month": "2025-07",
+    "price": 1335,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-041",
+    "productId": "prod-004",
+    "month": "2025-08",
+    "price": 1335,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-042",
+    "productId": "prod-004",
+    "month": "2025-09",
+    "price": 1340,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-043",
+    "productId": "prod-004",
+    "month": "2025-10",
+    "price": 1375,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-044",
+    "productId": "prod-004",
+    "month": "2025-11",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-045",
+    "productId": "prod-004",
+    "month": "2025-12",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-046",
+    "productId": "prod-004",
+    "month": "2026-01",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-047",
+    "productId": "prod-004",
+    "month": "2026-02",
+    "price": 1395,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-048",
+    "productId": "prod-004",
+    "month": "2026-03",
+    "price": 1400,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-049",
+    "productId": "prod-005",
+    "month": "2025-04",
+    "price": 1310,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-050",
+    "productId": "prod-005",
+    "month": "2025-05",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-051",
+    "productId": "prod-005",
+    "month": "2025-06",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-052",
+    "productId": "prod-005",
+    "month": "2025-07",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-053",
+    "productId": "prod-005",
+    "month": "2025-08",
+    "price": 1325,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-054",
+    "productId": "prod-005",
+    "month": "2025-09",
+    "price": 1325,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-055",
+    "productId": "prod-005",
+    "month": "2025-10",
+    "price": 1335,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-056",
+    "productId": "prod-005",
+    "month": "2025-11",
+    "price": 1345,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-057",
+    "productId": "prod-005",
+    "month": "2025-12",
+    "price": 1350,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-058",
+    "productId": "prod-005",
+    "month": "2026-01",
+    "price": 1350,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-059",
+    "productId": "prod-005",
+    "month": "2026-02",
+    "price": 1340,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-060",
+    "productId": "prod-005",
+    "month": "2026-03",
+    "price": 1355,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-061",
+    "productId": "prod-006",
+    "month": "2025-04",
+    "price": 1435,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-062",
+    "productId": "prod-006",
+    "month": "2025-05",
+    "price": 1460,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-063",
+    "productId": "prod-006",
+    "month": "2025-06",
+    "price": 1455,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-064",
+    "productId": "prod-006",
+    "month": "2025-07",
+    "price": 1470,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-065",
+    "productId": "prod-006",
+    "month": "2025-08",
+    "price": 1475,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-066",
+    "productId": "prod-006",
+    "month": "2025-09",
+    "price": 1480,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-067",
+    "productId": "prod-006",
+    "month": "2025-10",
+    "price": 1485,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-068",
+    "productId": "prod-006",
+    "month": "2025-11",
+    "price": 1520,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-069",
+    "productId": "prod-006",
+    "month": "2025-12",
+    "price": 1520,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-070",
+    "productId": "prod-006",
+    "month": "2026-01",
+    "price": 1520,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-071",
+    "productId": "prod-006",
+    "month": "2026-02",
+    "price": 1535,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-072",
+    "productId": "prod-006",
+    "month": "2026-03",
+    "price": 1540,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-073",
+    "productId": "prod-007",
+    "month": "2025-04",
+    "price": 1360,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-074",
+    "productId": "prod-007",
+    "month": "2025-05",
+    "price": 1390,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-075",
+    "productId": "prod-007",
+    "month": "2025-06",
+    "price": 1375,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-076",
+    "productId": "prod-007",
+    "month": "2025-07",
+    "price": 1390,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-077",
+    "productId": "prod-007",
+    "month": "2025-08",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-078",
+    "productId": "prod-007",
+    "month": "2025-09",
+    "price": 1395,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-079",
+    "productId": "prod-007",
+    "month": "2025-10",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-080",
+    "productId": "prod-007",
+    "month": "2025-11",
+    "price": 1390,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-081",
+    "productId": "prod-007",
+    "month": "2025-12",
+    "price": 1400,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-082",
+    "productId": "prod-007",
+    "month": "2026-01",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-083",
+    "productId": "prod-007",
+    "month": "2026-02",
+    "price": 1420,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-084",
+    "productId": "prod-007",
+    "month": "2026-03",
+    "price": 1425,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-085",
+    "productId": "prod-008",
+    "month": "2025-04",
+    "price": 1220,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-086",
+    "productId": "prod-008",
+    "month": "2025-05",
+    "price": 1225,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-087",
+    "productId": "prod-008",
+    "month": "2025-06",
+    "price": 1235,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-088",
+    "productId": "prod-008",
+    "month": "2025-07",
+    "price": 1225,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-089",
+    "productId": "prod-008",
+    "month": "2025-08",
+    "price": 1245,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-090",
+    "productId": "prod-008",
+    "month": "2025-09",
+    "price": 1250,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-091",
+    "productId": "prod-008",
+    "month": "2025-10",
+    "price": 1235,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-092",
+    "productId": "prod-008",
+    "month": "2025-11",
+    "price": 1240,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-093",
+    "productId": "prod-008",
+    "month": "2025-12",
+    "price": 1250,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-094",
+    "productId": "prod-008",
+    "month": "2026-01",
+    "price": 1260,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-095",
+    "productId": "prod-008",
+    "month": "2026-02",
+    "price": 1270,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-096",
+    "productId": "prod-008",
+    "month": "2026-03",
+    "price": 1275,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-097",
+    "productId": "prod-009",
+    "month": "2025-04",
+    "price": 1345,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-098",
+    "productId": "prod-009",
+    "month": "2025-05",
+    "price": 1340,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-099",
+    "productId": "prod-009",
+    "month": "2025-06",
+    "price": 1345,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-100",
+    "productId": "prod-009",
+    "month": "2025-07",
+    "price": 1355,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-101",
+    "productId": "prod-009",
+    "month": "2025-08",
+    "price": 1365,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-102",
+    "productId": "prod-009",
+    "month": "2025-09",
+    "price": 1355,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-103",
+    "productId": "prod-009",
+    "month": "2025-10",
+    "price": 1385,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-104",
+    "productId": "prod-009",
+    "month": "2025-11",
+    "price": 1375,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-105",
+    "productId": "prod-009",
+    "month": "2025-12",
+    "price": 1385,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-106",
+    "productId": "prod-009",
+    "month": "2026-01",
+    "price": 1390,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-107",
+    "productId": "prod-009",
+    "month": "2026-02",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-108",
+    "productId": "prod-009",
+    "month": "2026-03",
+    "price": 1395,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-109",
+    "productId": "prod-010",
+    "month": "2025-04",
+    "price": 1265,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-110",
+    "productId": "prod-010",
+    "month": "2025-05",
+    "price": 1280,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-111",
+    "productId": "prod-010",
+    "month": "2025-06",
+    "price": 1290,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-112",
+    "productId": "prod-010",
+    "month": "2025-07",
+    "price": 1280,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-113",
+    "productId": "prod-010",
+    "month": "2025-08",
+    "price": 1285,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-114",
+    "productId": "prod-010",
+    "month": "2025-09",
+    "price": 1305,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-115",
+    "productId": "prod-010",
+    "month": "2025-10",
+    "price": 1295,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-116",
+    "productId": "prod-010",
+    "month": "2025-11",
+    "price": 1315,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-117",
+    "productId": "prod-010",
+    "month": "2025-12",
+    "price": 1315,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-118",
+    "productId": "prod-010",
+    "month": "2026-01",
+    "price": 1310,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-119",
+    "productId": "prod-010",
+    "month": "2026-02",
+    "price": 1320,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-120",
+    "productId": "prod-010",
+    "month": "2026-03",
+    "price": 1325,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-121",
+    "productId": "prod-011",
+    "month": "2025-04",
+    "price": 1430,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-122",
+    "productId": "prod-011",
+    "month": "2025-05",
+    "price": 1435,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-123",
+    "productId": "prod-011",
+    "month": "2025-06",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-124",
+    "productId": "prod-011",
+    "month": "2025-07",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-125",
+    "productId": "prod-011",
+    "month": "2025-08",
+    "price": 1455,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-126",
+    "productId": "prod-011",
+    "month": "2025-09",
+    "price": 1455,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-127",
+    "productId": "prod-011",
+    "month": "2025-10",
+    "price": 1455,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-128",
+    "productId": "prod-011",
+    "month": "2025-11",
+    "price": 1460,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-129",
+    "productId": "prod-011",
+    "month": "2025-12",
+    "price": 1470,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-130",
+    "productId": "prod-011",
+    "month": "2026-01",
+    "price": 1480,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-131",
+    "productId": "prod-011",
+    "month": "2026-02",
+    "price": 1490,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-132",
+    "productId": "prod-011",
+    "month": "2026-03",
+    "price": 1500,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-133",
+    "productId": "prod-012",
+    "month": "2025-04",
+    "price": 1390,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-134",
+    "productId": "prod-012",
+    "month": "2025-05",
+    "price": 1395,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-135",
+    "productId": "prod-012",
+    "month": "2025-06",
+    "price": 1405,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-136",
+    "productId": "prod-012",
+    "month": "2025-07",
+    "price": 1395,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-137",
+    "productId": "prod-012",
+    "month": "2025-08",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-138",
+    "productId": "prod-012",
+    "month": "2025-09",
+    "price": 1415,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-139",
+    "productId": "prod-012",
+    "month": "2025-10",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-140",
+    "productId": "prod-012",
+    "month": "2025-11",
+    "price": 1435,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-141",
+    "productId": "prod-012",
+    "month": "2025-12",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-142",
+    "productId": "prod-012",
+    "month": "2026-01",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-143",
+    "productId": "prod-012",
+    "month": "2026-02",
+    "price": 1455,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-144",
+    "productId": "prod-012",
+    "month": "2026-03",
+    "price": 1460,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-145",
+    "productId": "prod-013",
+    "month": "2025-04",
+    "price": 1530,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-146",
+    "productId": "prod-013",
+    "month": "2025-05",
+    "price": 1550,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-147",
+    "productId": "prod-013",
+    "month": "2025-06",
+    "price": 1530,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-148",
+    "productId": "prod-013",
+    "month": "2025-07",
+    "price": 1545,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-149",
+    "productId": "prod-013",
+    "month": "2025-08",
+    "price": 1545,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-150",
+    "productId": "prod-013",
+    "month": "2025-09",
+    "price": 1555,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-151",
+    "productId": "prod-013",
+    "month": "2025-10",
+    "price": 1555,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-152",
+    "productId": "prod-013",
+    "month": "2025-11",
+    "price": 1565,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-153",
+    "productId": "prod-013",
+    "month": "2025-12",
+    "price": 1575,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-154",
+    "productId": "prod-013",
+    "month": "2026-01",
+    "price": 1580,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-155",
+    "productId": "prod-013",
+    "month": "2026-02",
+    "price": 1570,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-156",
+    "productId": "prod-013",
+    "month": "2026-03",
+    "price": 1590,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-157",
+    "productId": "prod-014",
+    "month": "2025-04",
+    "price": 1575,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-158",
+    "productId": "prod-014",
+    "month": "2025-05",
+    "price": 1550,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-159",
+    "productId": "prod-014",
+    "month": "2025-06",
+    "price": 1575,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-160",
+    "productId": "prod-014",
+    "month": "2025-07",
+    "price": 1590,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-161",
+    "productId": "prod-014",
+    "month": "2025-08",
+    "price": 1590,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-162",
+    "productId": "prod-014",
+    "month": "2025-09",
+    "price": 1580,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-163",
+    "productId": "prod-014",
+    "month": "2025-10",
+    "price": 1595,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-164",
+    "productId": "prod-014",
+    "month": "2025-11",
+    "price": 1595,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-165",
+    "productId": "prod-014",
+    "month": "2025-12",
+    "price": 1610,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-166",
+    "productId": "prod-014",
+    "month": "2026-01",
+    "price": 1620,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-167",
+    "productId": "prod-014",
+    "month": "2026-02",
+    "price": 1630,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-168",
+    "productId": "prod-014",
+    "month": "2026-03",
+    "price": 1640,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-169",
+    "productId": "prod-015",
+    "month": "2025-04",
+    "price": 1425,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-170",
+    "productId": "prod-015",
+    "month": "2025-05",
+    "price": 1420,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-171",
+    "productId": "prod-015",
+    "month": "2025-06",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-172",
+    "productId": "prod-015",
+    "month": "2025-07",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-173",
+    "productId": "prod-015",
+    "month": "2025-08",
+    "price": 1440,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-174",
+    "productId": "prod-015",
+    "month": "2025-09",
+    "price": 1450,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-175",
+    "productId": "prod-015",
+    "month": "2025-10",
+    "price": 1450,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-176",
+    "productId": "prod-015",
+    "month": "2025-11",
+    "price": 1465,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-177",
+    "productId": "prod-015",
+    "month": "2025-12",
+    "price": 1470,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-178",
+    "productId": "prod-015",
+    "month": "2026-01",
+    "price": 1470,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-179",
+    "productId": "prod-015",
+    "month": "2026-02",
+    "price": 1480,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-180",
+    "productId": "prod-015",
+    "month": "2026-03",
+    "price": 1485,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-181",
+    "productId": "prod-016",
+    "month": "2025-04",
+    "price": 955,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-182",
+    "productId": "prod-016",
+    "month": "2025-05",
+    "price": 970,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-183",
+    "productId": "prod-016",
+    "month": "2025-06",
+    "price": 960,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-184",
+    "productId": "prod-016",
+    "month": "2025-07",
+    "price": 970,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-185",
+    "productId": "prod-016",
+    "month": "2025-08",
+    "price": 970,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-186",
+    "productId": "prod-016",
+    "month": "2025-09",
+    "price": 975,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-187",
+    "productId": "prod-016",
+    "month": "2025-10",
+    "price": 965,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-188",
+    "productId": "prod-016",
+    "month": "2025-11",
+    "price": 975,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-189",
+    "productId": "prod-016",
+    "month": "2025-12",
+    "price": 980,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-190",
+    "productId": "prod-016",
+    "month": "2026-01",
+    "price": 980,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-191",
+    "productId": "prod-016",
+    "month": "2026-02",
+    "price": 990,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-192",
+    "productId": "prod-016",
+    "month": "2026-03",
+    "price": 995,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-193",
+    "productId": "prod-017",
+    "month": "2025-04",
+    "price": 985,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-194",
+    "productId": "prod-017",
+    "month": "2025-05",
+    "price": 985,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-195",
+    "productId": "prod-017",
+    "month": "2025-06",
+    "price": 1005,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-196",
+    "productId": "prod-017",
+    "month": "2025-07",
+    "price": 1005,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-197",
+    "productId": "prod-017",
+    "month": "2025-08",
+    "price": 1005,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-198",
+    "productId": "prod-017",
+    "month": "2025-09",
+    "price": 1005,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-199",
+    "productId": "prod-017",
+    "month": "2025-10",
+    "price": 1010,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-200",
+    "productId": "prod-017",
+    "month": "2025-11",
+    "price": 1010,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-201",
+    "productId": "prod-017",
+    "month": "2025-12",
+    "price": 1015,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-202",
+    "productId": "prod-017",
+    "month": "2026-01",
+    "price": 1020,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-203",
+    "productId": "prod-017",
+    "month": "2026-02",
+    "price": 1015,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-204",
+    "productId": "prod-017",
+    "month": "2026-03",
+    "price": 1025,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-205",
+    "productId": "prod-018",
+    "month": "2025-04",
+    "price": 1100,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-206",
+    "productId": "prod-018",
+    "month": "2025-05",
+    "price": 1105,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-207",
+    "productId": "prod-018",
+    "month": "2025-06",
+    "price": 1110,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-208",
+    "productId": "prod-018",
+    "month": "2025-07",
+    "price": 1115,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-209",
+    "productId": "prod-018",
+    "month": "2025-08",
+    "price": 1120,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-210",
+    "productId": "prod-018",
+    "month": "2025-09",
+    "price": 1120,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-211",
+    "productId": "prod-018",
+    "month": "2025-10",
+    "price": 1140,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-212",
+    "productId": "prod-018",
+    "month": "2025-11",
+    "price": 1135,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-213",
+    "productId": "prod-018",
+    "month": "2025-12",
+    "price": 1145,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-214",
+    "productId": "prod-018",
+    "month": "2026-01",
+    "price": 1150,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-215",
+    "productId": "prod-018",
+    "month": "2026-02",
+    "price": 1160,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-216",
+    "productId": "prod-018",
+    "month": "2026-03",
+    "price": 1170,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-217",
+    "productId": "prod-019",
+    "month": "2025-04",
+    "price": 1045,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-218",
+    "productId": "prod-019",
+    "month": "2025-05",
+    "price": 1055,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-219",
+    "productId": "prod-019",
+    "month": "2025-06",
+    "price": 1050,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-220",
+    "productId": "prod-019",
+    "month": "2025-07",
+    "price": 1070,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-221",
+    "productId": "prod-019",
+    "month": "2025-08",
+    "price": 1075,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-222",
+    "productId": "prod-019",
+    "month": "2025-09",
+    "price": 1080,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-223",
+    "productId": "prod-019",
+    "month": "2025-10",
+    "price": 1085,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-224",
+    "productId": "prod-019",
+    "month": "2025-11",
+    "price": 1075,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-225",
+    "productId": "prod-019",
+    "month": "2025-12",
+    "price": 1085,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-226",
+    "productId": "prod-019",
+    "month": "2026-01",
+    "price": 1090,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-227",
+    "productId": "prod-019",
+    "month": "2026-02",
+    "price": 1100,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-228",
+    "productId": "prod-019",
+    "month": "2026-03",
+    "price": 1105,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-229",
+    "productId": "prod-020",
+    "month": "2025-04",
+    "price": 1075,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-230",
+    "productId": "prod-020",
+    "month": "2025-05",
+    "price": 1095,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-231",
+    "productId": "prod-020",
+    "month": "2025-06",
+    "price": 1100,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-232",
+    "productId": "prod-020",
+    "month": "2025-07",
+    "price": 1105,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-233",
+    "productId": "prod-020",
+    "month": "2025-08",
+    "price": 1100,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-234",
+    "productId": "prod-020",
+    "month": "2025-09",
+    "price": 1110,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-235",
+    "productId": "prod-020",
+    "month": "2025-10",
+    "price": 1115,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-236",
+    "productId": "prod-020",
+    "month": "2025-11",
+    "price": 1130,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-237",
+    "productId": "prod-020",
+    "month": "2025-12",
+    "price": 1130,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-238",
+    "productId": "prod-020",
+    "month": "2026-01",
+    "price": 1130,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-239",
+    "productId": "prod-020",
+    "month": "2026-02",
+    "price": 1140,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-240",
+    "productId": "prod-020",
+    "month": "2026-03",
+    "price": 1145,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-241",
+    "productId": "prod-021",
+    "month": "2025-04",
+    "price": 1495,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-242",
+    "productId": "prod-021",
+    "month": "2025-05",
+    "price": 1510,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-243",
+    "productId": "prod-021",
+    "month": "2025-06",
+    "price": 1520,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-244",
+    "productId": "prod-021",
+    "month": "2025-07",
+    "price": 1500,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-245",
+    "productId": "prod-021",
+    "month": "2025-08",
+    "price": 1515,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-246",
+    "productId": "prod-021",
+    "month": "2025-09",
+    "price": 1510,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-247",
+    "productId": "prod-021",
+    "month": "2025-10",
+    "price": 1530,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-248",
+    "productId": "prod-021",
+    "month": "2025-11",
+    "price": 1525,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-249",
+    "productId": "prod-021",
+    "month": "2025-12",
+    "price": 1540,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-250",
+    "productId": "prod-021",
+    "month": "2026-01",
+    "price": 1550,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-251",
+    "productId": "prod-021",
+    "month": "2026-02",
+    "price": 1560,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-252",
+    "productId": "prod-021",
+    "month": "2026-03",
+    "price": 1570,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-253",
+    "productId": "prod-022",
+    "month": "2025-04",
+    "price": 1250,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-254",
+    "productId": "prod-022",
+    "month": "2025-05",
+    "price": 1270,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-255",
+    "productId": "prod-022",
+    "month": "2025-06",
+    "price": 1265,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-256",
+    "productId": "prod-022",
+    "month": "2025-07",
+    "price": 1265,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-257",
+    "productId": "prod-022",
+    "month": "2025-08",
+    "price": 1275,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-258",
+    "productId": "prod-022",
+    "month": "2025-09",
+    "price": 1290,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-259",
+    "productId": "prod-022",
+    "month": "2025-10",
+    "price": 1285,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-260",
+    "productId": "prod-022",
+    "month": "2025-11",
+    "price": 1305,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-261",
+    "productId": "prod-022",
+    "month": "2025-12",
+    "price": 1305,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-262",
+    "productId": "prod-022",
+    "month": "2026-01",
+    "price": 1300,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-263",
+    "productId": "prod-022",
+    "month": "2026-02",
+    "price": 1310,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-264",
+    "productId": "prod-022",
+    "month": "2026-03",
+    "price": 1315,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-265",
+    "productId": "prod-023",
+    "month": "2025-04",
+    "price": 1370,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-266",
+    "productId": "prod-023",
+    "month": "2025-05",
+    "price": 1380,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-267",
+    "productId": "prod-023",
+    "month": "2025-06",
+    "price": 1395,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-268",
+    "productId": "prod-023",
+    "month": "2025-07",
+    "price": 1385,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-269",
+    "productId": "prod-023",
+    "month": "2025-08",
+    "price": 1390,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-270",
+    "productId": "prod-023",
+    "month": "2025-09",
+    "price": 1385,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-271",
+    "productId": "prod-023",
+    "month": "2025-10",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-272",
+    "productId": "prod-023",
+    "month": "2025-11",
+    "price": 1400,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-273",
+    "productId": "prod-023",
+    "month": "2025-12",
+    "price": 1410,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-274",
+    "productId": "prod-023",
+    "month": "2026-01",
+    "price": 1420,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-275",
+    "productId": "prod-023",
+    "month": "2026-02",
+    "price": 1430,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-276",
+    "productId": "prod-023",
+    "month": "2026-03",
+    "price": 1435,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-277",
+    "productId": "prod-024",
+    "month": "2025-04",
+    "price": 1505,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-278",
+    "productId": "prod-024",
+    "month": "2025-05",
+    "price": 1500,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-279",
+    "productId": "prod-024",
+    "month": "2025-06",
+    "price": 1510,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-280",
+    "productId": "prod-024",
+    "month": "2025-07",
+    "price": 1510,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-281",
+    "productId": "prod-024",
+    "month": "2025-08",
+    "price": 1535,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-282",
+    "productId": "prod-024",
+    "month": "2025-09",
+    "price": 1535,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-283",
+    "productId": "prod-024",
+    "month": "2025-10",
+    "price": 1545,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-284",
+    "productId": "prod-024",
+    "month": "2025-11",
+    "price": 1545,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-285",
+    "productId": "prod-024",
+    "month": "2025-12",
+    "price": 1555,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-286",
+    "productId": "prod-024",
+    "month": "2026-01",
+    "price": 1560,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-287",
+    "productId": "prod-024",
+    "month": "2026-02",
+    "price": 1550,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-288",
+    "productId": "prod-024",
+    "month": "2026-03",
+    "price": 1565,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "msp-289",
+    "productId": "prod-025",
+    "month": "2025-04",
+    "price": 925,
+    "currency": "USD",
+    "updatedAt": "2025-03-28T10:00:00Z"
+  },
+  {
+    "id": "msp-290",
+    "productId": "prod-025",
+    "month": "2025-05",
+    "price": 930,
+    "currency": "USD",
+    "updatedAt": "2025-04-28T10:00:00Z"
+  },
+  {
+    "id": "msp-291",
+    "productId": "prod-025",
+    "month": "2025-06",
+    "price": 925,
+    "currency": "USD",
+    "updatedAt": "2025-05-28T10:00:00Z"
+  },
+  {
+    "id": "msp-292",
+    "productId": "prod-025",
+    "month": "2025-07",
+    "price": 940,
+    "currency": "USD",
+    "updatedAt": "2025-06-28T10:00:00Z"
+  },
+  {
+    "id": "msp-293",
+    "productId": "prod-025",
+    "month": "2025-08",
+    "price": 930,
+    "currency": "USD",
+    "updatedAt": "2025-07-28T10:00:00Z"
+  },
+  {
+    "id": "msp-294",
+    "productId": "prod-025",
+    "month": "2025-09",
+    "price": 930,
+    "currency": "USD",
+    "updatedAt": "2025-08-28T10:00:00Z"
+  },
+  {
+    "id": "msp-295",
+    "productId": "prod-025",
+    "month": "2025-10",
+    "price": 940,
+    "currency": "USD",
+    "updatedAt": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": "msp-296",
+    "productId": "prod-025",
+    "month": "2025-11",
+    "price": 950,
+    "currency": "USD",
+    "updatedAt": "2025-10-28T10:00:00Z"
+  },
+  {
+    "id": "msp-297",
+    "productId": "prod-025",
+    "month": "2025-12",
+    "price": 950,
+    "currency": "USD",
+    "updatedAt": "2025-11-28T10:00:00Z"
+  },
+  {
+    "id": "msp-298",
+    "productId": "prod-025",
+    "month": "2026-01",
+    "price": 950,
+    "currency": "USD",
+    "updatedAt": "2025-12-28T10:00:00Z"
+  },
+  {
+    "id": "msp-299",
+    "productId": "prod-025",
+    "month": "2026-02",
+    "price": 960,
+    "currency": "USD",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  },
+  {
+    "id": "msp-300",
+    "productId": "prod-025",
+    "month": "2026-03",
+    "price": 965,
+    "currency": "USD",
+    "updatedAt": "2026-02-28T10:00:00Z"
+  }
+]

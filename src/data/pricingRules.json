@@ -1,0 +1,95 @@
+[
+  {
+    "id": "rule-001",
+    "name": "Volume Discount (100+ MT)",
+    "trigger": "volume",
+    "condition": { "minQuantity": 100 },
+    "adjustmentType": "percentage",
+    "adjustmentValue": -2,
+    "priority": 10,
+    "active": true
+  },
+  {
+    "id": "rule-002",
+    "name": "Volume Discount (500+ MT)",
+    "trigger": "volume",
+    "condition": { "minQuantity": 500 },
+    "adjustmentType": "percentage",
+    "adjustmentValue": -5,
+    "priority": 20,
+    "active": true
+  },
+  {
+    "id": "rule-003",
+    "name": "Tier A Customer Discount",
+    "trigger": "customer_tier",
+    "condition": { "tiers": ["A"] },
+    "adjustmentType": "percentage",
+    "adjustmentValue": -3,
+    "priority": 30,
+    "active": true
+  },
+  {
+    "id": "rule-004",
+    "name": "Tier B Customer Discount",
+    "trigger": "customer_tier",
+    "condition": { "tiers": ["B"] },
+    "adjustmentType": "percentage",
+    "adjustmentValue": -1,
+    "priority": 30,
+    "active": true
+  },
+  {
+    "id": "rule-005",
+    "name": "EXW Incoterms Adjustment",
+    "trigger": "incoterms",
+    "condition": { "incoterms": ["EXW"] },
+    "adjustmentType": "fixed",
+    "adjustmentValue": -15,
+    "priority": 40,
+    "active": true
+  },
+  {
+    "id": "rule-006",
+    "name": "Extended Payment Surcharge (60+ days)",
+    "trigger": "payment_terms",
+    "condition": { "paymentTermsMinDays": 60 },
+    "adjustmentType": "percentage",
+    "adjustmentValue": 1.5,
+    "priority": 50,
+    "active": true
+  },
+  {
+    "id": "rule-007",
+    "productId": "prod-006",
+    "name": "Bormod Premium Surcharge",
+    "trigger": "volume",
+    "condition": { "maxQuantity": 50 },
+    "adjustmentType": "percentage",
+    "adjustmentValue": 3,
+    "priority": 5,
+    "active": true
+  },
+  {
+    "id": "rule-008",
+    "productId": "prod-001",
+    "name": "LD 03322 Bulk Discount (200+ MT)",
+    "trigger": "volume",
+    "condition": { "minQuantity": 200 },
+    "adjustmentType": "percentage",
+    "adjustmentValue": -3.5,
+    "priority": 15,
+    "active": true
+  },
+  {
+    "id": "rule-009",
+    "productId": "prod-004",
+    "name": "Rigidex Automotive Tier A Bonus",
+    "trigger": "customer_tier",
+    "condition": { "tiers": ["A"] },
+    "adjustmentType": "fixed",
+    "adjustmentValue": -25,
+    "priority": 35,
+    "active": true
+  }
+]

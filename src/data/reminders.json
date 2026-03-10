@@ -1,0 +1,57 @@
+[
+  {
+    "id": "rem-001",
+    "type": "customer",
+    "targetId": "cust-005",
+    "targetName": "Ankara Plastik A.S.",
+    "title": "Follow up on annual pipe compound pricing review",
+    "frequency": "monthly",
+    "dueDate": "2026-03-10T09:00:00Z",
+    "status": "active",
+    "createdAt": "2026-01-15T10:00:00Z"
+  },
+  {
+    "id": "rem-002",
+    "type": "product",
+    "targetId": "prod-001",
+    "targetName": "ExxonMobil\u2122 LD 03322.BW1",
+    "title": "Review LDPE MSP for Q2 \u2013 supplier price increase expected",
+    "frequency": "quarterly",
+    "dueDate": "2026-03-25T09:00:00Z",
+    "status": "active",
+    "createdAt": "2026-01-05T08:00:00Z"
+  },
+  {
+    "id": "rem-003",
+    "type": "customer",
+    "targetId": "cust-002",
+    "targetName": "AutoPoly Solutions Inc.",
+    "title": "Send updated March offer with Borealis PP grade",
+    "frequency": "weekly",
+    "dueDate": "2026-02-28T09:00:00Z",
+    "status": "done",
+    "createdAt": "2026-02-20T11:00:00Z"
+  },
+  {
+    "id": "rem-004",
+    "type": "customer",
+    "targetId": "cust-006",
+    "targetName": "BrasilFilm Ltda.",
+    "title": "Confirm H1 agri film volume requirements",
+    "frequency": "monthly",
+    "dueDate": "2026-03-15T09:00:00Z",
+    "status": "snoozed",
+    "createdAt": "2026-02-10T14:00:00Z"
+  },
+  {
+    "id": "rem-005",
+    "type": "product",
+    "targetId": "prod-016",
+    "targetName": "TotalEnergies PVC S-7102",
+    "title": "Check PVC allocation status \u2013 supply tightening in Europe",
+    "frequency": "weekly",
+    "dueDate": "2026-04-01T09:00:00Z",
+    "status": "active",
+    "createdAt": "2026-02-25T09:00:00Z"
+  }
+]

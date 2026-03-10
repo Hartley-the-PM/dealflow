@@ -1,0 +1,122 @@
+[
+  {
+    "id": "cust-001",
+    "name": "Plastipack GmbH",
+    "country": "Germany",
+    "segment": "Packaging",
+    "tier": "A",
+    "assignedAM": "John Mitchell",
+    "address": "Industriestrasse 42, 40210 Dusseldorf, Germany",
+    "email": "procurement@plastipack.de",
+    "phone": "+49 211 555 0142",
+    "createdAt": "2024-03-15T09:00:00Z"
+  },
+  {
+    "id": "cust-002",
+    "name": "AutoPoly Solutions Inc.",
+    "country": "USA",
+    "segment": "Automotive",
+    "tier": "A",
+    "assignedAM": "Sarah Chen",
+    "address": "2800 Commerce Blvd, Detroit, MI 48201, USA",
+    "email": "purchasing@autopolysolutions.com",
+    "phone": "+1 313 555 0198",
+    "createdAt": "2024-05-22T14:30:00Z"
+  },
+  {
+    "id": "cust-003",
+    "name": "Van der Berg Plastics B.V.",
+    "country": "Netherlands",
+    "segment": "Consumer Goods",
+    "tier": "A",
+    "assignedAM": "Marco Rodriguez",
+    "address": "Havenweg 18, 3016 BM Rotterdam, Netherlands",
+    "email": "orders@vdbergplastics.nl",
+    "phone": "+31 10 555 0233",
+    "createdAt": "2024-01-10T08:15:00Z"
+  },
+  {
+    "id": "cust-004",
+    "name": "Polimeros Azteca S.A. de C.V.",
+    "country": "Mexico",
+    "segment": "Packaging",
+    "tier": "B",
+    "assignedAM": "Marco Rodriguez",
+    "address": "Av. Industria 1450, Col. Industrial, 64000 Monterrey, Mexico",
+    "email": "compras@polimerosazteca.com.mx",
+    "phone": "+52 81 555 0377",
+    "createdAt": "2024-07-03T11:00:00Z"
+  },
+  {
+    "id": "cust-005",
+    "name": "Ankara Plastik A.S.",
+    "country": "Turkey",
+    "segment": "Construction",
+    "tier": "B",
+    "assignedAM": "John Mitchell",
+    "address": "Organize Sanayi Bolgesi 3. Cadde No:12, 06935 Ankara, Turkey",
+    "email": "info@ankaraplastik.com.tr",
+    "phone": "+90 312 555 0489",
+    "createdAt": "2024-09-18T10:45:00Z"
+  },
+  {
+    "id": "cust-006",
+    "name": "BrasilFilm Ltda.",
+    "country": "Brazil",
+    "segment": "Agriculture",
+    "tier": "B",
+    "assignedAM": "Marco Rodriguez",
+    "address": "Rodovia SP-340 Km 128, 13088-901 Campinas, SP, Brazil",
+    "email": "comercial@brasilfilm.com.br",
+    "phone": "+55 19 555 0512",
+    "createdAt": "2024-04-28T13:20:00Z"
+  },
+  {
+    "id": "cust-007",
+    "name": "Reliant Polymers Pvt. Ltd.",
+    "country": "India",
+    "segment": "Packaging",
+    "tier": "B",
+    "assignedAM": "Sarah Chen",
+    "address": "Plot 47, MIDC Taloja, Navi Mumbai 410208, India",
+    "email": "procurement@reliantpolymers.in",
+    "phone": "+91 22 555 0644",
+    "createdAt": "2024-06-12T07:30:00Z"
+  },
+  {
+    "id": "cust-008",
+    "name": "EuroPipe Sp. z o.o.",
+    "country": "Poland",
+    "segment": "Construction",
+    "tier": "C",
+    "assignedAM": "John Mitchell",
+    "address": "ul. Przemyslowa 28, 42-200 Czestochowa, Poland",
+    "email": "zakupy@europipe.pl",
+    "phone": "+48 34 555 0771",
+    "createdAt": "2024-08-05T09:10:00Z"
+  },
+  {
+    "id": "cust-009",
+    "name": "Loire Emballages S.A.",
+    "country": "France",
+    "segment": "Consumer Goods",
+    "tier": "C",
+    "assignedAM": "Sarah Chen",
+    "address": "Zone Industrielle des Platanes, 44600 Saint-Nazaire, France",
+    "email": "achats@loireemballages.fr",
+    "phone": "+33 2 40 55 0899",
+    "createdAt": "2024-02-20T15:00:00Z"
+  },
+  {
+    "id": "cust-010",
+    "name": "Sterling Mouldings Ltd.",
+    "country": "UK",
+    "segment": "Automotive",
+    "tier": "C",
+    "assignedAM": "John Mitchell",
+    "address": "Unit 7, Bridgewater Industrial Estate, Warrington WA4 6PQ, UK",
+    "email": "supply@sterlingmouldings.co.uk",
+    "phone": "+44 1925 555 092",
+    "createdAt": "2024-11-01T08:00:00Z"
+  }
+]
