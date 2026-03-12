@@ -28,6 +28,7 @@ import DealOffers from '@/components/deals/DealOffers';
 import DealProducts from '@/components/deals/DealProducts';
 import DealActivityLog from '@/components/deals/DealActivityLog';
 import DealNotes from '@/components/deals/DealNotes';
+import DealAlerts from '@/components/notifications/DealAlerts';
 import { useDealStore } from '@/stores/dealStore';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useOfferStore } from '@/stores/offerStore';
@@ -259,6 +260,8 @@ export default function DealDetailPage() {
           </>
         }
       />
+
+      <DealAlerts dealId={dealId} />
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tab} onChange={(_, v) => setTab(v)}>

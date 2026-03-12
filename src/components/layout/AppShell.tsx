@@ -9,6 +9,7 @@ import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { useHydration } from '@/hooks/useHydration';
+import { useNotificationEngine } from '@/hooks/useNotificationEngine';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const DRAWER_WIDTH = 260;
@@ -19,6 +20,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const hydrated = useHydration();
   const settings = useSettingsStore((s) => s.settings);
+  useNotificationEngine();
 
   if (!hydrated) {
     return (

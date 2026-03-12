@@ -24,7 +24,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { alpha } from '@mui/material/styles';
 import GlobalSearch from './GlobalSearch';
+import NotificationPanel from '@/components/notifications/NotificationPanel';
 import { useReminderStore } from '@/stores/reminderStore';
+import { useNotificationStore } from '@/stores/notificationStore';
 
 interface TopBarProps {
   onMenuToggle: () => void;
@@ -36,9 +38,12 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
   const [profileAnchor, setProfileAnchor] = useState<HTMLElement | null>(null);
+  const [notifPanelOpen, setNotifPanelOpen] = useState(false);
   const reminders = useReminderStore((s) => s.reminders);
+  const notificationCount = useNotificationStore((s) => s.getActiveCount());
 
   const activeReminders = reminders.filter((r) => r.status === 'active').length;
+  const badgeCount = notificationCount + activeReminders;
   const initials = currentUser
     .split(' ')
     .map((n) => n[0])
@@ -114,14 +119,14 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton
-              onClick={() => router.push('/reminders')}
+              onClick={() => setNotifPanelOpen(true)}
               size="small"
               sx={{ color: 'text.secondary' }}
             >
               <Badge
-                badgeContent={activeReminders}
+                badgeContent={badgeCount}
                 color="error"
-                max={9}
+                max={99}
               >
                 <NotificationsIcon fontSize="small" />
               </Badge>
@@ -149,6 +154,7 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
       </AppBar>
 
       <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <NotificationPanel open={notifPanelOpen} onClose={() => setNotifPanelOpen(false)} />
 
       {/* Profile Popover */}
       <Popover

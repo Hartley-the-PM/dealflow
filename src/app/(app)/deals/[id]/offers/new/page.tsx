@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import PageHeader from '@/components/shared/PageHeader';
 import OfferForm from '@/components/offers/OfferForm';
+import TemplatePicker from '@/components/offers/TemplatePicker';
 import { useDealStore } from '@/stores/dealStore';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useOfferStore } from '@/stores/offerStore';
@@ -15,6 +16,7 @@ import { useHydration } from '@/hooks/useHydration';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
 import type { Offer } from '@/types';
+import type { OfferTemplate } from '@/types/offerBuilder';
 
 export default function NewOfferPage() {
   const hydrated = useHydration();
@@ -29,6 +31,9 @@ export default function NewOfferPage() {
   const addOffer = useOfferStore((s) => s.addOffer);
   const addActivity = useActivityStore((s) => s.addActivity);
   const settings = useSettingsStore((s) => s.settings);
+
+  const [selectedTemplate, setSelectedTemplate] = useState<OfferTemplate | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const deal = getDealById(dealId);
   const customer = deal ? getCustomerById(deal.customerId) : undefined;
@@ -64,6 +69,16 @@ export default function NewOfferPage() {
     router.push(`/deals/${dealId}`);
   };
 
+  const handleTemplateSelect = (template: OfferTemplate) => {
+    setSelectedTemplate(template);
+    setShowForm(true);
+  };
+
+  const handleSkipTemplate = () => {
+    setSelectedTemplate(null);
+    setShowForm(true);
+  };
+
   if (!hydrated) return null;
 
   if (!deal) {
@@ -87,13 +102,17 @@ export default function NewOfferPage() {
           { label: 'New Offer' },
         ]}
       />
-      <OfferForm
-        dealId={dealId}
-        customerId={deal.customerId}
-        defaultName={autoName}
-        defaultVersion={nextVersion}
-        onSave={handleSave}
-      />
+      {!showForm ? (
+        <TemplatePicker onSelect={handleTemplateSelect} onSkip={handleSkipTemplate} />
+      ) : (
+        <OfferForm
+          dealId={dealId}
+          customerId={deal.customerId}
+          defaultName={autoName}
+          defaultVersion={nextVersion}
+          onSave={handleSave}
+        />
+      )}
     </Box>
   );
 }

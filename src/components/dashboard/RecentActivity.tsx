@@ -38,6 +38,10 @@ const actionIcons: Record<ActivityAction, React.ReactNode> = {
   note_added: <CommentIcon color="action" />,
   deal_updated: <SwapHorizIcon color="action" />,
   deal_deleted: <CancelIcon sx={{ color: '#DC2626' }} />,
+  offer_shared: <SendIcon sx={{ color: '#7C3AED' }} />,
+  buyer_accepted: <CheckCircleIcon sx={{ color: '#059669' }} />,
+  buyer_rejected: <CancelIcon sx={{ color: '#DC2626' }} />,
+  buyer_counter_proposed: <SwapHorizIcon sx={{ color: '#D97706' }} />,
 };
 
 export default function RecentActivity() {

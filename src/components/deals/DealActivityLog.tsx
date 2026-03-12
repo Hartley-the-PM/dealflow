@@ -40,6 +40,10 @@ const actionIcons: Record<ActivityAction, React.ReactNode> = {
   note_added: <NoteAddIcon color="info" />,
   deal_updated: <SwapHorizIcon color="action" />,
   deal_deleted: <CancelIcon color="error" />,
+  offer_shared: <SendIcon color="primary" />,
+  buyer_accepted: <CheckCircleIcon color="success" />,
+  buyer_rejected: <CancelIcon color="error" />,
+  buyer_counter_proposed: <SwapHorizIcon color="warning" />,
 };
 
 const actionLabels: Record<ActivityAction, string> = {
@@ -55,6 +59,10 @@ const actionLabels: Record<ActivityAction, string> = {
   pdf_generated: 'PDF Generated',
   status_changed: 'Status Changed',
   note_added: 'Note Added',
+  offer_shared: 'Offer Shared',
+  buyer_accepted: 'Buyer Accepted',
+  buyer_rejected: 'Buyer Rejected',
+  buyer_counter_proposed: 'Buyer Counter-Proposed',
 };
 
 export default function DealActivityLog({ dealId }: DealActivityLogProps) {

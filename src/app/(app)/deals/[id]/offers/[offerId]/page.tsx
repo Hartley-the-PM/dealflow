@@ -24,9 +24,22 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import ShareIcon from '@mui/icons-material/Share';
+import LinkIcon from '@mui/icons-material/Link';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import PageHeader from '@/components/shared/PageHeader';
 import StatusChip from '@/components/shared/StatusChip';
 import ConfirmDialog from '@/components/shared/ConfirmDialog';
+import OfferAnalyticsDashboard from '@/components/offers/OfferAnalyticsDashboard';
 import { useDealStore } from '@/stores/dealStore';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useOfferStore } from '@/stores/offerStore';
@@ -34,6 +47,7 @@ import { useProductStore } from '@/stores/productStore';
 import { usePricingStore } from '@/stores/pricingStore';
 import { useActivityStore } from '@/stores/activityStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useOfferShareStore } from '@/stores/offerShareStore';
 import { useHydration } from '@/hooks/useHydration';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
@@ -58,6 +72,14 @@ export default function ViewOfferPage() {
   const settings = useSettingsStore((s) => s.settings);
 
   const [confirmAction, setConfirmAction] = useState<'approve' | 'reject' | 'send' | null>(null);
+  const [viewTab, setViewTab] = useState(0);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
+  const [snackbar, setSnackbar] = useState('');
+
+  const createShareLink = useOfferShareStore((s) => s.createShareLink);
+  const getShareLinksByOffer = useOfferShareStore((s) => s.getShareLinksByOffer);
+  const getBuyerResponsesByOffer = useOfferShareStore((s) => s.getBuyerResponsesByOffer);
 
   const deal = getDealById(dealId);
   const customer = deal ? getCustomerById(deal.customerId) : undefined;
@@ -156,6 +178,33 @@ export default function ViewOfferPage() {
     else if (confirmAction === 'send') handleSend();
   };
 
+  const handleShare = () => {
+    if (!offer) return;
+    const existingLinks = getShareLinksByOffer(offerId);
+    let token: string;
+    if (existingLinks.length > 0) {
+      token = existingLinks[0].token;
+    } else {
+      const link = createShareLink(offerId, dealId, settings.currentUser);
+      token = link.token;
+      addActivity({
+        id: uuidv4(), entityType: 'offer', entityId: offerId, dealId,
+        action: 'offer_shared', details: `Share link created for "${offer.name}"`,
+        userId: settings.currentUser, timestamp: new Date().toISOString(),
+      });
+    }
+    const url = `${window.location.origin}/offer/${token}`;
+    setShareUrl(url);
+    setShareDialogOpen(true);
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(shareUrl);
+    setSnackbar('Link copied to clipboard');
+  };
+
+  const buyerResponses = offer ? getBuyerResponsesByOffer(offerId) : [];
+
   if (!hydrated) return null;
 
   if (!deal || !offer) {
@@ -226,10 +275,28 @@ export default function ViewOfferPage() {
                 Duplicate
               </Button>
             )}
+            {offer && (offer.status === 'Sent' || offer.status === 'Approved' || offer.status === 'Pending') && (
+              <Button
+                variant="outlined"
+                startIcon={<ShareIcon />}
+                onClick={handleShare}
+              >
+                Share
+              </Button>
+            )}
           </Box>
         }
       />
 
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+        <Tabs value={viewTab} onChange={(_, v) => setViewTab(v)}>
+          <Tab label="Details" />
+          <Tab label={`Buyer Responses${buyerResponses.length > 0 ? ` (${buyerResponses.length})` : ''}`} />
+          <Tab label="Analytics" />
+        </Tabs>
+      </Box>
+
+      {viewTab === 0 && (
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 8 }}>
           {/* Offer Metadata */}
@@ -477,6 +544,125 @@ export default function ViewOfferPage() {
           </Card>
         </Grid>
       </Grid>
+
+      )}
+
+      {viewTab === 1 && (
+        <Box>
+          <Typography variant="h6" gutterBottom>Buyer Responses</Typography>
+          {buyerResponses.length === 0 ? (
+            <Typography color="text.secondary">No buyer responses yet. Share the offer to receive buyer feedback.</Typography>
+          ) : (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {buyerResponses.map((response) => (
+                <Card key={response.id} variant="outlined">
+                  <CardContent>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                      <Chip
+                        label={response.type === 'accept' ? 'Accepted' : response.type === 'reject' ? 'Rejected' : 'Counter-Proposal'}
+                        size="small"
+                        color={response.type === 'accept' ? 'success' : response.type === 'reject' ? 'error' : 'primary'}
+                      />
+                      <Typography variant="subtitle2">{response.buyerName}</Typography>
+                      <Typography variant="caption" color="text.secondary">{response.buyerEmail}</Typography>
+                      <Typography variant="caption" color="text.disabled" sx={{ ml: 'auto' }}>
+                        {new Date(response.createdAt).toLocaleString()}
+                      </Typography>
+                    </Box>
+                    {response.generalComment && (
+                      <Typography variant="body2" sx={{ mb: 1.5, fontStyle: 'italic' }}>
+                        &ldquo;{response.generalComment}&rdquo;
+                      </Typography>
+                    )}
+                    {response.type === 'counter_proposal' && response.lineActions.some((la) => la.counterPrice !== null) && (
+                      <TableContainer>
+                        <Table size="small">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell sx={{ fontWeight: 600 }}>Product</TableCell>
+                              <TableCell sx={{ fontWeight: 600 }} align="right">Original Price</TableCell>
+                              <TableCell sx={{ fontWeight: 600 }} align="right">Counter Price</TableCell>
+                              <TableCell sx={{ fontWeight: 600 }}>Comment</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {response.lineActions
+                              .filter((la) => la.counterPrice !== null || la.comment)
+                              .map((la) => {
+                                const origLine = offer?.lines.find((l) => l.id === la.lineId);
+                                const product = getProductById(la.productId);
+                                return (
+                                  <TableRow key={la.lineId}>
+                                    <TableCell>{product?.name ?? 'Unknown'}</TableCell>
+                                    <TableCell align="right">
+                                      {origLine ? origLine.pricePerUnit.toLocaleString(undefined, { minimumFractionDigits: 2 }) : '\u2014'}
+                                    </TableCell>
+                                    <TableCell align="right" sx={{ color: 'primary.main', fontWeight: 600 }}>
+                                      {la.counterPrice !== null ? la.counterPrice.toLocaleString(undefined, { minimumFractionDigits: 2 }) : '\u2014'}
+                                    </TableCell>
+                                    <TableCell>{la.comment || '\u2014'}</TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </Box>
+          )}
+        </Box>
+      )}
+
+      {viewTab === 2 && (
+        <OfferAnalyticsDashboard offerId={offerId} />
+      )}
+
+      {/* Share Dialog */}
+      <Dialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Share Offer Link</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Share this link with the buyer. They can view the offer, counter-propose prices, and accept or reject.
+          </Typography>
+          <TextField
+            fullWidth
+            size="small"
+            value={shareUrl}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LinkIcon fontSize="small" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={handleCopyLink}>
+                    <ContentCopyIcon fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Alert severity="info" sx={{ mt: 2 }}>
+            Note: In this prototype, the link only works in the same browser where the app data lives in localStorage.
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShareDialogOpen(false)}>Close</Button>
+          <Button variant="contained" onClick={handleCopyLink}>Copy Link</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={!!snackbar}
+        autoHideDuration={2000}
+        onClose={() => setSnackbar('')}
+        message={snackbar}
+      />
 
       {/* Confirm Dialog */}
       <ConfirmDialog

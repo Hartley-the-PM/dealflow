@@ -12,16 +12,23 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PageHeader from '@/components/shared/PageHeader';
 import ConfirmDialog from '@/components/shared/ConfirmDialog';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useNotificationStore } from '@/stores/notificationStore';
 import type { UserRole } from '@/types';
 
 export default function SettingsPage() {
   const settings = useSettingsStore((s) => s.settings);
   const updateRole = useSettingsStore((s) => s.updateRole);
   const updateUser = useSettingsStore((s) => s.updateUser);
+  const notifSettings = useNotificationStore((s) => s.settings);
+  const setNotifSettings = useNotificationStore((s) => s.setSettings);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [snackbar, setSnackbar] = useState('');
 
@@ -90,6 +97,117 @@ export default function SettingsPage() {
               <Alert severity="info" variant="outlined">
                 <strong>Sales Manager:</strong> All AM permissions + approve/reject offers.
               </Alert>
+            </Box>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Notifications
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              Configure automated notification thresholds. The notification engine scans your deals every 60 seconds.
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={notifSettings.enabled}
+                    onChange={(e) => setNotifSettings({ enabled: e.target.checked })}
+                  />
+                }
+                label="Enable smart notifications"
+              />
+              <Divider />
+              <Typography variant="subtitle2" color="text.secondary">
+                Time-Based Thresholds
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="Offer validity warning (days)"
+                    value={notifSettings.offerValidityDays}
+                    onChange={(e) => setNotifSettings({ offerValidityDays: parseInt(e.target.value) || 3 })}
+                    inputProps={{ min: 1, max: 30 }}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="Deal inactive threshold (days)"
+                    value={notifSettings.dealInactiveDays}
+                    onChange={(e) => setNotifSettings({ dealInactiveDays: parseInt(e.target.value) || 14 })}
+                    inputProps={{ min: 1, max: 90 }}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="Follow-up after send (days)"
+                    value={notifSettings.followUpDays}
+                    onChange={(e) => setNotifSettings({ followUpDays: parseInt(e.target.value) || 5 })}
+                    inputProps={{ min: 1, max: 30 }}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="No response threshold (days)"
+                    value={notifSettings.offerNoResponseDays}
+                    onChange={(e) => setNotifSettings({ offerNoResponseDays: parseInt(e.target.value) || 7 })}
+                    inputProps={{ min: 1, max: 60 }}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="Draft stuck threshold (days)"
+                    value={notifSettings.dealStuckDraftDays}
+                    onChange={(e) => setNotifSettings({ dealStuckDraftDays: parseInt(e.target.value) || 10 })}
+                    inputProps={{ min: 1, max: 60 }}
+                  />
+                </Grid>
+              </Grid>
+              <Divider />
+              <Typography variant="subtitle2" color="text.secondary">
+                Pricing Thresholds
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="Margin alert threshold (%)"
+                    value={notifSettings.marginThresholdPct}
+                    onChange={(e) => setNotifSettings({ marginThresholdPct: parseFloat(e.target.value) || 5 })}
+                    inputProps={{ min: 0, max: 50, step: 0.5 }}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    label="Deal value threshold ($)"
+                    value={notifSettings.dealValueThreshold}
+                    onChange={(e) => setNotifSettings({ dealValueThreshold: parseInt(e.target.value) || 100000 })}
+                    inputProps={{ min: 0, step: 10000 }}
+                  />
+                </Grid>
+              </Grid>
             </Box>
           </CardContent>
         </Card>

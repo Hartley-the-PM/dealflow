@@ -22,7 +22,13 @@ import Tooltip from '@mui/material/Tooltip';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import BlockIcon from '@mui/icons-material/Block';
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import PricingPanel from './PricingPanel';
+import OfferModuleBuilder from './OfferModuleBuilder';
+import type { OfferModule } from '@/types/offerBuilder';
 import { useProductStore } from '@/stores/productStore';
 import { usePricingStore } from '@/stores/pricingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
@@ -121,6 +127,8 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
   }, []);
 
   const [lines, setLines] = useState<FormLine[]>(initialLines);
+  const [mode, setMode] = useState<'classic' | 'builder'>('classic');
+  const [builderModules, setBuilderModules] = useState<OfferModule[]>(offer?.modules ?? []);
 
   // ------ Line Operations ------
 
@@ -291,15 +299,72 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
       createdAt: offer?.createdAt ?? now,
       updatedAt: now,
       sentAt: offer?.sentAt ?? null,
+      modules: mode === 'builder' && builderModules.length > 0 ? builderModules : undefined,
+      shareToken: offer?.shareToken,
+      templateId: offer?.templateId,
     };
 
     onSave(offerData);
   };
 
+  // ------ Product info for builder ------
+  const builderProducts = products.map((p) => ({ id: p.id, name: p.name, code: p.code }));
+  const builderOfferLines: import('@/types').OfferLine[] = lines
+    .filter((l) => l.productId)
+    .map((l) => ({
+      id: l.id,
+      productId: l.productId,
+      quantity: l.quantity !== '' ? parseFloat(l.quantity) : null,
+      unit: l.unit,
+      pricePerUnit: parseFloat(l.pricePerUnit) || 0,
+      currency: l.currency || currency,
+      incoterms: l.incoterms || incoterms,
+      paymentTerms: l.paymentTerms || paymentTerms,
+      belowMSPReason: l.belowMSPReason === '' ? null : l.belowMSPReason,
+      belowMSPNote: l.belowMSPNote,
+    }));
+
   // ------ Render ------
 
   return (
     <Grid container spacing={3}>
+      {/* Mode Toggle */}
+      <Grid size={{ xs: 12 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: -1 }}>
+          <ToggleButtonGroup
+            size="small"
+            value={mode}
+            exclusive
+            onChange={(_, v) => { if (v) setMode(v); }}
+          >
+            <ToggleButton value="classic">
+              <ViewListIcon sx={{ fontSize: 18, mr: 0.5 }} />
+              Classic Form
+            </ToggleButton>
+            <ToggleButton value="builder">
+              <DashboardCustomizeIcon sx={{ fontSize: 18, mr: 0.5 }} />
+              Builder Mode
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+      </Grid>
+
+      {/* Builder Mode */}
+      {mode === 'builder' && (
+        <Grid size={{ xs: 12 }}>
+          <Card variant="outlined">
+            <CardContent>
+              <OfferModuleBuilder
+                modules={builderModules}
+                onChange={setBuilderModules}
+                offerLines={builderOfferLines}
+                products={builderProducts}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
+      )}
+
       {/* Left Column: Metadata + Lines */}
       <Grid size={{ xs: 12, md: 8 }}>
         {/* Metadata Section */}

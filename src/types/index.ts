@@ -56,3 +56,30 @@ export type {
   FieldStats,
   DataSummary,
 } from './chartBuilder';
+export type {
+  NotificationCategory,
+  NotificationPriority,
+  NotificationStatus,
+  NotificationTrigger,
+  Notification,
+  NotificationSettings,
+} from './notification';
+export { DEFAULT_NOTIFICATION_SETTINGS } from './notification';
+export type {
+  HeroModule,
+  ProductLinesModule,
+  TermsModule,
+  CustomTextModule,
+  ProductShowcaseModule,
+  CompanyAboutModule,
+  TestimonialsModule,
+  OfferModule,
+  OfferModuleType,
+  OfferTemplate,
+  BuyerLineAction,
+  BuyerResponse,
+  OfferShareLink,
+  AnalyticsEventType,
+  OfferAnalyticsEvent,
+  OfferAnalyticsSession,
+} from './offerBuilder';

@@ -10,6 +10,7 @@ interface OfferStore {
   getOfferById: (id: string) => Offer | undefined;
   getOffersByDeal: (dealId: string) => Offer[];
   getLatestOfferForDeal: (dealId: string) => Offer | undefined;
+  getOfferByShareToken: (token: string) => Offer | undefined;
   duplicateAsNewVersion: (offerId: string, newId: string) => Offer | undefined;
 }
 
@@ -24,6 +25,7 @@ export const useOfferStore = create<OfferStore>()(
       })),
       getOfferById: (id) => get().offers.find((o) => o.id === id),
       getOffersByDeal: (dealId) => get().offers.filter((o) => o.dealId === dealId),
+      getOfferByShareToken: (token) => get().offers.find((o) => o.shareToken === token),
       getLatestOfferForDeal: (dealId) => {
         const dealOffers = get().offers.filter((o) => o.dealId === dealId);
         if (dealOffers.length === 0) return undefined;

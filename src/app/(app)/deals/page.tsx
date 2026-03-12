@@ -34,6 +34,7 @@ import { useActivityStore } from '@/stores/activityStore';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { useHydration } from '@/hooks/useHydration';
 import { v4 as uuidv4 } from 'uuid';
+import DealAlerts from '@/components/notifications/DealAlerts';
 import type { DealStatus, Customer } from '@/types';
 
 const DEAL_STATUSES: DealStatus[] = ['Draft', 'Active', 'Won', 'Lost', 'Expired'];
@@ -238,6 +239,7 @@ export default function DealsPage() {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell width={40} />
                 <TableCell sx={{ fontWeight: 600 }}>Deal Name</TableCell>
                 <TableCell sx={{ fontWeight: 600 }}>Customer</TableCell>
                 <TableCell sx={{ fontWeight: 600 }}>Last Offer Status</TableCell>
@@ -262,6 +264,9 @@ export default function DealsPage() {
                     sx={{ cursor: 'pointer' }}
                     onClick={() => router.push(`/deals/${deal.id}`)}
                   >
+                    <TableCell align="center" onClick={(e) => e.stopPropagation()} sx={{ px: 0.5 }}>
+                      <DealAlerts dealId={deal.id} compact />
+                    </TableCell>
                     <TableCell sx={{ fontWeight: 500 }}>{deal.name}</TableCell>
                     <TableCell>{customer?.name ?? '\u2014'}</TableCell>
                     <TableCell>

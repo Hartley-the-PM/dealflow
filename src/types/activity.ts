@@ -10,7 +10,11 @@ export type ActivityAction =
   | 'order_created'
   | 'pdf_generated'
   | 'status_changed'
-  | 'note_added';
+  | 'note_added'
+  | 'offer_shared'
+  | 'buyer_accepted'
+  | 'buyer_rejected'
+  | 'buyer_counter_proposed';
 
 export interface ActivityEntry {
   id: string;

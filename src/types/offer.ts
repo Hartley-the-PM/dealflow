@@ -36,4 +36,7 @@ export interface Offer {
   createdAt: string;
   updatedAt: string;
   sentAt: string | null;
+  modules?: import('./offerBuilder').OfferModule[];
+  shareToken?: string;
+  templateId?: string;
 }

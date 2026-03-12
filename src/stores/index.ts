@@ -8,3 +8,7 @@ export { useReminderStore } from './reminderStore';
 export { useActivityStore } from './activityStore';
 export { useSettingsStore } from './settingsStore';
 export { usePricingEngineStore } from './pricingEngineStore';
+export { useNotificationStore } from './notificationStore';
+export { useOfferTemplateStore } from './offerTemplateStore';
+export { useOfferShareStore } from './offerShareStore';
+export { useOfferAnalyticsStore } from './offerAnalyticsStore';
