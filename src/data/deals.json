@@ -4,6 +4,7 @@
     "customerId": "cust-001",
     "name": "Q1 2026 Supply Agreement",
     "status": "Active",
+    "pipelineStage": "Offer",
     "createdBy": "John Mitchell",
     "createdAt": "2025-12-10T09:00:00Z",
     "updatedAt": "2026-02-15T14:30:00Z"
@@ -13,6 +14,7 @@
     "customerId": "cust-002",
     "name": "Monthly Mar 2026",
     "status": "Active",
+    "pipelineStage": "Offer",
     "createdBy": "Sarah Chen",
     "createdAt": "2026-02-20T11:00:00Z",
     "updatedAt": "2026-03-01T09:15:00Z"
@@ -22,6 +24,7 @@
     "customerId": "cust-003",
     "name": "Q1 2026 Film Resins",
     "status": "Won",
+    "pipelineStage": "Order",
     "createdBy": "Marco Rodriguez",
     "createdAt": "2025-12-18T08:30:00Z",
     "updatedAt": "2026-01-25T16:00:00Z"
@@ -31,6 +34,7 @@
     "customerId": "cust-005",
     "name": "Annual 2026 Pipe Compounds",
     "status": "Active",
+    "pipelineStage": "Offer",
     "createdBy": "John Mitchell",
     "createdAt": "2025-11-05T10:00:00Z",
     "updatedAt": "2026-02-28T13:45:00Z"
@@ -39,7 +43,8 @@
     "id": "deal-005",
     "customerId": "cust-006",
     "name": "H1 2026 Agri Film Supply",
-    "status": "Draft",
+    "status": "Active",
+    "pipelineStage": "Opportunity",
     "createdBy": "Marco Rodriguez",
     "createdAt": "2026-02-10T14:00:00Z",
     "updatedAt": "2026-02-10T14:00:00Z"
@@ -49,6 +54,8 @@
     "customerId": "cust-007",
     "name": "Q1 2026 Packaging Resins",
     "status": "Lost",
+    "pipelineStage": "Lost",
+    "exitReason": "Competitor offered lower pricing",
     "createdBy": "Sarah Chen",
     "createdAt": "2025-12-01T07:00:00Z",
     "updatedAt": "2026-01-20T10:30:00Z"
@@ -58,6 +65,7 @@
     "customerId": "cust-008",
     "name": "Monthly Feb 2026",
     "status": "Won",
+    "pipelineStage": "Order",
     "createdBy": "John Mitchell",
     "createdAt": "2026-01-15T09:30:00Z",
     "updatedAt": "2026-02-05T11:00:00Z"
@@ -67,6 +75,8 @@
     "customerId": "cust-010",
     "name": "Q1 2026 Automotive Compounds",
     "status": "Expired",
+    "pipelineStage": "Expired",
+    "exitReason": "Offer validity expired without response",
     "createdBy": "John Mitchell",
     "createdAt": "2025-10-20T08:00:00Z",
     "updatedAt": "2026-01-15T17:00:00Z"

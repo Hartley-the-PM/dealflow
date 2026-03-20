@@ -40,9 +40,17 @@ import PageHeader from '@/components/shared/PageHeader';
 import StatusChip from '@/components/shared/StatusChip';
 import ConfirmDialog from '@/components/shared/ConfirmDialog';
 import OfferAnalyticsDashboard from '@/components/offers/OfferAnalyticsDashboard';
+import ModuleRenderer from '@/components/offers/modules/ModuleRenderer';
+import BrandedHeader from '@/components/offers/modules/BrandedHeader';
+import { migrateModules } from '@/lib/migrateModules';
+import { useOfferBuilderSettingsStore } from '@/stores/offerBuilderSettingsStore';
+import { useOfferTemplateStore } from '@/stores/offerTemplateStore';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useDealStore } from '@/stores/dealStore';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useOfferStore } from '@/stores/offerStore';
+import { useOrderStore } from '@/stores/orderStore';
 import { useProductStore } from '@/stores/productStore';
 import { usePricingStore } from '@/stores/pricingStore';
 import { useActivityStore } from '@/stores/activityStore';
@@ -71,12 +79,17 @@ export default function ViewOfferPage() {
   const addActivity = useActivityStore((s) => s.addActivity);
   const settings = useSettingsStore((s) => s.settings);
 
+  const addOrder = useOrderStore((s) => s.addOrder);
+  const getOrderByOffer = useOrderStore((s) => s.getOrderByOffer);
+
   const [confirmAction, setConfirmAction] = useState<'approve' | 'reject' | 'send' | null>(null);
   const [viewTab, setViewTab] = useState(0);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
   const [snackbar, setSnackbar] = useState('');
 
+  const brandProfiles = useOfferBuilderSettingsStore((s) => s.brandProfiles);
+  const allTemplates = useOfferTemplateStore((s) => s.templates);
   const createShareLink = useOfferShareStore((s) => s.createShareLink);
   const getShareLinksByOffer = useOfferShareStore((s) => s.getShareLinksByOffer);
   const getBuyerResponsesByOffer = useOfferShareStore((s) => s.getBuyerResponsesByOffer);
@@ -203,6 +216,35 @@ export default function ViewOfferPage() {
     setSnackbar('Link copied to clipboard');
   };
 
+  const existingOrder = offer ? getOrderByOffer(offerId) : undefined;
+  const canConvertToOrder = offer?.status === 'Approved' && !existingOrder;
+
+  const handleConvertToOrder = () => {
+    if (!offer || !deal) return;
+    const orderId = uuidv4();
+    const orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
+    addOrder({
+      id: orderId,
+      orderNumber,
+      offerId: offer.id,
+      dealId: deal.id,
+      customerId: deal.customerId,
+      status: 'Created',
+      createdAt: new Date().toISOString(),
+    });
+    addActivity({
+      id: uuidv4(),
+      entityType: 'order',
+      entityId: orderId,
+      dealId: deal.id,
+      action: 'order_created',
+      details: `Order ${orderNumber} created from offer V${offer.version}`,
+      userId: settings.currentUser,
+      timestamp: new Date().toISOString(),
+    });
+    setSnackbar(`Order ${orderNumber} created`);
+  };
+
   const buyerResponses = offer ? getBuyerResponsesByOffer(offerId) : [];
 
   if (!hydrated) return null;
@@ -222,7 +264,7 @@ export default function ViewOfferPage() {
       <PageHeader
         title={offer.name}
         breadcrumbs={[
-          { label: 'Deals', href: '/deals' },
+          { label: 'Pipeline', href: '/deals' },
           { label: deal.name, href: `/deals/${dealId}` },
           { label: offer.name },
         ]}
@@ -275,6 +317,24 @@ export default function ViewOfferPage() {
                 Duplicate
               </Button>
             )}
+            {canConvertToOrder && (
+              <Button
+                variant="contained"
+                color="success"
+                startIcon={<ShoppingCartIcon />}
+                onClick={handleConvertToOrder}
+              >
+                Convert to Order
+              </Button>
+            )}
+            {existingOrder && (
+              <Chip
+                icon={<ShoppingCartIcon />}
+                label={`Order: ${existingOrder.orderNumber}`}
+                color="success"
+                variant="outlined"
+              />
+            )}
             {offer && (offer.status === 'Sent' || offer.status === 'Approved' || offer.status === 'Pending') && (
               <Button
                 variant="outlined"
@@ -290,13 +350,132 @@ export default function ViewOfferPage() {
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
         <Tabs value={viewTab} onChange={(_, v) => setViewTab(v)}>
+          <Tab icon={<VisibilityIcon sx={{ fontSize: 16 }} />} iconPosition="start" label="Preview" sx={{ minHeight: 48 }} />
           <Tab label="Details" />
           <Tab label={`Buyer Responses${buyerResponses.length > 0 ? ` (${buyerResponses.length})` : ''}`} />
           <Tab label="Analytics" />
         </Tabs>
       </Box>
 
-      {viewTab === 0 && (
+      {/* Preview Tab */}
+      {viewTab === 0 && offer && (() => {
+        const hasModules = offer.modules && offer.modules.length > 0;
+        const migratedMods = hasModules ? migrateModules(offer.modules!) : [];
+        const productList = (getProductById ? offer.lines.map(() => null) : []);
+        const allProducts = offer.lines.map((l) => {
+          const p = getProductById(l.productId);
+          return p ? { id: p.id, name: p.name, code: p.code } : { id: l.productId, name: 'Unknown', code: '' };
+        });
+        // Find brand profile from template
+        const template = offer.templateId ? allTemplates.find((t) => t.id === offer.templateId) : undefined;
+        const brandProfile = template?.brandProfileId
+          ? brandProfiles.find((b) => b.id === template.brandProfileId)
+          : brandProfiles.length > 0 ? brandProfiles[0] : undefined;
+
+        return (
+          <Box sx={{ display: 'flex', justifyContent: 'center', bgcolor: '#F8FAFC', borderRadius: 2, p: 3 }}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: 780,
+                bgcolor: '#FFFFFF',
+                borderRadius: 3,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+                overflow: 'hidden',
+              }}
+            >
+              {hasModules ? (
+                migratedMods
+                  .filter((m) => m.visible)
+                  .map((mod) => (
+                    <ModuleRenderer key={mod.id} module={mod} offerLines={offer.lines} products={allProducts} brandProfile={brandProfile} />
+                  ))
+              ) : (
+                /* Classic offer — show a clean formatted view */
+                <Box sx={{ py: 5, px: 4 }}>
+                  <Box sx={{ textAlign: 'center', mb: 4 }}>
+                    {brandProfile?.logoUrl && (
+                      <Box component="img" src={brandProfile.logoUrl} alt="" sx={{ maxHeight: 48, mb: 2, mx: 'auto', display: 'block', objectFit: 'contain' }} />
+                    )}
+                    <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: '-0.02em', color: '#1A1A2E', mb: 0.5 }}>
+                      {offer.name}
+                    </Typography>
+                    {customer && (
+                      <Typography variant="h6" sx={{ color: '#6B7280', fontWeight: 400 }}>
+                        Prepared for {customer.name}
+                      </Typography>
+                    )}
+                    <Box sx={{ width: 60, height: 3, borderRadius: 2, background: 'linear-gradient(90deg, #4F46E5, #7C3AED)', mx: 'auto', mt: 2 }} />
+                  </Box>
+
+                  {/* Pricing table */}
+                  <Typography sx={{ fontWeight: 700, color: '#1A1A2E', fontSize: '1.25rem', mb: 2 }}>Pricing</Typography>
+                  <TableContainer sx={{ borderRadius: 2, border: '1px solid #E5E7EB', overflow: 'hidden', mb: 4 }}>
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow sx={{ bgcolor: '#F9FAFB' }}>
+                          <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#6B7280' }}>Product</TableCell>
+                          <TableCell align="right" sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#6B7280' }}>Qty</TableCell>
+                          <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#6B7280' }}>Unit</TableCell>
+                          <TableCell align="right" sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#6B7280' }}>Price/Unit</TableCell>
+                          <TableCell align="right" sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#6B7280' }}>Total</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {offer.lines.map((line, idx) => {
+                          const product = getProductById(line.productId);
+                          return (
+                            <TableRow key={line.id} sx={{ bgcolor: idx % 2 === 1 ? '#FAFBFC' : 'transparent', '&:last-child td': { borderBottom: 0 } }}>
+                              <TableCell sx={{ fontWeight: 500, color: '#374151' }}>{product ? `${product.name} (${product.code})` : 'Unknown'}</TableCell>
+                              <TableCell align="right" sx={{ color: '#374151' }}>{line.quantity !== null ? line.quantity.toLocaleString() : '\u2014'}</TableCell>
+                              <TableCell sx={{ color: '#6B7280' }}>{line.unit}</TableCell>
+                              <TableCell align="right" sx={{ fontWeight: 500, color: '#374151' }}>{line.currency} {line.pricePerUnit.toLocaleString(undefined, { minimumFractionDigits: 2 })}</TableCell>
+                              <TableCell align="right" sx={{ fontWeight: 600, color: '#1A1A2E' }}>
+                                {line.quantity !== null ? `${line.currency} ${(line.pricePerUnit * line.quantity).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : '\u2014'}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+
+                  {/* Terms */}
+                  <Typography sx={{ fontWeight: 700, color: '#1A1A2E', fontSize: '1.25rem', mb: 2 }}>Terms</Typography>
+                  <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap', mb: 2 }}>
+                    <Box>
+                      <Typography variant="caption" sx={{ color: '#6B7280', textTransform: 'uppercase', fontSize: '0.65rem' }}>Currency</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>{offer.currency}</Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" sx={{ color: '#6B7280', textTransform: 'uppercase', fontSize: '0.65rem' }}>Incoterms</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>{offer.incoterms}{offer.incotermsLocation ? ` - ${offer.incotermsLocation}` : ''}</Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" sx={{ color: '#6B7280', textTransform: 'uppercase', fontSize: '0.65rem' }}>Payment Terms</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>{offer.paymentTerms || '\u2014'}</Typography>
+                    </Box>
+                    {offer.validityDate && (
+                      <Box>
+                        <Typography variant="caption" sx={{ color: '#6B7280', textTransform: 'uppercase', fontSize: '0.65rem' }}>Valid Until</Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 500 }}>{new Date(offer.validityDate).toLocaleDateString()}</Typography>
+                      </Box>
+                    )}
+                  </Box>
+                  {offer.notes && (
+                    <Box sx={{ pl: 2, borderLeft: '3px solid #E5E7EB', mt: 2 }}>
+                      <Typography variant="caption" sx={{ color: '#6B7280', textTransform: 'uppercase', fontSize: '0.65rem' }}>Notes</Typography>
+                      <Typography variant="body2" sx={{ color: '#6B7280', whiteSpace: 'pre-wrap' }}>{offer.notes}</Typography>
+                    </Box>
+                  )}
+                </Box>
+              )}
+            </Box>
+          </Box>
+        );
+      })()}
+
+      {viewTab === 1 && (
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 8 }}>
           {/* Offer Metadata */}
@@ -547,7 +726,7 @@ export default function ViewOfferPage() {
 
       )}
 
-      {viewTab === 1 && (
+      {viewTab === 2 && (
         <Box>
           <Typography variant="h6" gutterBottom>Buyer Responses</Typography>
           {buyerResponses.length === 0 ? (
@@ -559,9 +738,9 @@ export default function ViewOfferPage() {
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                       <Chip
-                        label={response.type === 'accept' ? 'Accepted' : response.type === 'reject' ? 'Rejected' : 'Counter-Proposal'}
+                        label={response.type === 'accept' ? 'Accepted' : response.type === 'reject' ? 'Declined' : response.type === 'request_changes' ? 'Changes Requested' : 'Counter-Proposal'}
                         size="small"
-                        color={response.type === 'accept' ? 'success' : response.type === 'reject' ? 'error' : 'primary'}
+                        color={response.type === 'accept' ? 'success' : response.type === 'reject' ? 'error' : response.type === 'request_changes' ? 'warning' : 'primary'}
                       />
                       <Typography variant="subtitle2">{response.buyerName}</Typography>
                       <Typography variant="caption" color="text.secondary">{response.buyerEmail}</Typography>
@@ -616,7 +795,7 @@ export default function ViewOfferPage() {
         </Box>
       )}
 
-      {viewTab === 2 && (
+      {viewTab === 3 && (
         <OfferAnalyticsDashboard offerId={offerId} />
       )}
 
@@ -625,7 +804,7 @@ export default function ViewOfferPage() {
         <DialogTitle>Share Offer Link</DialogTitle>
         <DialogContent>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Share this link with the buyer. They can view the offer, counter-propose prices, and accept or reject.
+            Share this link with the buyer. They can view the offer and respond — accept, request changes, or decline.
           </Typography>
           <TextField
             fullWidth

@@ -29,16 +29,18 @@ import { useReminderStore } from '@/stores/reminderStore';
 import { useNotificationStore } from '@/stores/notificationStore';
 
 interface TopBarProps {
-  onMenuToggle: () => void;
+  onMenuClick?: () => void;
+  onMenuToggle?: () => void;
   currentRole: string;
   currentUser: string;
 }
 
-export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBarProps) {
+export default function TopBar({ onMenuClick, onMenuToggle, currentRole, currentUser }: TopBarProps) {
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
   const [profileAnchor, setProfileAnchor] = useState<HTMLElement | null>(null);
-  const [notifPanelOpen, setNotifPanelOpen] = useState(false);
+  const [notifAnchorEl, setNotifAnchorEl] = useState<HTMLElement | null>(null);
+  const notifPanelOpen = Boolean(notifAnchorEl);
   const reminders = useReminderStore((s) => s.reminders);
   const notificationCount = useNotificationStore((s) => s.getActiveCount());
 
@@ -52,6 +54,8 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
 
   const roleLabel = currentRole === 'account_manager' ? 'Account Manager' : 'Sales Manager';
 
+  const handleMenuClick = onMenuClick || onMenuToggle;
+
   return (
     <>
       <AppBar
@@ -62,24 +66,27 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
           color: 'text.primary',
           borderBottom: '1px solid',
           borderColor: 'divider',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          zIndex: (theme) => theme.zIndex.drawer - 1,
+          width: { xs: '100%', md: 'calc(100% - 260px)' },
+          ml: { xs: 0, md: '260px' },
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ px: { xs: 1, sm: 2, md: 3 }, minHeight: { xs: 56, md: 64 } }}>
           <IconButton
             edge="start"
-            onClick={onMenuToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
+            onClick={handleMenuClick}
+            sx={{ mr: { xs: 1, sm: 2 }, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
 
           <Box sx={{ flex: 1 }} />
 
+          {/* Desktop: full search bar */}
           <Box
             onClick={() => setSearchOpen(true)}
             sx={{
-              display: 'flex',
+              display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
               gap: 1,
               px: 2,
@@ -89,7 +96,7 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
               border: '1px solid',
               borderColor: 'divider',
               cursor: 'pointer',
-              minWidth: 240,
+              minWidth: { sm: 180, md: 240 },
               '&:hover': {
                 bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
               },
@@ -109,17 +116,30 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
                 color: 'text.secondary',
                 fontFamily: 'monospace',
                 fontSize: '0.7rem',
+                display: { sm: 'none', md: 'block' },
               }}
             >
               ⌘K
             </Typography>
           </Box>
 
+          {/* Mobile: search icon only */}
+          <IconButton
+            onClick={() => setSearchOpen(true)}
+            size="small"
+            sx={{
+              display: { xs: 'flex', sm: 'none' },
+              color: 'text.secondary',
+            }}
+          >
+            <SearchIcon />
+          </IconButton>
+
           <Box sx={{ flex: 1 }} />
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 } }}>
             <IconButton
-              onClick={() => setNotifPanelOpen(true)}
+              onClick={(e) => setNotifAnchorEl(e.currentTarget)}
               size="small"
               sx={{ color: 'text.secondary' }}
             >
@@ -135,12 +155,12 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
             <IconButton
               onClick={(e) => setProfileAnchor(e.currentTarget)}
               size="small"
-              sx={{ ml: 0.5 }}
+              sx={{ ml: { xs: 0, sm: 0.5 } }}
             >
               <Avatar
                 sx={{
-                  width: 32,
-                  height: 32,
+                  width: { xs: 28, sm: 32 },
+                  height: { xs: 28, sm: 32 },
                   bgcolor: 'primary.main',
                   fontSize: '0.8rem',
                   fontWeight: 600,
@@ -154,7 +174,7 @@ export default function TopBar({ onMenuToggle, currentRole, currentUser }: TopBa
       </AppBar>
 
       <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <NotificationPanel open={notifPanelOpen} onClose={() => setNotifPanelOpen(false)} />
+      <NotificationPanel open={notifPanelOpen} onClose={() => setNotifAnchorEl(null)} anchorEl={notifAnchorEl} />
 
       {/* Profile Popover */}
       <Popover

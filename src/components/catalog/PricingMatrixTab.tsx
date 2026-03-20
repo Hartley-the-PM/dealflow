@@ -55,7 +55,7 @@ import type {
 } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
-const CATEGORY_COLOR: Record<string, string> = {
+const PRODUCT_TYPE_COLOR: Record<string, string> = {
   LDPE: '#2563EB',
   HDPE: '#059669',
   PP: '#D97706',
@@ -69,7 +69,7 @@ const TRIGGER_LABELS: Record<AdjustmentTrigger, string> = {
   customer_tier: 'Customer Tier',
   incoterms: 'Incoterms',
   payment_terms: 'Payment Terms',
-  category: 'Category',
+  product_type: 'Product Type',
 };
 
 function formatCondition(rule: PricingRule): string {
@@ -87,7 +87,7 @@ function formatCondition(rule: PricingRule): string {
       return c.incoterms?.join(', ') ?? '—';
     case 'payment_terms':
       return c.paymentTermsMinDays != null ? `≥${c.paymentTermsMinDays} days` : '—';
-    case 'category':
+    case 'product_type':
       return c.categories?.join(', ') ?? '—';
     default:
       return '—';
@@ -209,7 +209,7 @@ export default function PricingMatrixTab() {
   });
 
   const categories = useMemo(() => {
-    const cats = new Set(products.map((p) => p.category));
+    const cats = new Set(products.map((p) => p.productType));
     return Array.from(cats).sort();
   }, [products]);
 
@@ -225,7 +225,7 @@ export default function PricingMatrixTab() {
       );
     }
     if (categoryFilter) {
-      filtered = filtered.filter((p) => p.category === categoryFilter);
+      filtered = filtered.filter((p) => p.productType === categoryFilter);
     }
 
     return filtered
@@ -308,7 +308,7 @@ export default function PricingMatrixTab() {
       else if (rule.trigger === 'customer_tier') setRuleConditionValue(c.tiers?.join(',') ?? '');
       else if (rule.trigger === 'incoterms') setRuleConditionValue(c.incoterms?.join(',') ?? '');
       else if (rule.trigger === 'payment_terms') setRuleConditionValue(String(c.paymentTermsMinDays ?? ''));
-      else if (rule.trigger === 'category') setRuleConditionValue(c.categories?.join(',') ?? '');
+      else if (rule.trigger === 'product_type') setRuleConditionValue(c.categories?.join(',') ?? '');
     } else {
       setEditingRule(null);
       setRuleName('');
@@ -332,7 +332,7 @@ export default function PricingMatrixTab() {
       condition.incoterms = ruleConditionValue.split(',').map((s) => s.trim());
     else if (ruleTrigger === 'payment_terms')
       condition.paymentTermsMinDays = parseInt(ruleConditionValue) || 30;
-    else if (ruleTrigger === 'category')
+    else if (ruleTrigger === 'product_type')
       condition.categories = ruleConditionValue.split(',').map((s) => s.trim());
 
     const ruleData: PricingRule = {
@@ -363,7 +363,7 @@ export default function PricingMatrixTab() {
       case 'customer_tier': return 'Tiers (comma-separated: A,B,C)';
       case 'incoterms': return 'Incoterms (comma-separated)';
       case 'payment_terms': return 'Min Days';
-      case 'category': return 'Categories (comma-separated)';
+      case 'product_type': return 'Product Types (comma-separated)';
       default: return 'Condition';
     }
   };
@@ -424,7 +424,7 @@ export default function PricingMatrixTab() {
               fontWeight: 600,
               fontSize: 11,
               ...(categoryFilter === cat && {
-                bgcolor: CATEGORY_COLOR[cat] ?? '#666',
+                bgcolor: PRODUCT_TYPE_COLOR[cat] ?? '#666',
                 color: '#fff',
               }),
             }}
@@ -439,7 +439,7 @@ export default function PricingMatrixTab() {
             <TableRow>
               <TableCell sx={{ fontWeight: 600 }}>Product Code</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Product Name</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Category</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Product Type</TableCell>
               <TableCell sx={{ fontWeight: 600 }} align="right">Base Price</TableCell>
             </TableRow>
           </TableHead>
@@ -460,14 +460,14 @@ export default function PricingMatrixTab() {
                 <TableCell sx={{ fontWeight: 500 }}>{row.name}</TableCell>
                 <TableCell>
                   <Chip
-                    label={row.category}
+                    label={row.productType}
                     size="small"
                     sx={{
                       fontWeight: 600,
                       fontSize: 11,
-                      bgcolor: `${CATEGORY_COLOR[row.category] ?? '#666'}15`,
-                      color: CATEGORY_COLOR[row.category] ?? '#666',
-                      border: `1px solid ${CATEGORY_COLOR[row.category] ?? '#666'}40`,
+                      bgcolor: `${PRODUCT_TYPE_COLOR[row.productType] ?? '#666'}15`,
+                      color: PRODUCT_TYPE_COLOR[row.productType] ?? '#666',
+                      border: `1px solid ${PRODUCT_TYPE_COLOR[row.productType] ?? '#666'}40`,
                     }}
                   />
                 </TableCell>
@@ -520,14 +520,14 @@ export default function PricingMatrixTab() {
                     {selectedProduct.code}
                   </Typography>
                   <Chip
-                    label={selectedProduct.category}
+                    label={selectedProduct.productType}
                     size="small"
                     sx={{
                       fontWeight: 600,
                       fontSize: 10,
                       height: 20,
-                      bgcolor: `${CATEGORY_COLOR[selectedProduct.category] ?? '#666'}15`,
-                      color: CATEGORY_COLOR[selectedProduct.category] ?? '#666',
+                      bgcolor: `${PRODUCT_TYPE_COLOR[selectedProduct.productType] ?? '#666'}15`,
+                      color: PRODUCT_TYPE_COLOR[selectedProduct.productType] ?? '#666',
                     }}
                   />
                 </Box>
@@ -789,7 +789,7 @@ export default function PricingMatrixTab() {
               <MenuItem value="customer_tier">Customer Tier</MenuItem>
               <MenuItem value="incoterms">Incoterms</MenuItem>
               <MenuItem value="payment_terms">Payment Terms</MenuItem>
-              <MenuItem value="category">Category</MenuItem>
+              <MenuItem value="product_type">Product Type</MenuItem>
             </Select>
           </FormControl>
           <TextField label={conditionLabel()} value={ruleConditionValue} onChange={(e) => setRuleConditionValue(e.target.value)} size="small" fullWidth />

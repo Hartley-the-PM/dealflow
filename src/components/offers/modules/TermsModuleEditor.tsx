@@ -2,24 +2,47 @@
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import type { TermsModule } from '@/types/offerBuilder';
+import type { TermsModule, ContentPreset } from '@/types/offerBuilder';
 
 interface Props {
   module: TermsModule;
   onChange: (updated: TermsModule) => void;
+  presets?: ContentPreset[];
 }
 
-export default function TermsModuleEditor({ module, onChange }: Props) {
+export default function TermsModuleEditor({ module, onChange, presets }: Props) {
   const update = (field: keyof TermsModule, value: string) => {
     onChange({ ...module, [field]: value });
   };
 
+  const handleLoadPreset = (presetId: string) => {
+    const preset = presets?.find((p) => p.id === presetId);
+    if (preset) {
+      onChange({ ...module, ...preset.data });
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Typography variant="subtitle2" color="text.secondary">
-        Terms & Conditions
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Typography variant="subtitle2" color="text.secondary">
+          Terms & Conditions
+        </Typography>
+        {presets && presets.length > 0 && (
+          <TextField
+            select
+            size="small"
+            label="Load Preset"
+            value=""
+            onChange={(e) => handleLoadPreset(e.target.value)}
+            sx={{ minWidth: 140 }}
+          >
+            {presets.map((p) => <MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>)}
+          </TextField>
+        )}
+      </Box>
       <TextField
         size="small"
         fullWidth

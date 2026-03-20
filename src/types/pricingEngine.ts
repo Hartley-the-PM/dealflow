@@ -19,7 +19,7 @@ export interface BasePrice {
 }
 
 export type AdjustmentType = 'percentage' | 'fixed';
-export type AdjustmentTrigger = 'volume' | 'customer_tier' | 'incoterms' | 'payment_terms' | 'category';
+export type AdjustmentTrigger = 'volume' | 'customer_tier' | 'incoterms' | 'payment_terms' | 'product_type';
 
 export interface PricingRuleCondition {
   minQuantity?: number;
@@ -56,6 +56,12 @@ export interface CustomerOverride {
 export type GuardrailType = 'min_margin_pct' | 'max_discount_pct' | 'below_cost' | 'below_msp';
 export type GuardrailAction = 'warn' | 'block' | 'require_approval';
 
+export interface GuardrailApprover {
+  userId: string;
+  userName: string;
+  order: number;
+}
+
 export interface Guardrail {
   id: string;
   name: string;
@@ -64,6 +70,8 @@ export interface Guardrail {
   action: GuardrailAction;
   scope?: string;
   active: boolean;
+  description?: string;
+  approvers?: GuardrailApprover[];
 }
 
 export type ApprovalStatus = 'pending' | 'approved' | 'rejected';

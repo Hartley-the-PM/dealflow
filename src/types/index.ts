@@ -6,12 +6,16 @@ export type {
   UnitOfMeasure,
   Incoterms,
   BelowMSPReason,
+  OfferLineType,
+  FormulationLinePart,
   OfferLine,
   Offer,
 } from './offer';
 export type { Product } from './product';
 export type { MSPEntry } from './pricing';
-export type { OrderStatus, Order } from './order';
+export type { OrderStatus, OrderLine, OrderDocument, ShippingAddress, Order } from './order';
+export type { OpportunityStatus, OpportunitySource, OpportunityPriority, OpportunityLine, Opportunity } from './opportunity';
+export type { AgentSourceType, AgentDraftType, AgentDraftStatus, AgentActivity, AgentDraft, AIAgent } from './agent';
 export type { ReminderType, ReminderFrequency, ReminderStatus, Reminder } from './reminder';
 export type { ActivityAction, ActivityEntry } from './activity';
 export type { UserRole, AppSettings } from './settings';
@@ -73,6 +77,11 @@ export type {
   ProductShowcaseModule,
   CompanyAboutModule,
   TestimonialsModule,
+  CoverImageModule,
+  DividerModule,
+  ImageModule,
+  ProductsModule,
+  ProductsModuleEntry,
   OfferModule,
   OfferModuleType,
   OfferTemplate,
@@ -82,4 +91,27 @@ export type {
   AnalyticsEventType,
   OfferAnalyticsEvent,
   OfferAnalyticsSession,
+  BrandProfile,
+  ContentPresetType,
+  ContentPreset,
+  TermsPresetData,
+  TestimonialsPresetData,
+  CoverImagePresetData,
+  CompanyAboutPresetData,
+  PresetData,
 } from './offerBuilder';
+export type { Sample, SampleLine, SampleStatus } from './sample';
+export type { WhiteLabelBrand, WhiteLabelProduct } from './whiteLabel';
+export type { FormulationType, FormulationIngredient, Formulation } from './formulation';
+export type { CertificationType, CertificationStatus, Certification } from './certification';
+export type { ScheduleFrequency, OrderScheduleStatus, ScheduledOrderEntry, OrderSchedule } from './orderSchedule';
+export type {
+  DocumentType,
+  DocumentVersion,
+  CompanyDocument,
+  DocumentPackage,
+  PackageDocument,
+  PackageView,
+  PackageTemplate,
+  DealDocument,
+} from './document';

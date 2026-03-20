@@ -13,25 +13,28 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
+import Grow from '@mui/material/Grow';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import ModuleRenderer from './modules/ModuleRenderer';
+import BrandedHeader from './modules/BrandedHeader';
+import { useOfferBuilderSettingsStore } from '@/stores/offerBuilderSettingsStore';
+import { migrateModules } from '@/lib/migrateModules';
 import { useOfferTracking } from '@/hooks/useOfferTracking';
 import { useOfferShareStore } from '@/stores/offerShareStore';
 import { useOfferStore } from '@/stores/offerStore';
 import { useProductStore } from '@/stores/productStore';
+import { useWhiteLabelStore } from '@/stores/whiteLabelStore';
+import { useFormulationStore } from '@/stores/formulationStore';
 import { useActivityStore } from '@/stores/activityStore';
 import type { Offer } from '@/types/offer';
-import type { OfferShareLink, BuyerLineAction, BuyerResponse } from '@/types/offerBuilder';
+import type { OfferShareLink, BuyerResponse } from '@/types/offerBuilder';
 import { v4 as uuidv4 } from 'uuid';
 
 interface BuyerOfferViewProps {
@@ -40,35 +43,58 @@ interface BuyerOfferViewProps {
   shareLink: OfferShareLink;
 }
 
+const COLORS = {
+  heading: '#1A1A2E',
+  body: '#6B7280',
+  bodyDark: '#374151',
+  border: '#E5E7EB',
+  bgSubtle: '#F9FAFB',
+  bgAlt: '#FAFBFC',
+};
+
+type ResponseType = 'accept' | 'reject' | 'request_changes';
+
 export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { trackClick, observeSections } = useOfferTracking({ offerId: offer.id, token });
 
   const products = useProductStore((s) => s.products);
+  const wlProducts = useWhiteLabelStore((s) => s.products);
+  const wlBrands = useWhiteLabelStore((s) => s.brands);
+  const formulations = useFormulationStore((s) => s.formulations);
   const addBuyerResponse = useOfferShareStore((s) => s.addBuyerResponse);
-  const duplicateAsNewVersion = useOfferStore((s) => s.duplicateAsNewVersion);
   const updateOffer = useOfferStore((s) => s.updateOffer);
   const addActivity = useActivityStore((s) => s.addActivity);
+  const brandProfiles = useOfferBuilderSettingsStore((s) => s.brandProfiles);
+
+  // Find the brand profile linked to this offer's template
+  const brandProfile = brandProfiles.length > 0 ? brandProfiles[0] : undefined; // Use first brand as default for buyer view
 
   const [submitted, setSubmitted] = useState(false);
-  const [submittedType, setSubmittedType] = useState<'accept' | 'reject' | 'counter_proposal' | null>(null);
+  const [submittedType, setSubmittedType] = useState<ResponseType | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogAction, setDialogAction] = useState<'accept' | 'reject' | 'counter_proposal'>('accept');
+  const [dialogAction, setDialogAction] = useState<ResponseType>('accept');
   const [buyerName, setBuyerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
   const [generalComment, setGeneralComment] = useState('');
-  const [lineActions, setLineActions] = useState<Record<string, { counterPrice: string; comment: string }>>(
-    () => {
-      const map: Record<string, { counterPrice: string; comment: string }> = {};
-      offer.lines.forEach((line) => {
-        map[line.id] = { counterPrice: '', comment: '' };
-      });
-      return map;
-    }
-  );
 
-  const getProductName = (productId: string) => {
-    const p = products.find((pr) => pr.id === productId);
+  const getProductName = (line: import('@/types/offer').OfferLine) => {
+    // White label: show WL product name only — never reveal source products
+    if (line.lineType === 'white_label' && line.whiteLabelId) {
+      const wl = wlProducts.find((w) => w.id === line.whiteLabelId);
+      if (wl) {
+        const brand = wlBrands.find((b) => b.id === wl.brandId);
+        return brand ? `${brand.name} ${wl.name}` : wl.name;
+      }
+      return 'White Label Product';
+    }
+    // Formulation: show formulation name
+    if (line.lineType === 'formulation' && line.formulationId) {
+      const fm = formulations.find((f) => f.id === line.formulationId);
+      return fm ? `${fm.name} (${fm.code})` : 'Formulation';
+    }
+    // Standard product
+    const p = products.find((pr) => pr.id === line.productId);
     return p ? `${p.name} (${p.code})` : 'Product';
   };
 
@@ -78,24 +104,15 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
     return () => { if (cleanup) cleanup(); };
   }, [observeSections]);
 
-  const openAction = (action: 'accept' | 'reject' | 'counter_proposal') => {
+  const openAction = (action: ResponseType) => {
     setDialogAction(action);
     setDialogOpen(true);
-    trackClick(action === 'accept' ? 'accept_button' : action === 'reject' ? 'reject_button' : 'counter_propose_button');
+    trackClick(`${action}_button`);
   };
 
   const handleSubmit = useCallback(() => {
     if (!buyerName.trim() || !buyerEmail.trim()) return;
-
-    const actions: BuyerLineAction[] = offer.lines.map((line) => {
-      const la = lineActions[line.id];
-      return {
-        lineId: line.id,
-        productId: line.productId,
-        counterPrice: la?.counterPrice ? parseFloat(la.counterPrice) : null,
-        comment: la?.comment || '',
-      };
-    });
+    if (dialogAction === 'request_changes' && !generalComment.trim()) return;
 
     const response: BuyerResponse = {
       id: uuidv4(),
@@ -104,7 +121,7 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
       type: dialogAction,
       buyerName: buyerName.trim(),
       buyerEmail: buyerEmail.trim(),
-      lineActions: actions,
+      lineActions: [],
       generalComment: generalComment.trim(),
       createdAt: new Date().toISOString(),
     };
@@ -112,7 +129,6 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
     addBuyerResponse(response);
     trackClick(`submit_${dialogAction}`);
 
-    // Handle offer status updates
     const now = new Date().toISOString();
     if (dialogAction === 'accept') {
       updateOffer(offer.id, { status: 'Approved', updatedAt: now });
@@ -134,35 +150,18 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
         entityId: offer.id,
         dealId: shareLink.dealId,
         action: 'buyer_rejected',
-        details: `${buyerName} rejected offer "${offer.name}"`,
+        details: `${buyerName} declined offer "${offer.name}"`,
         userId: buyerName,
         timestamp: now,
       });
-    } else if (dialogAction === 'counter_proposal') {
-      // Create a new version with counter-proposed prices
-      const newId = uuidv4();
-      const newOffer = duplicateAsNewVersion(offer.id, newId);
-      if (newOffer) {
-        // Update lines with counter-proposed prices
-        const updatedLines = newOffer.lines.map((line) => {
-          const la = lineActions[line.id];
-          if (la?.counterPrice) {
-            const cp = parseFloat(la.counterPrice);
-            if (!isNaN(cp) && cp > 0) {
-              return { ...line, pricePerUnit: cp };
-            }
-          }
-          return line;
-        });
-        updateOffer(newId, { lines: updatedLines, notes: `Counter-proposal from ${buyerName}: ${generalComment}` });
-      }
+    } else if (dialogAction === 'request_changes') {
       addActivity({
         id: uuidv4(),
         entityType: 'offer',
         entityId: offer.id,
         dealId: shareLink.dealId,
-        action: 'buyer_counter_proposed',
-        details: `${buyerName} submitted a counter-proposal on "${offer.name}"`,
+        action: 'buyer_requested_changes',
+        details: `${buyerName} requested changes on "${offer.name}": ${generalComment.trim()}`,
         userId: buyerName,
         timestamp: now,
       });
@@ -171,195 +170,244 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
     setSubmitted(true);
     setSubmittedType(dialogAction);
     setDialogOpen(false);
-  }, [offer, token, shareLink, buyerName, buyerEmail, generalComment, lineActions, dialogAction, addBuyerResponse, updateOffer, duplicateAsNewVersion, addActivity, trackClick]);
+  }, [offer, token, shareLink, buyerName, buyerEmail, generalComment, dialogAction, addBuyerResponse, updateOffer, addActivity, trackClick]);
 
   // Thank-you screen
   if (submitted) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', px: 2 }}>
-        <Card sx={{ maxWidth: 500, textAlign: 'center', p: 3 }}>
-          <CardContent>
-            {submittedType === 'accept' && <CheckCircleIcon sx={{ fontSize: 64, color: 'success.main', mb: 2 }} />}
-            {submittedType === 'reject' && <CancelIcon sx={{ fontSize: 64, color: 'error.main', mb: 2 }} />}
-            {submittedType === 'counter_proposal' && <SwapHorizIcon sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />}
-            <Typography variant="h5" fontWeight={700} gutterBottom>
-              {submittedType === 'accept' && 'Offer Accepted'}
-              {submittedType === 'reject' && 'Offer Declined'}
-              {submittedType === 'counter_proposal' && 'Counter-Proposal Submitted'}
-            </Typography>
-            <Typography color="text.secondary">
-              {submittedType === 'accept' && 'Thank you for accepting this offer. The seller has been notified.'}
-              {submittedType === 'reject' && 'Your response has been recorded. The seller has been notified.'}
-              {submittedType === 'counter_proposal' && 'Your counter-proposal has been submitted. The seller will review and respond.'}
-            </Typography>
-          </CardContent>
-        </Card>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          px: 2,
+          background: 'linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%)',
+        }}
+      >
+        <Grow in={true} timeout={500}>
+          <Card sx={{ maxWidth: 500, textAlign: 'center', p: 4, borderRadius: 3, boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}>
+            <CardContent>
+              {submittedType === 'accept' && <CheckCircleIcon sx={{ fontSize: 80, color: 'success.main', mb: 2 }} />}
+              {submittedType === 'reject' && <CancelIcon sx={{ fontSize: 80, color: 'error.main', mb: 2 }} />}
+              {submittedType === 'request_changes' && <EditNoteIcon sx={{ fontSize: 80, color: 'warning.main', mb: 2 }} />}
+              <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: '-0.02em', color: COLORS.heading, mb: 1 }}>
+                {submittedType === 'accept' && 'Offer Accepted'}
+                {submittedType === 'reject' && 'Offer Declined'}
+                {submittedType === 'request_changes' && 'Changes Requested'}
+              </Typography>
+              <Typography sx={{ color: COLORS.body, lineHeight: 1.7 }}>
+                {submittedType === 'accept' && 'Thank you for accepting this offer. The seller has been notified and will follow up shortly.'}
+                {submittedType === 'reject' && 'Your response has been recorded. The seller has been notified.'}
+                {submittedType === 'request_changes' && 'Your feedback has been submitted. The seller will review your requested changes and get back to you soon.'}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grow>
       </Box>
     );
   }
 
-  const hasModules = offer.modules && offer.modules.length > 0;
+  const migratedModules = offer.modules ? migrateModules(offer.modules) : undefined;
+  const hasModules = migratedModules && migratedModules.length > 0;
   const productList = products.map((p) => ({ id: p.id, name: p.name, code: p.code }));
 
+  const isExpired = offer.validityDate && new Date(offer.validityDate) < new Date();
+
   return (
-    <Box ref={containerRef} sx={{ maxWidth: 900, mx: 'auto', py: 4, px: 2 }}>
-      {/* Render modules if present */}
+    <Box ref={containerRef} sx={{ maxWidth: 780, mx: 'auto', py: 4, px: 2 }}>
+      {isExpired && (
+        <Box sx={{ bgcolor: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 2, p: 2, mb: 3, textAlign: 'center' }}>
+          <Typography variant="subtitle2" sx={{ color: '#DC2626', fontWeight: 600 }}>
+            This offer has expired
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#991B1B', mt: 0.5 }}>
+            This offer was valid until {new Date(offer.validityDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}. Please contact your sales representative for updated pricing.
+          </Typography>
+        </Box>
+      )}
+      {/* White paper container for modules */}
       {hasModules ? (
-        <>
-          {offer.modules!
+        <Box
+          sx={{
+            bgcolor: '#FFFFFF',
+            borderRadius: 3,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+            overflow: 'hidden',
+            mb: 4,
+          }}
+        >
+          {migratedModules!
             .filter((m) => m.visible)
             .map((mod) => (
-              <Box key={mod.id}>
-                <ModuleRenderer module={mod} offerLines={offer.lines} products={productList} />
-                <Divider sx={{ my: 2 }} />
-              </Box>
+              <ModuleRenderer key={mod.id} module={mod} offerLines={offer.lines} products={productList} brandProfile={brandProfile} />
             ))}
-        </>
+        </Box>
       ) : (
-        <>
-          {/* Default buyer view without modules */}
-          <Box sx={{ textAlign: 'center', mb: 4 }} data-section="hero">
-            <Typography variant="h4" fontWeight={700} gutterBottom>
-              {offer.name}
+        <Box
+          sx={{
+            bgcolor: '#FFFFFF',
+            borderRadius: 3,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+            overflow: 'hidden',
+            mb: 4,
+            py: 5,
+            textAlign: 'center',
+          }}
+          data-section="hero"
+        >
+          <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: '-0.02em', color: COLORS.heading, mb: 0.5 }}>
+            {offer.name}
+          </Typography>
+          <Chip label={`Version ${offer.version}`} size="small" sx={{ mb: 1 }} />
+          {offer.validityDate && (
+            <Typography variant="body2" sx={{ color: COLORS.body }}>
+              Valid until {new Date(offer.validityDate).toLocaleDateString()}
             </Typography>
-            <Chip label={`Version ${offer.version}`} size="small" sx={{ mb: 1 }} />
-            {offer.validityDate && (
-              <Typography variant="body2" color="text.secondary">
-                Valid until {new Date(offer.validityDate).toLocaleDateString()}
-              </Typography>
-            )}
-          </Box>
-          <Divider sx={{ mb: 3 }} />
-        </>
+          )}
+        </Box>
       )}
 
-      {/* Product Lines with Negotiation */}
-      <Box data-section="product_lines" sx={{ mb: 3 }}>
-        <Typography variant="h6" fontWeight={600} gutterBottom>
+      {/* Pricing Table — only shown for classic (non-builder) offers */}
+      {!hasModules && <Box
+        data-section="product_lines"
+        sx={{
+          bgcolor: '#FFFFFF',
+          borderRadius: 3,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+          overflow: 'hidden',
+          mb: 3,
+          p: 4,
+        }}
+      >
+        <Typography sx={{ fontWeight: 700, letterSpacing: '-0.02em', color: COLORS.heading, fontSize: '1.25rem', mb: 0.5 }}>
           Pricing
         </Typography>
-        <TableContainer component={Paper} variant="outlined">
+        <Typography variant="body2" sx={{ color: COLORS.body, mb: 3 }}>
+          Review the pricing below
+        </Typography>
+        <TableContainer sx={{ borderRadius: 2, border: `1px solid ${COLORS.border}`, overflow: 'hidden' }}>
           <Table size="small">
             <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: 600 }}>Product</TableCell>
-                <TableCell sx={{ fontWeight: 600 }} align="right">Qty</TableCell>
-                <TableCell sx={{ fontWeight: 600 }}>Unit</TableCell>
-                <TableCell sx={{ fontWeight: 600 }} align="right">Price/Unit</TableCell>
-                <TableCell sx={{ fontWeight: 600 }} align="right">Total</TableCell>
-                <TableCell sx={{ fontWeight: 600, minWidth: 120 }}>Counter Price</TableCell>
-                <TableCell sx={{ fontWeight: 600, minWidth: 140 }}>Comment</TableCell>
+              <TableRow sx={{ bgcolor: COLORS.bgSubtle }}>
+                <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: COLORS.body }}>Product</TableCell>
+                <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: COLORS.body }} align="right">Qty</TableCell>
+                <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: COLORS.body }}>Unit</TableCell>
+                <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: COLORS.body }} align="right">Price/Unit</TableCell>
+                <TableCell sx={{ fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: COLORS.body }} align="right">Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {offer.lines.map((line) => (
-                <TableRow key={line.id}>
-                  <TableCell>{getProductName(line.productId)}</TableCell>
-                  <TableCell align="right">{line.quantity !== null ? line.quantity.toLocaleString() : '\u2014'}</TableCell>
-                  <TableCell>{line.unit}</TableCell>
-                  <TableCell align="right">
+              {offer.lines.map((line, idx) => (
+                <TableRow key={line.id} sx={{ bgcolor: idx % 2 === 1 ? COLORS.bgAlt : 'transparent', '&:last-child td': { borderBottom: 0 } }}>
+                  <TableCell sx={{ color: COLORS.bodyDark, fontWeight: 500 }}>{getProductName(line)}</TableCell>
+                  <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: COLORS.bodyDark }}>
+                    {line.quantity !== null ? line.quantity.toLocaleString() : '\u2014'}
+                  </TableCell>
+                  <TableCell sx={{ color: COLORS.body }}>{line.unit}</TableCell>
+                  <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: COLORS.bodyDark, fontWeight: 500 }}>
                     {line.currency} {line.pricePerUnit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: COLORS.heading, fontWeight: 600 }}>
                     {line.quantity !== null
                       ? `${line.currency} ${(line.pricePerUnit * line.quantity).toLocaleString(undefined, { minimumFractionDigits: 2 })}`
                       : '\u2014'}
-                  </TableCell>
-                  <TableCell>
-                    <TextField
-                      size="small"
-                      type="number"
-                      placeholder="Your price"
-                      value={lineActions[line.id]?.counterPrice || ''}
-                      onChange={(e) => {
-                        setLineActions((prev) => ({
-                          ...prev,
-                          [line.id]: { ...prev[line.id], counterPrice: e.target.value },
-                        }));
-                        trackClick('counter_price_input');
-                      }}
-                      inputProps={{ min: 0, step: 'any' }}
-                      sx={{ minWidth: 100 }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <TextField
-                      size="small"
-                      placeholder="Note..."
-                      value={lineActions[line.id]?.comment || ''}
-                      onChange={(e) =>
-                        setLineActions((prev) => ({
-                          ...prev,
-                          [line.id]: { ...prev[line.id], comment: e.target.value },
-                        }))
-                      }
-                      sx={{ minWidth: 120 }}
-                    />
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-      </Box>
+      </Box>}
 
-      {/* Offer Terms */}
-      <Box data-section="terms" sx={{ mb: 3 }}>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography variant="subtitle2" gutterBottom>Offer Terms</Typography>
-            <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
-              <Box>
-                <Typography variant="caption" color="text.secondary">Currency</Typography>
-                <Typography variant="body2">{offer.currency}</Typography>
-              </Box>
-              <Box>
-                <Typography variant="caption" color="text.secondary">Incoterms</Typography>
-                <Typography variant="body2">{offer.incoterms}{offer.incotermsLocation ? ` - ${offer.incotermsLocation}` : ''}</Typography>
-              </Box>
-              <Box>
-                <Typography variant="caption" color="text.secondary">Payment Terms</Typography>
-                <Typography variant="body2">{offer.paymentTerms || '\u2014'}</Typography>
-              </Box>
-            </Box>
-            {offer.notes && (
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="caption" color="text.secondary">Notes</Typography>
-                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{offer.notes}</Typography>
-              </Box>
-            )}
-          </CardContent>
-        </Card>
-      </Box>
+      {/* Offer Terms — only for classic offers */}
+      {!hasModules && <Box
+        data-section="terms"
+        sx={{
+          bgcolor: '#FFFFFF',
+          borderRadius: 3,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+          overflow: 'hidden',
+          mb: 3,
+          p: 4,
+        }}
+      >
+        <Typography sx={{ fontWeight: 700, letterSpacing: '-0.02em', color: COLORS.heading, fontSize: '1rem', mb: 2 }}>
+          Offer Terms
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+          <Box>
+            <Typography variant="caption" sx={{ color: COLORS.body, textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.65rem' }}>Currency</Typography>
+            <Typography variant="body2" sx={{ color: COLORS.bodyDark, fontWeight: 500 }}>{offer.currency}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" sx={{ color: COLORS.body, textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.65rem' }}>Incoterms</Typography>
+            <Typography variant="body2" sx={{ color: COLORS.bodyDark, fontWeight: 500 }}>{offer.incoterms}{offer.incotermsLocation ? ` - ${offer.incotermsLocation}` : ''}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" sx={{ color: COLORS.body, textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.65rem' }}>Payment Terms</Typography>
+            <Typography variant="body2" sx={{ color: COLORS.bodyDark, fontWeight: 500 }}>{offer.paymentTerms || '\u2014'}</Typography>
+          </Box>
+        </Box>
+        {offer.notes && (
+          <Box sx={{ mt: 2, pl: 2, borderLeft: '3px solid #E5E7EB' }}>
+            <Typography variant="caption" sx={{ color: COLORS.body, textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.65rem' }}>Notes</Typography>
+            <Typography variant="body2" sx={{ color: COLORS.body, whiteSpace: 'pre-wrap', lineHeight: 1.7 }}>{offer.notes}</Typography>
+          </Box>
+        )}
+      </Box>}
 
       {/* Actions */}
-      <Box data-section="actions" sx={{ display: 'flex', gap: 2, justifyContent: 'center', pt: 2, pb: 4 }}>
-        <Button
-          variant="contained"
-          color="success"
-          size="large"
-          startIcon={<CheckCircleIcon />}
-          onClick={() => openAction('accept')}
-        >
-          Accept Offer
-        </Button>
-        <Button
-          variant="outlined"
-          size="large"
-          startIcon={<SwapHorizIcon />}
-          onClick={() => openAction('counter_proposal')}
-        >
-          Counter-Propose
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          size="large"
-          startIcon={<CancelIcon />}
-          onClick={() => openAction('reject')}
-        >
-          Decline
-        </Button>
+      <Box
+        data-section="actions"
+        sx={{
+          bgcolor: '#FFFFFF',
+          borderRadius: 3,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+          overflow: 'hidden',
+          p: 4,
+          mb: 4,
+          textAlign: 'center',
+        }}
+      >
+        <Typography sx={{ fontWeight: 600, color: COLORS.heading, mb: 0.5 }}>
+          Ready to respond?
+        </Typography>
+        <Typography variant="body2" sx={{ color: COLORS.body, mb: 3 }}>
+          Accept this offer, request changes, or decline
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            startIcon={<CheckCircleIcon />}
+            onClick={() => openAction('accept')}
+            sx={{ textTransform: 'none', px: 3 }}
+          >
+            Accept Offer
+          </Button>
+          <Button
+            variant="outlined"
+            color="warning"
+            size="large"
+            startIcon={<EditNoteIcon />}
+            onClick={() => openAction('request_changes')}
+            sx={{ textTransform: 'none', px: 3 }}
+          >
+            Request Changes
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            size="large"
+            startIcon={<CancelIcon />}
+            onClick={() => openAction('reject')}
+            sx={{ textTransform: 'none', px: 3 }}
+          >
+            Decline
+          </Button>
+        </Box>
       </Box>
 
       {/* Submit Dialog */}
@@ -367,14 +415,9 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
         <DialogTitle>
           {dialogAction === 'accept' && 'Accept Offer'}
           {dialogAction === 'reject' && 'Decline Offer'}
-          {dialogAction === 'counter_proposal' && 'Submit Counter-Proposal'}
+          {dialogAction === 'request_changes' && 'Request Changes'}
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: '16px !important' }}>
-          {dialogAction === 'counter_proposal' && (
-            <Alert severity="info" sx={{ mb: 1 }}>
-              Enter your counter-prices in the table above before submitting.
-            </Alert>
-          )}
           <TextField
             autoFocus
             size="small"
@@ -396,24 +439,26 @@ export default function BuyerOfferView({ offer, token, shareLink }: BuyerOfferVi
           <TextField
             size="small"
             fullWidth
-            label="Comment (optional)"
+            label={dialogAction === 'request_changes' ? 'What changes would you like?' : 'Comment (optional)'}
             multiline
-            minRows={2}
+            minRows={dialogAction === 'request_changes' ? 3 : 2}
             value={generalComment}
             onChange={(e) => setGeneralComment(e.target.value)}
+            required={dialogAction === 'request_changes'}
+            placeholder={dialogAction === 'request_changes' ? 'Describe the changes you need — pricing adjustments, quantity changes, different terms, etc.' : ''}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
           <Button
             variant="contained"
-            color={dialogAction === 'reject' ? 'error' : dialogAction === 'accept' ? 'success' : 'primary'}
+            color={dialogAction === 'reject' ? 'error' : dialogAction === 'accept' ? 'success' : 'warning'}
             onClick={handleSubmit}
-            disabled={!buyerName.trim() || !buyerEmail.trim()}
+            disabled={!buyerName.trim() || !buyerEmail.trim() || (dialogAction === 'request_changes' && !generalComment.trim())}
           >
             {dialogAction === 'accept' && 'Accept'}
             {dialogAction === 'reject' && 'Decline'}
-            {dialogAction === 'counter_proposal' && 'Submit'}
+            {dialogAction === 'request_changes' && 'Submit Request'}
           </Button>
         </DialogActions>
       </Dialog>

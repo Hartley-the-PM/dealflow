@@ -37,7 +37,7 @@ interface MSPPriceChartProps {
 
 const COMPARISON_COLORS = ['#6366F1', '#EC4899', '#F59E0B', '#10B981', '#8B5CF6'];
 
-const CATEGORY_COLOR: Record<string, string> = {
+const PRODUCT_TYPE_COLOR: Record<string, string> = {
   LDPE: '#2563EB',
   HDPE: '#059669',
   PP: '#D97706',
@@ -64,11 +64,11 @@ export default function MSPPriceChart({ productId }: MSPPriceChartProps) {
   const [compareIds, setCompareIds] = useState<string[]>([]);
 
   const product = products.find((p) => p.id === productId);
-  const primaryColor = CATEGORY_COLOR[product?.category ?? ''] ?? '#1E40AF';
+  const primaryColor = PRODUCT_TYPE_COLOR[product?.productType ?? ''] ?? '#1E40AF';
 
   // Products in same category for easy comparison
   const sameCategoryProducts = useMemo(
-    () => products.filter((p) => p.category === product?.category && p.id !== productId),
+    () => products.filter((p) => p.productType === product?.productType && p.id !== productId),
     [products, product, productId]
   );
 
@@ -339,10 +339,10 @@ export default function MSPPriceChart({ productId }: MSPPriceChartProps) {
           multiple
           size="small"
           options={comparableProducts}
-          getOptionLabel={(p) => `${p.name} (${p.category})`}
+          getOptionLabel={(p) => `${p.name} (${p.productType})`}
           value={products.filter((p) => compareIds.includes(p.id))}
           onChange={(_, vals) => setCompareIds(vals.map((v) => v.id))}
-          groupBy={(p) => p.category}
+          groupBy={(p) => p.productType}
           renderInput={(params) => (
             <TextField
               {...params}

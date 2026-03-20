@@ -1,0 +1,97 @@
+[
+  {
+    "id": "fm-001",
+    "name": "EcoBlend HDPE R30",
+    "code": "VLT-FM-001",
+    "type": "blend",
+    "family": "PE",
+    "productType": "HDPE",
+    "ingredients": [
+      {
+        "id": "ing-001",
+        "productId": "prod-002",
+        "productName": "SABIC HDPE B5429",
+        "percentage": 70,
+        "role": "Base Polymer",
+        "notes": "Primary HDPE resin"
+      },
+      {
+        "id": "ing-002",
+        "productId": "",
+        "productName": "Post-Consumer Recycled HDPE Flake",
+        "percentage": 30,
+        "role": "Additive",
+        "notes": "PCR content sourced from bottle-to-bottle recycling stream"
+      }
+    ],
+    "calculatedTds": {
+      "density": 0.952,
+      "meltFlowIndex": "0.40 g/10 min (190°C/2.16 kg)",
+      "tensileStrength": 25.0,
+      "elongationAtBreak": 650,
+      "flexuralModulus": 950
+    },
+    "recycledContent": {
+      "totalPercent": 30,
+      "pcrPercent": 30,
+      "pirPercent": 0
+    },
+    "notes": "Sustainable HDPE blend with 30% post-consumer recycled content for blow molding applications",
+    "createdBy": "system",
+    "createdAt": "2025-10-01T00:00:00Z",
+    "updatedAt": "2025-10-01T00:00:00Z"
+  },
+  {
+    "id": "fm-002",
+    "name": "Custom PP Compound V1",
+    "code": "VLT-FM-002",
+    "type": "recipe",
+    "family": "PP",
+    "productType": "PP",
+    "ingredients": [
+      {
+        "id": "ing-003",
+        "productId": "prod-006",
+        "productName": "Borealis Bormod BH345MO",
+        "percentage": 70,
+        "role": "Base Polymer",
+        "notes": "High-flow PP homopolymer base"
+      },
+      {
+        "id": "ing-004",
+        "productId": "",
+        "productName": "Titanium Dioxide White Masterbatch",
+        "percentage": 15,
+        "role": "Colorant",
+        "notes": "TiO2 masterbatch for opacity and whiteness"
+      },
+      {
+        "id": "ing-005",
+        "productId": "",
+        "productName": "Irganox B225 Stabilizer Blend",
+        "percentage": 10,
+        "role": "Stabilizer",
+        "notes": "Antioxidant and processing stabilizer blend"
+      },
+      {
+        "id": "ing-006",
+        "productId": "",
+        "productName": "Calcium Carbonate CaCO3",
+        "percentage": 5,
+        "role": "Filler",
+        "notes": "Mineral filler for stiffness and cost reduction"
+      }
+    ],
+    "calculatedTds": {
+      "density": 0.940,
+      "meltFlowIndex": "32.0 g/10 min (230°C/2.16 kg)",
+      "tensileStrength": 28.0,
+      "elongationAtBreak": 140,
+      "flexuralModulus": 1350
+    },
+    "notes": "Custom compounded PP for injection molding with enhanced whiteness and thermal stability",
+    "createdBy": "system",
+    "createdAt": "2025-10-15T00:00:00Z",
+    "updatedAt": "2025-10-15T00:00:00Z"
+  }
+]

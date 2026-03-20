@@ -107,7 +107,7 @@ export default function DashboardGrid({ dashboard, filteredOffers, deals, custom
           {dashboard.items.map((item) => {
             if (item.type === 'default') {
               return (
-                <div key={item.id}>
+                <div key={item.id} style={{ border: '1px solid #E5E7EB', borderRadius: 12, background: '#fff', overflow: 'hidden' }}>
                   <DefaultChartWrapper
                     componentName={item.componentName}
                     filteredOffers={filteredOffers}
@@ -123,7 +123,7 @@ export default function DashboardGrid({ dashboard, filteredOffers, deals, custom
             if (!config) return <div key={item.chartId} />;
 
             return (
-              <div key={item.chartId}>
+              <div key={item.chartId} style={{ border: '1px solid #E5E7EB', borderRadius: 12, background: '#fff', overflow: 'hidden' }}>
                 <CustomChartCard
                   config={config}
                   onDelete={() => handleDeleteCustomChart(item.chartId)}

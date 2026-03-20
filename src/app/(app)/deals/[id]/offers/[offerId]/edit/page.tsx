@@ -90,7 +90,7 @@ export default function EditOfferPage() {
         title={`Edit: ${offer.name}`}
         subtitle={`${deal.name} \u2013 ${customer?.name ?? ''}`}
         breadcrumbs={[
-          { label: 'Deals', href: '/deals' },
+          { label: 'Pipeline', href: '/deals' },
           { label: deal.name, href: `/deals/${dealId}` },
           { label: offer.name, href: `/deals/${dealId}/offers/${offerId}` },
           { label: 'Edit' },

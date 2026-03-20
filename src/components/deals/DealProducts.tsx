@@ -26,7 +26,7 @@ interface ProductAggregate {
   productId: string;
   name: string;
   code: string;
-  category: string;
+  productType: string;
   appearances: number;
   latestPrice: number;
   latestCurrency: string;
@@ -86,7 +86,7 @@ export default function DealProducts({ dealId }: DealProductsProps) {
         productId,
         name: product.name,
         code: product.code,
-        category: product.category,
+        category: product.productType,
         appearances: data.appearances.size,
         latestPrice: data.latestPrice,
         latestCurrency: data.latestCurrency,
@@ -109,7 +109,7 @@ export default function DealProducts({ dealId }: DealProductsProps) {
           <TableRow>
             <TableCell sx={{ fontWeight: 600 }}>Product Name</TableCell>
             <TableCell sx={{ fontWeight: 600 }}>Code</TableCell>
-            <TableCell sx={{ fontWeight: 600 }}>Category</TableCell>
+            <TableCell sx={{ fontWeight: 600 }}>Product Type</TableCell>
             <TableCell sx={{ fontWeight: 600 }} align="center">
               Appearances
             </TableCell>
@@ -138,7 +138,7 @@ export default function DealProducts({ dealId }: DealProductsProps) {
                 </Link>
               </TableCell>
               <TableCell>{p.code}</TableCell>
-              <TableCell>{p.category}</TableCell>
+              <TableCell>{p.productType}</TableCell>
               <TableCell align="center">{p.appearances}</TableCell>
               <TableCell align="right">
                 {p.latestCurrency}{' '}

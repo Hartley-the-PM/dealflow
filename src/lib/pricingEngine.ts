@@ -91,7 +91,7 @@ function ruleMatches(rule: PricingRule, input: ComputePriceInput): boolean {
       const days = parsePaymentDays(input.paymentTerms);
       return c.paymentTermsMinDays != null && days >= c.paymentTermsMinDays;
     }
-    case 'category':
+    case 'product_type':
       return c.categories?.includes(input.productCategory) ?? false;
     default:
       return false;

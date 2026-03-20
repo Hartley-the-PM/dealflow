@@ -38,7 +38,7 @@ export function usePricingEngine() {
           customerTier: customer?.tier ?? 'C',
           incoterms,
           paymentTerms,
-          productCategory: product?.category ?? '',
+          productCategory: product?.productType ?? '',
         },
         {
           basePrices,

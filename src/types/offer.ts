@@ -6,9 +6,23 @@ export type Incoterms = 'FCA' | 'FOB' | 'CIF' | 'CFR' | 'EXW' | 'DAP' | 'DDP';
 
 export type BelowMSPReason = 'Volume commitment' | 'Strategic account' | 'Market conditions' | 'Competitive pressure' | 'Other';
 
+export type OfferLineType = 'product' | 'white_label' | 'formulation';
+
+export interface FormulationLinePart {
+  ingredientId: string;
+  ingredientName: string;
+  percentage: number;
+  role: string;
+  selling: boolean; // true = selling this part, false = consulting only
+}
+
 export interface OfferLine {
   id: string;
-  productId: string;
+  lineType: OfferLineType;
+  productId: string; // catalog product ID (used when lineType === 'product')
+  whiteLabelId: string; // WL product ID (used when lineType === 'white_label')
+  formulationId: string; // formulation ID (used when lineType === 'formulation')
+  formulationParts: FormulationLinePart[]; // ingredient-level selling/consulting breakdown
   quantity: number | null;
   unit: UnitOfMeasure;
   pricePerUnit: number;

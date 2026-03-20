@@ -32,7 +32,7 @@ import { useOrderStore } from '@/stores/orderStore';
 import { useProductStore } from '@/stores/productStore';
 import { usePricingEngineStore } from '@/stores/pricingEngineStore';
 
-const CATEGORY_COLOR: Record<string, string> = {
+const PRODUCT_TYPE_COLOR: Record<string, string> = {
   LDPE: '#2563EB',
   HDPE: '#059669',
   PP: '#D97706',
@@ -56,7 +56,7 @@ interface ProductRow {
   productId: string;
   productName: string;
   productCode: string;
-  category: string;
+  productType: string;
   timesOffered: number;
   timesOrdered: number;
   lastPrice: number;
@@ -131,7 +131,7 @@ export default function CustomerProducts({ customerId }: CustomerProductsProps) 
         productId,
         productName: product.name,
         productCode: product.code,
-        category: product.category,
+        category: product.productType,
         timesOffered: points.filter((p) => p.type === 'Offered').length,
         timesOrdered: points.filter((p) => p.type === 'Ordered').length,
         lastPrice: last.price,
@@ -157,7 +157,7 @@ export default function CustomerProducts({ customerId }: CustomerProductsProps) 
             <TableCell width={40} />
             <TableCell sx={{ fontWeight: 600 }}>Product Code</TableCell>
             <TableCell sx={{ fontWeight: 600 }}>Product Name</TableCell>
-            <TableCell sx={{ fontWeight: 600 }}>Category</TableCell>
+            <TableCell sx={{ fontWeight: 600 }}>Product Type</TableCell>
             <TableCell sx={{ fontWeight: 600 }} align="center">Offered</TableCell>
             <TableCell sx={{ fontWeight: 600 }} align="center">Ordered</TableCell>
             <TableCell sx={{ fontWeight: 600 }} align="right">Last Price</TableCell>
@@ -213,14 +213,14 @@ function ProductExpandableRow({
         <TableCell sx={{ fontWeight: 500 }}>{row.productName}</TableCell>
         <TableCell>
           <Chip
-            label={row.category}
+            label={row.productType}
             size="small"
             sx={{
               fontWeight: 600,
               fontSize: 11,
-              bgcolor: `${CATEGORY_COLOR[row.category] ?? '#666'}15`,
-              color: CATEGORY_COLOR[row.category] ?? '#666',
-              border: `1px solid ${CATEGORY_COLOR[row.category] ?? '#666'}40`,
+              bgcolor: `${PRODUCT_TYPE_COLOR[row.productType] ?? '#666'}15`,
+              color: PRODUCT_TYPE_COLOR[row.productType] ?? '#666',
+              border: `1px solid ${PRODUCT_TYPE_COLOR[row.productType] ?? '#666'}40`,
             }}
           />
         </TableCell>

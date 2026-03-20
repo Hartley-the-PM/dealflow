@@ -2,6 +2,7 @@
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -9,14 +10,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import type { TestimonialsModule } from '@/types/offerBuilder';
+import type { TestimonialsModule, ContentPreset } from '@/types/offerBuilder';
 
 interface Props {
   module: TestimonialsModule;
   onChange: (updated: TestimonialsModule) => void;
+  presets?: ContentPreset[];
 }
 
-export default function TestimonialsEditor({ module, onChange }: Props) {
+export default function TestimonialsEditor({ module, onChange, presets }: Props) {
   const addTestimonial = () => {
     onChange({
       ...module,
@@ -40,15 +42,36 @@ export default function TestimonialsEditor({ module, onChange }: Props) {
     });
   };
 
+  const handleLoadPreset = (presetId: string) => {
+    const preset = presets?.find((p) => p.id === presetId);
+    if (preset) {
+      onChange({ ...module, ...preset.data });
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
         <Typography variant="subtitle2" color="text.secondary">
           Testimonials ({module.testimonials.length})
         </Typography>
-        <Button size="small" startIcon={<AddIcon />} onClick={addTestimonial}>
-          Add Testimonial
-        </Button>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          {presets && presets.length > 0 && (
+            <TextField
+              select
+              size="small"
+              label="Load Preset"
+              value=""
+              onChange={(e) => handleLoadPreset(e.target.value)}
+              sx={{ minWidth: 140 }}
+            >
+              {presets.map((p) => <MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>)}
+            </TextField>
+          )}
+          <Button size="small" startIcon={<AddIcon />} onClick={addTestimonial}>
+            Add Testimonial
+          </Button>
+        </Box>
       </Box>
       {module.testimonials.map((testimonial, i) => (
         <Card key={i} variant="outlined">

@@ -11,7 +11,7 @@ interface ProductCardProps {
   product: Product;
 }
 
-const categoryColors: Record<string, { bg: string; color: string }> = {
+const productTypeColors: Record<string, { bg: string; color: string }> = {
   LDPE: { bg: '#DBEAFE', color: '#1D4ED8' },
   HDPE: { bg: '#D1FAE5', color: '#059669' },
   PP: { bg: '#FEF3C7', color: '#D97706' },
@@ -21,7 +21,7 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const chipColor = categoryColors[product.category] || { bg: '#F3F4F6', color: '#374151' };
+  const chipColor = productTypeColors[product.productType] || { bg: '#F3F4F6', color: '#374151' };
 
   return (
     <Card variant="outlined" sx={{ height: '100%' }}>
@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </Typography>
           <Chip
-            label={product.category}
+            label={product.productType}
             size="small"
             sx={{
               bgcolor: chipColor.bg,

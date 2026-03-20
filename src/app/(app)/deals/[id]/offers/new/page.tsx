@@ -1,22 +1,23 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import PageHeader from '@/components/shared/PageHeader';
 import OfferForm from '@/components/offers/OfferForm';
-import TemplatePicker from '@/components/offers/TemplatePicker';
 import { useDealStore } from '@/stores/dealStore';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useOfferStore } from '@/stores/offerStore';
 import { useActivityStore } from '@/stores/activityStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useOfferTemplateStore } from '@/stores/offerTemplateStore';
 import { useHydration } from '@/hooks/useHydration';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
 import type { Offer } from '@/types';
-import type { OfferTemplate } from '@/types/offerBuilder';
+import type { OfferModule, ContentPresetType } from '@/types/offerBuilder';
+import { useOfferBuilderSettingsStore } from '@/stores/offerBuilderSettingsStore';
 
 export default function NewOfferPage() {
   const hydrated = useHydration();
@@ -32,8 +33,9 @@ export default function NewOfferPage() {
   const addActivity = useActivityStore((s) => s.addActivity);
   const settings = useSettingsStore((s) => s.settings);
 
-  const [selectedTemplate, setSelectedTemplate] = useState<OfferTemplate | null>(null);
-  const [showForm, setShowForm] = useState(false);
+  const templates = useOfferTemplateStore((s) => s.templates);
+  const defaultPresets = useOfferBuilderSettingsStore((s) => s.defaultPresets);
+  const contentPresets = useOfferBuilderSettingsStore((s) => s.contentPresets);
 
   const deal = getDealById(dealId);
   const customer = deal ? getCustomerById(deal.customerId) : undefined;
@@ -49,6 +51,31 @@ export default function NewOfferPage() {
     const monthStr = format(new Date(), 'MMM yyyy');
     return `${customerName} \u2013 ${monthStr} \u2013 V${nextVersion}`;
   }, [customer, nextVersion]);
+
+  // Auto-apply the Standard template (first preset) with default presets
+  const initialModules = useMemo(() => {
+    const standardTemplate = templates.find((t) => t.name === 'Standard') ?? templates[0];
+    if (!standardTemplate) return undefined;
+
+    const freshModules = standardTemplate.modules.map((m) => ({ ...m, id: uuidv4() }));
+
+    const presetTypeMap: Record<string, ContentPresetType> = {
+      terms: 'terms',
+      testimonials: 'testimonials',
+      cover_image: 'cover_image',
+      company_about: 'company_about',
+    };
+
+    return freshModules.map((mod) => {
+      const presetType = presetTypeMap[mod.type];
+      if (!presetType) return mod;
+      const defaultPresetId = defaultPresets[presetType];
+      if (!defaultPresetId) return mod;
+      const preset = contentPresets.find((p) => p.id === defaultPresetId);
+      if (!preset) return mod;
+      return { ...mod, ...preset.data };
+    });
+  }, [templates, defaultPresets, contentPresets]);
 
   const handleSave = (offer: Offer) => {
     addOffer(offer);
@@ -69,16 +96,6 @@ export default function NewOfferPage() {
     router.push(`/deals/${dealId}`);
   };
 
-  const handleTemplateSelect = (template: OfferTemplate) => {
-    setSelectedTemplate(template);
-    setShowForm(true);
-  };
-
-  const handleSkipTemplate = () => {
-    setSelectedTemplate(null);
-    setShowForm(true);
-  };
-
   if (!hydrated) return null;
 
   if (!deal) {
@@ -97,22 +114,19 @@ export default function NewOfferPage() {
         title="New Offer"
         subtitle={`${deal.name} \u2013 ${customer?.name ?? ''}`}
         breadcrumbs={[
-          { label: 'Deals', href: '/deals' },
+          { label: 'Pipeline', href: '/deals' },
           { label: deal.name, href: `/deals/${dealId}` },
           { label: 'New Offer' },
         ]}
       />
-      {!showForm ? (
-        <TemplatePicker onSelect={handleTemplateSelect} onSkip={handleSkipTemplate} />
-      ) : (
-        <OfferForm
-          dealId={dealId}
-          customerId={deal.customerId}
-          defaultName={autoName}
-          defaultVersion={nextVersion}
-          onSave={handleSave}
-        />
-      )}
+      <OfferForm
+        dealId={dealId}
+        customerId={deal.customerId}
+        defaultName={autoName}
+        defaultVersion={nextVersion}
+        onSave={handleSave}
+        initialModules={initialModules}
+      />
     </Box>
   );
 }

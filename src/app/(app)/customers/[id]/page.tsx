@@ -11,7 +11,8 @@ import CustomerOverview from '@/components/customers/CustomerOverview';
 import CustomerProducts from '@/components/customers/CustomerProducts';
 import CustomerDeals from '@/components/customers/CustomerDeals';
 import CustomerContacts from '@/components/customers/CustomerContacts';
-import CustomerNotes from '@/components/customers/CustomerNotes';
+import CustomerDealNotes from '@/components/customers/CustomerDealNotes';
+import CustomerDealActivity from '@/components/customers/CustomerDealActivity';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useHydration } from '@/hooks/useHydration';
 
@@ -49,16 +50,23 @@ export default function CustomerDetailPage() {
           <Tab label="Overview" />
           <Tab label="Products" />
           <Tab label="Deals" />
+          <Tab label="Notes & Activity" />
           <Tab label="Contacts" />
-          <Tab label="Notes" />
         </Tabs>
       </Box>
 
       {tab === 0 && <CustomerOverview customer={customer} />}
       {tab === 1 && <CustomerProducts customerId={customer.id} />}
       {tab === 2 && <CustomerDeals customerId={customer.id} />}
-      {tab === 3 && <CustomerContacts customerId={customer.id} />}
-      {tab === 4 && <CustomerNotes customerId={customer.id} />}
+      {tab === 3 && (
+        <Box>
+          <CustomerDealNotes customerId={customer.id} />
+          <Box sx={{ mt: 4 }}>
+            <CustomerDealActivity customerId={customer.id} />
+          </Box>
+        </Box>
+      )}
+      {tab === 4 && <CustomerContacts customerId={customer.id} />}
     </Box>
   );
 }

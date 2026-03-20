@@ -1,0 +1,304 @@
+{
+  "agents": [
+    {
+      "id": "agent-001",
+      "name": "Deal Analyst",
+      "description": "Monitors meetings and emails to extract deal intelligence, create opportunities, and draft notes",
+      "avatar": "🤖",
+      "enabled": true,
+      "capabilities": ["zoom_call", "teams_meeting", "email", "phone_call"],
+      "dealsMonitoring": ["deal-001", "deal-002", "deal-003", "deal-004", "deal-005"]
+    },
+    {
+      "id": "agent-002",
+      "name": "Order Processor",
+      "description": "Reads purchase orders from emails and SMS to auto-create draft orders",
+      "avatar": "📦",
+      "enabled": true,
+      "capabilities": ["email", "sms", "whatsapp"],
+      "dealsMonitoring": ["deal-001", "deal-003", "deal-007"]
+    },
+    {
+      "id": "agent-003",
+      "name": "Pricing Scout",
+      "description": "Monitors market communications for competitive pricing intelligence",
+      "avatar": "🔍",
+      "enabled": false,
+      "capabilities": ["email", "phone_call"],
+      "dealsMonitoring": []
+    }
+  ],
+  "activities": [
+    {
+      "id": "act-001",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "sourceType": "zoom_call",
+      "sourceLabel": "Zoom call with Erik Johansson (AutoPoly)",
+      "summary": "Discussed Q2 supply needs. Customer expressed interest in expanding to PVC rigid sheet for their new construction materials division. Estimated 180 MT at ~$1,150/MT. High priority — customer wants pricing by end of month.",
+      "participants": ["Erik Johansson", "John Mitchell", "Sarah Chen"],
+      "timestamp": "2026-03-15T14:30:00.000Z",
+      "draftsCreated": ["draft-001", "draft-002"]
+    },
+    {
+      "id": "act-002",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "sourceType": "email",
+      "sourceLabel": "Email thread: RE: Q1 Supply Agreement - HDPE inquiry",
+      "summary": "Erik followed up about HDPE containers. Mentioned they need 100 MT of blow molding grade HDPE. Referenced competitor pricing at $1,420/MT. Wants to consolidate suppliers.",
+      "participants": ["Erik Johansson", "John Mitchell"],
+      "timestamp": "2026-03-14T09:15:00.000Z",
+      "draftsCreated": ["draft-003"]
+    },
+    {
+      "id": "act-003",
+      "dealId": "deal-002",
+      "agentId": "agent-001",
+      "sourceType": "teams_meeting",
+      "sourceLabel": "Teams meeting: Monthly Mar 2026 planning",
+      "summary": "Production planning call with AutoPoly. Confirmed March delivery schedule. Customer mentioned potential PET bottle expansion for Q3. Early stage — needs follow-up.",
+      "participants": ["Mehmet Kaya", "Sarah Chen", "Marco Rodriguez"],
+      "timestamp": "2026-03-12T10:00:00.000Z",
+      "draftsCreated": ["draft-004"]
+    },
+    {
+      "id": "act-004",
+      "dealId": "deal-003",
+      "agentId": "agent-002",
+      "sourceType": "email",
+      "sourceLabel": "Email: PO #PL-2026-0847 from Plastipack GmbH",
+      "summary": "Received purchase order via email for INEOS Rigidex HD5218EA. PO specifies 150 MT at $1,345/MT, delivery by April 15. Payment terms Net 30.",
+      "participants": ["Hans Mueller", "procurement@plastipack.de"],
+      "timestamp": "2026-03-13T08:30:00.000Z",
+      "draftsCreated": ["draft-005"]
+    },
+    {
+      "id": "act-005",
+      "dealId": "deal-004",
+      "agentId": "agent-001",
+      "sourceType": "phone_call",
+      "sourceLabel": "Phone call with Ahmet Ozturk (Ankara Plastik)",
+      "summary": "Ahmet called to discuss expanding from pipe-grade HDPE to include PP fittings. Needs PPH grade for injection molding. Volume estimate 120 MT. Also mentioned interest in HDPE drums for chemical storage (small test volume ~60 MT).",
+      "participants": ["Ahmet Ozturk", "John Mitchell"],
+      "timestamp": "2026-03-10T15:45:00.000Z",
+      "draftsCreated": ["draft-006", "draft-007"]
+    },
+    {
+      "id": "act-006",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "sourceType": "email",
+      "sourceLabel": "Email: Meeting notes from Q1 review",
+      "summary": "Internal email from Sarah Chen summarizing the Q1 supply agreement review. Key takeaways: customer satisfaction high, pricing competitive, upsell opportunity for HDPE and PVC identified.",
+      "participants": ["Sarah Chen", "John Mitchell"],
+      "timestamp": "2026-03-11T16:00:00.000Z",
+      "draftsCreated": ["draft-008"]
+    },
+    {
+      "id": "act-007",
+      "dealId": "deal-005",
+      "agentId": "agent-001",
+      "sourceType": "whatsapp",
+      "sourceLabel": "WhatsApp message from Carlos Silva (BrasilFilm)",
+      "summary": "Carlos sent photos of competitor LLDPE film samples and asked if we can match quality. Mentioned they need UV-stabilized grade urgently for April planting season.",
+      "participants": ["Carlos Silva", "Marco Rodriguez"],
+      "timestamp": "2026-03-09T11:20:00.000Z",
+      "draftsCreated": ["draft-009"]
+    }
+  ],
+  "drafts": [
+    {
+      "id": "draft-001",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "activityId": "act-001",
+      "draftType": "opportunity",
+      "status": "pending",
+      "title": "PVC rigid sheet for construction division",
+      "summary": "Based on Zoom call with Erik Johansson (Mar 15). AutoPoly is launching a construction materials division and needs rigid PVC sheet. High priority — customer wants pricing by end of month.",
+      "data": {
+        "productId": "prod-025",
+        "productName": "ExxonMobil™ PVC E6834",
+        "estimatedQty": 180,
+        "targetPrice": 1150,
+        "estimatedValue": 207000,
+        "source": "zoom_call",
+        "priority": "High",
+        "contactName": "Erik Johansson",
+        "contactEmail": "erik.j@autopoly.com"
+      },
+      "createdAt": "2026-03-15T14:45:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    },
+    {
+      "id": "draft-002",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "activityId": "act-001",
+      "draftType": "note",
+      "status": "approved",
+      "title": "Zoom call summary - Q2 supply planning",
+      "summary": "Auto-generated meeting notes from the Zoom call with AutoPoly on March 15.",
+      "data": {
+        "noteText": "**Zoom Call Summary - Mar 15, 2026**\n\nParticipants: Erik Johansson (AutoPoly), John Mitchell, Sarah Chen\n\n**Key Discussion Points:**\n1. Q2 supply needs confirmed — same volumes as Q1\n2. New opportunity: PVC rigid sheet for construction division (~180 MT)\n3. Erik wants pricing proposal by end of March\n4. Customer satisfaction with current LDPE supply is high\n5. Potential to consolidate more products under Vailent\n\n**Action Items:**\n- Send PVC pricing proposal (John)\n- Schedule follow-up for HDPE containers (Sarah)\n- Prepare Q2 forecast update",
+        "category": "Meeting Notes",
+        "priority": "Normal"
+      },
+      "createdAt": "2026-03-15T14:45:00.000Z",
+      "reviewedAt": "2026-03-15T15:00:00.000Z",
+      "reviewedBy": "John Mitchell"
+    },
+    {
+      "id": "draft-003",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "activityId": "act-002",
+      "draftType": "note",
+      "status": "pending",
+      "title": "Email intelligence: Competitor pricing for HDPE",
+      "summary": "Extracted competitive pricing intel from email thread with Erik Johansson.",
+      "data": {
+        "noteText": "**Competitive Intelligence — HDPE Containers**\n\nSource: Email from Erik Johansson (Mar 14)\n\n- Competitor offering blow molding HDPE at $1,420/MT\n- Customer wants to consolidate to fewer suppliers\n- Volume: ~100 MT for industrial containers\n- Opportunity to win by offering better service + bundled pricing with existing LDPE supply",
+        "category": "Competitive Intelligence",
+        "priority": "High"
+      },
+      "createdAt": "2026-03-14T09:30:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    },
+    {
+      "id": "draft-004",
+      "dealId": "deal-002",
+      "agentId": "agent-001",
+      "activityId": "act-003",
+      "draftType": "opportunity",
+      "status": "pending",
+      "title": "PET bottle expansion (Q3)",
+      "summary": "AutoPoly mentioned potential PET bottle expansion during Teams planning meeting. Early stage but worth tracking.",
+      "data": {
+        "productId": "prod-018",
+        "productName": "Braskem PET Cleartuf® 8006",
+        "estimatedQty": 50,
+        "targetPrice": null,
+        "estimatedValue": null,
+        "source": "teams_meeting",
+        "priority": "Low",
+        "contactName": "Mehmet Kaya",
+        "contactEmail": "m.kaya@autopoly.com"
+      },
+      "createdAt": "2026-03-12T10:30:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    },
+    {
+      "id": "draft-005",
+      "dealId": "deal-003",
+      "agentId": "agent-002",
+      "activityId": "act-004",
+      "draftType": "order",
+      "status": "pending",
+      "title": "PO #PL-2026-0847 — INEOS Rigidex HD5218EA",
+      "summary": "Purchase order received via email from Plastipack GmbH. Auto-extracted order details.",
+      "data": {
+        "poNumber": "PL-2026-0847",
+        "productId": "prod-004",
+        "productName": "INEOS Rigidex® HD5218EA",
+        "quantity": 150,
+        "pricePerUnit": 1345,
+        "totalValue": 201750,
+        "deliveryDate": "2026-04-15",
+        "paymentTerms": "Net 30",
+        "customerContact": "Hans Mueller"
+      },
+      "createdAt": "2026-03-13T08:45:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    },
+    {
+      "id": "draft-006",
+      "dealId": "deal-004",
+      "agentId": "agent-001",
+      "activityId": "act-005",
+      "draftType": "opportunity",
+      "status": "pending",
+      "title": "PP compound for injection molded fittings",
+      "summary": "From phone call with Ahmet Ozturk. Ankara Plastik expanding into PP pipe fittings.",
+      "data": {
+        "productId": "prod-007",
+        "productName": "TotalEnergies PPH 3060",
+        "estimatedQty": 120,
+        "targetPrice": 1400,
+        "estimatedValue": 168000,
+        "source": "phone_call",
+        "priority": "Medium",
+        "contactName": "Ahmet Ozturk",
+        "contactEmail": "a.ozturk@ankaraplastik.com.tr"
+      },
+      "createdAt": "2026-03-10T16:00:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    },
+    {
+      "id": "draft-007",
+      "dealId": "deal-004",
+      "agentId": "agent-001",
+      "activityId": "act-005",
+      "draftType": "opportunity",
+      "status": "pending",
+      "title": "HDPE for blow molded drums (test volume)",
+      "summary": "From same phone call. Small test volume for chemical storage drums.",
+      "data": {
+        "productId": "prod-002",
+        "productName": "SABIC® HDPE B5429",
+        "estimatedQty": 60,
+        "targetPrice": 1480,
+        "estimatedValue": 88800,
+        "source": "phone_call",
+        "priority": "Low",
+        "contactName": "Ahmet Ozturk",
+        "contactEmail": "a.ozturk@ankaraplastik.com.tr"
+      },
+      "createdAt": "2026-03-10T16:00:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    },
+    {
+      "id": "draft-008",
+      "dealId": "deal-001",
+      "agentId": "agent-001",
+      "activityId": "act-006",
+      "draftType": "note",
+      "status": "approved",
+      "title": "Q1 review summary — key takeaways",
+      "summary": "Summarized internal Q1 review email from Sarah Chen.",
+      "data": {
+        "noteText": "**Q1 Supply Agreement Review**\n\nKey takeaways from internal review:\n- Customer satisfaction: High\n- Pricing: Competitive vs market\n- Delivery reliability: 98% on-time\n- Upsell opportunities identified: HDPE containers, PVC construction\n- Recommendation: Proactively offer bundled Q2 pricing",
+        "category": "Internal Review",
+        "priority": "Normal"
+      },
+      "createdAt": "2026-03-11T16:15:00.000Z",
+      "reviewedAt": "2026-03-11T17:00:00.000Z",
+      "reviewedBy": "John Mitchell"
+    },
+    {
+      "id": "draft-009",
+      "dealId": "deal-005",
+      "agentId": "agent-001",
+      "activityId": "act-007",
+      "draftType": "note",
+      "status": "pending",
+      "title": "WhatsApp: Competitor LLDPE samples + urgent UV request",
+      "summary": "Carlos Silva shared competitor film samples via WhatsApp. Urgent need for UV-stabilized grade.",
+      "data": {
+        "noteText": "**WhatsApp from Carlos Silva (BrasilFilm) — Mar 9**\n\nCarlos sent photos of competitor LLDPE film samples:\n- Competitor is offering UV-stabilized LLDPE at competitive pricing\n- BrasilFilm needs UV grade urgently for April planting season\n- If we can match quality, they'll commit to 250 MT\n\n**Action needed:** Expedite UV-stabilized DOWLEX 2045G sample and pricing",
+        "category": "Customer Request",
+        "priority": "High"
+      },
+      "createdAt": "2026-03-09T11:30:00.000Z",
+      "reviewedAt": null,
+      "reviewedBy": null
+    }
+  ]
+}

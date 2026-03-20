@@ -1,0 +1,83 @@
+[
+  {
+    "id": "wlp-001",
+    "brandId": "wlb-001",
+    "name": "VNP HDPE 5429",
+    "code": "VNP-HD-5429",
+    "linkedProductIds": ["prod-002", "prod-004"],
+    "family": "PE",
+    "productType": "HDPE",
+    "tdsRanges": {
+      "densityMin": 0.954,
+      "densityMax": 0.958,
+      "mfiMin": "0.35 g/10 min",
+      "mfiMax": "18.0 g/10 min",
+      "tensileMin": 26.5,
+      "tensileMax": 28.0,
+      "elongationMin": 150,
+      "elongationMax": 800,
+      "flexuralMin": 1100,
+      "flexuralMax": 1350,
+      "meltingPointMin": "132°C",
+      "meltingPointMax": "134°C"
+    },
+    "notes": "White label HDPE based on SABIC B5429 and INEOS Rigidex HD5218EA",
+    "createdBy": "system",
+    "createdAt": "2025-09-15T00:00:00Z",
+    "updatedAt": "2025-09-15T00:00:00Z"
+  },
+  {
+    "id": "wlp-002",
+    "brandId": "wlb-001",
+    "name": "VNP PP Compound",
+    "code": "VNP-PP-3060",
+    "linkedProductIds": ["prod-006", "prod-007"],
+    "family": "PP",
+    "productType": "PP",
+    "tdsRanges": {
+      "densityMin": 0.905,
+      "densityMax": 0.905,
+      "mfiMin": "3.0 g/10 min",
+      "mfiMax": "45.0 g/10 min",
+      "tensileMin": 34.0,
+      "tensileMax": 36.0,
+      "elongationMin": 200,
+      "elongationMax": 450,
+      "flexuralMin": 1500,
+      "flexuralMax": 1600,
+      "meltingPointMin": "163°C",
+      "meltingPointMax": "165°C"
+    },
+    "notes": "White label PP based on Borealis Bormod BH345MO and TotalEnergies PPH 3060",
+    "createdBy": "system",
+    "createdAt": "2025-09-15T00:00:00Z",
+    "updatedAt": "2025-09-15T00:00:00Z"
+  },
+  {
+    "id": "wlp-003",
+    "brandId": "wlb-002",
+    "name": "CYN LDPE Film",
+    "code": "CYN-LD-1840",
+    "linkedProductIds": ["prod-001", "prod-003"],
+    "family": "PE",
+    "productType": "LDPE",
+    "tdsRanges": {
+      "densityMin": 0.919,
+      "densityMax": 0.923,
+      "mfiMin": "0.33 g/10 min",
+      "mfiMax": "1.7 g/10 min",
+      "tensileMin": 10.8,
+      "tensileMax": 12.5,
+      "elongationMin": 650,
+      "elongationMax": 720,
+      "flexuralMin": 220,
+      "flexuralMax": 280,
+      "meltingPointMin": "110°C",
+      "meltingPointMax": "112°C"
+    },
+    "notes": "White label LDPE film grade based on ExxonMobil LD 03322 and LyondellBasell Lupolen 1840H",
+    "createdBy": "system",
+    "createdAt": "2025-10-01T00:00:00Z",
+    "updatedAt": "2025-10-01T00:00:00Z"
+  }
+]

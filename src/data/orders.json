@@ -3,45 +3,343 @@
     "id": "order-001",
     "orderNumber": "ORD-2026-001",
     "offerId": "offer-007",
+    "opportunityId": "opp-005",
     "dealId": "deal-003",
     "customerId": "cust-003",
+    "name": "PlastiPack Q1 Film Resins",
     "status": "Delivered",
-    "createdAt": "2026-01-26T09:00:00Z"
+    "lines": [
+      {
+        "id": "ol-001",
+        "productId": "prod-004",
+        "quantity": 300,
+        "unit": "MT",
+        "pricePerUnit": 1350,
+        "currency": "USD"
+      },
+      {
+        "id": "ol-002",
+        "productId": "prod-013",
+        "quantity": 80,
+        "unit": "MT",
+        "pricePerUnit": 1200,
+        "currency": "USD"
+      }
+    ],
+    "currency": "USD",
+    "incoterms": "CIF",
+    "incotermsLocation": "Hamburg, Germany",
+    "paymentTerms": "Net 30",
+    "poNumber": "PP-PO-2026-0412",
+    "orderDate": "2026-01-26T09:00:00Z",
+    "deliveryDate": "2026-02-20T00:00:00Z",
+    "shippingAddress": {
+      "street": "Industriestraße 45",
+      "city": "Hamburg",
+      "state": "Hamburg",
+      "postalCode": "20457",
+      "country": "Germany"
+    },
+    "carrier": "Maersk",
+    "trackingNumber": "MAEU-2026-84721",
+    "estimatedArrival": "2026-02-18T00:00:00Z",
+    "documents": [
+      {
+        "id": "doc-001",
+        "name": "Purchase Order PP-PO-2026-0412",
+        "type": "Purchase Order",
+        "url": "",
+        "uploadedAt": "2026-01-26T09:15:00Z",
+        "uploadedBy": "Hans Mueller"
+      },
+      {
+        "id": "doc-002",
+        "name": "Invoice INV-2026-001",
+        "type": "Invoice",
+        "url": "",
+        "uploadedAt": "2026-01-27T10:00:00Z",
+        "uploadedBy": "John Mitchell"
+      },
+      {
+        "id": "doc-003",
+        "name": "Bill of Lading MAEU-84721",
+        "type": "Bill of Lading",
+        "url": "",
+        "uploadedAt": "2026-02-05T14:00:00Z",
+        "uploadedBy": "Logistics Team"
+      }
+    ],
+    "notes": "Delivered on schedule. Customer confirmed quality meets spec.",
+    "createdBy": "John Mitchell",
+    "createdAt": "2026-01-26T09:00:00Z",
+    "updatedAt": "2026-02-20T16:00:00Z"
   },
   {
     "id": "order-002",
     "orderNumber": "ORD-2026-002",
     "offerId": "offer-013",
+    "opportunityId": "opp-012",
     "dealId": "deal-007",
     "customerId": "cust-008",
+    "name": "Van der Berg Monthly LLDPE",
     "status": "Shipped",
-    "createdAt": "2026-02-06T10:30:00Z"
+    "lines": [
+      {
+        "id": "ol-003",
+        "productId": "prod-005",
+        "quantity": 150,
+        "unit": "MT",
+        "pricePerUnit": 1290,
+        "currency": "EUR"
+      }
+    ],
+    "currency": "EUR",
+    "incoterms": "DAP",
+    "incotermsLocation": "Rotterdam, Netherlands",
+    "paymentTerms": "Net 45",
+    "poNumber": "VDB-2026-0078",
+    "orderDate": "2026-02-06T10:30:00Z",
+    "deliveryDate": null,
+    "shippingAddress": {
+      "street": "Havenweg 12",
+      "city": "Rotterdam",
+      "state": "South Holland",
+      "postalCode": "3089 JK",
+      "country": "Netherlands"
+    },
+    "carrier": "Hapag-Lloyd",
+    "trackingNumber": "HLCU-2026-55934",
+    "estimatedArrival": "2026-03-22T00:00:00Z",
+    "documents": [
+      {
+        "id": "doc-004",
+        "name": "Purchase Order VDB-2026-0078",
+        "type": "Purchase Order",
+        "url": "",
+        "uploadedAt": "2026-02-06T10:45:00Z",
+        "uploadedBy": "Jan van der Berg"
+      },
+      {
+        "id": "doc-005",
+        "name": "TDS - LLDPE C4 Film Grade",
+        "type": "TDS",
+        "url": "",
+        "uploadedAt": "2026-02-07T09:00:00Z",
+        "uploadedBy": "John Mitchell"
+      },
+      {
+        "id": "doc-006",
+        "name": "Shipping Documents HLCU-55934",
+        "type": "Shipping Docs",
+        "url": "",
+        "uploadedAt": "2026-02-15T11:00:00Z",
+        "uploadedBy": "Logistics Team"
+      }
+    ],
+    "notes": "In transit via Hapag-Lloyd. ETA Rotterdam March 22.",
+    "createdBy": "John Mitchell",
+    "createdAt": "2026-02-06T10:30:00Z",
+    "updatedAt": "2026-02-15T11:30:00Z"
   },
   {
     "id": "order-003",
     "orderNumber": "ORD-2026-003",
     "offerId": "offer-003",
+    "opportunityId": "opp-003",
     "dealId": "deal-001",
     "customerId": "cust-001",
+    "name": "AutoPoly Q1 Supply - PP Homopolymer",
     "status": "Confirmed",
-    "createdAt": "2026-02-16T08:00:00Z"
+    "lines": [
+      {
+        "id": "ol-004",
+        "productId": "prod-006",
+        "quantity": 150,
+        "unit": "MT",
+        "pricePerUnit": 1380,
+        "currency": "USD"
+      },
+      {
+        "id": "ol-005",
+        "productId": "prod-022",
+        "quantity": 200,
+        "unit": "MT",
+        "pricePerUnit": 1320,
+        "currency": "USD"
+      }
+    ],
+    "currency": "USD",
+    "incoterms": "FOB",
+    "incotermsLocation": "Houston, TX",
+    "paymentTerms": "Net 60",
+    "poNumber": "AP-2026-1523",
+    "orderDate": "2026-02-16T08:00:00Z",
+    "deliveryDate": null,
+    "shippingAddress": {
+      "street": "1200 Industrial Blvd",
+      "city": "Gothenburg",
+      "state": "Västra Götaland",
+      "postalCode": "405 30",
+      "country": "Sweden"
+    },
+    "carrier": "",
+    "trackingNumber": "",
+    "estimatedArrival": null,
+    "documents": [
+      {
+        "id": "doc-007",
+        "name": "Purchase Order AP-2026-1523",
+        "type": "Purchase Order",
+        "url": "",
+        "uploadedAt": "2026-02-16T08:30:00Z",
+        "uploadedBy": "Erik Johansson"
+      },
+      {
+        "id": "doc-008",
+        "name": "SDS - PP Homopolymer",
+        "type": "SDS",
+        "url": "",
+        "uploadedAt": "2026-02-17T10:00:00Z",
+        "uploadedBy": "Sarah Chen"
+      }
+    ],
+    "notes": "Awaiting production scheduling. Customer needs delivery by end of March.",
+    "createdBy": "Sarah Chen",
+    "createdAt": "2026-02-16T08:00:00Z",
+    "updatedAt": "2026-02-17T10:30:00Z"
   },
   {
     "id": "order-004",
     "orderNumber": "ORD-2026-004",
     "offerId": "offer-004",
+    "opportunityId": null,
     "dealId": "deal-002",
     "customerId": "cust-002",
-    "status": "Confirmed",
-    "createdAt": "2026-03-03T10:00:00Z"
+    "name": "Monthly Mar 2026 - PP Order",
+    "status": "In Production",
+    "lines": [
+      {
+        "id": "ol-006",
+        "productId": "prod-007",
+        "quantity": 100,
+        "unit": "MT",
+        "pricePerUnit": 1400,
+        "currency": "USD"
+      }
+    ],
+    "currency": "USD",
+    "incoterms": "CIF",
+    "incotermsLocation": "Istanbul, Turkey",
+    "paymentTerms": "Net 30",
+    "poNumber": "MK-PO-2026-0330",
+    "orderDate": "2026-03-03T10:00:00Z",
+    "deliveryDate": null,
+    "shippingAddress": {
+      "street": "Organize Sanayi Bölgesi 8. Cadde No:14",
+      "city": "Istanbul",
+      "state": "Istanbul",
+      "postalCode": "34953",
+      "country": "Turkey"
+    },
+    "carrier": "MSC",
+    "trackingNumber": "",
+    "estimatedArrival": "2026-04-10T00:00:00Z",
+    "documents": [
+      {
+        "id": "doc-009",
+        "name": "Purchase Order MK-PO-2026-0330",
+        "type": "Purchase Order",
+        "url": "",
+        "uploadedAt": "2026-03-03T10:15:00Z",
+        "uploadedBy": "Mehmet Kaya"
+      }
+    ],
+    "notes": "In production. Expected to ship mid-March.",
+    "createdBy": "Sarah Chen",
+    "createdAt": "2026-03-03T10:00:00Z",
+    "updatedAt": "2026-03-10T14:00:00Z"
   },
   {
     "id": "order-005",
     "orderNumber": "ORD-2026-005",
     "offerId": "offer-008",
+    "opportunityId": "opp-007",
     "dealId": "deal-004",
     "customerId": "cust-005",
+    "name": "Ankara Annual Pipe Compounds - Batch 1",
     "status": "Shipped",
-    "createdAt": "2026-02-20T14:30:00Z"
+    "lines": [
+      {
+        "id": "ol-007",
+        "productId": "prod-023",
+        "quantity": 250,
+        "unit": "MT",
+        "pricePerUnit": 1280,
+        "currency": "USD"
+      },
+      {
+        "id": "ol-008",
+        "productId": "prod-004",
+        "quantity": 100,
+        "unit": "MT",
+        "pricePerUnit": 1350,
+        "currency": "USD"
+      }
+    ],
+    "currency": "USD",
+    "incoterms": "CFR",
+    "incotermsLocation": "Mersin, Turkey",
+    "paymentTerms": "LC at Sight",
+    "poNumber": "ANK-2026-A001",
+    "orderDate": "2026-02-20T14:30:00Z",
+    "deliveryDate": null,
+    "shippingAddress": {
+      "street": "Serbest Bölge, Liman Yolu No:8",
+      "city": "Mersin",
+      "state": "Mersin",
+      "postalCode": "33020",
+      "country": "Turkey"
+    },
+    "carrier": "CMA CGM",
+    "trackingNumber": "CMAU-2026-77102",
+    "estimatedArrival": "2026-03-25T00:00:00Z",
+    "documents": [
+      {
+        "id": "doc-010",
+        "name": "Purchase Order ANK-2026-A001",
+        "type": "Purchase Order",
+        "url": "",
+        "uploadedAt": "2026-02-20T15:00:00Z",
+        "uploadedBy": "Ahmet Ozturk"
+      },
+      {
+        "id": "doc-011",
+        "name": "Certificate of Analysis - PE100",
+        "type": "Certificate",
+        "url": "",
+        "uploadedAt": "2026-02-25T09:00:00Z",
+        "uploadedBy": "QA Team"
+      },
+      {
+        "id": "doc-012",
+        "name": "Bill of Lading CMAU-77102",
+        "type": "Bill of Lading",
+        "url": "",
+        "uploadedAt": "2026-03-05T16:00:00Z",
+        "uploadedBy": "Logistics Team"
+      },
+      {
+        "id": "doc-013",
+        "name": "Invoice INV-2026-005",
+        "type": "Invoice",
+        "url": "",
+        "uploadedAt": "2026-02-21T08:00:00Z",
+        "uploadedBy": "John Mitchell"
+      }
+    ],
+    "notes": "First batch of annual contract. Shipped via CMA CGM. Second batch scheduled for Q2.",
+    "createdBy": "John Mitchell",
+    "createdAt": "2026-02-20T14:30:00Z",
+    "updatedAt": "2026-03-05T16:30:00Z"
   }
 ]

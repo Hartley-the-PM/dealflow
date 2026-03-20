@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 import Autocomplete from '@mui/material/Autocomplete';
+import Collapse from '@mui/material/Collapse';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -26,12 +27,21 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import TuneIcon from '@mui/icons-material/Tune';
 import PricingPanel from './PricingPanel';
 import OfferModuleBuilder from './OfferModuleBuilder';
-import type { OfferModule } from '@/types/offerBuilder';
+import type { OfferModule, ProductsModule, OfferModuleType } from '@/types/offerBuilder';
+import { useOfferTemplateStore } from '@/stores/offerTemplateStore';
+import { useOfferBuilderSettingsStore } from '@/stores/offerBuilderSettingsStore';
+import type { PricingContext } from './modules/ProductsModuleEditor';
+import { migrateModules } from '@/lib/migrateModules';
 import { useProductStore } from '@/stores/productStore';
 import { usePricingStore } from '@/stores/pricingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useWhiteLabelStore } from '@/stores/whiteLabelStore';
+import { useFormulationStore } from '@/stores/formulationStore';
 import { usePricingEngine } from '@/hooks/usePricingEngine';
 import { usePricingEngineStore } from '@/stores/pricingEngineStore';
 import { checkGuardrails } from '@/lib/pricingEngine';
@@ -70,11 +80,15 @@ interface OfferFormProps {
   defaultName?: string;
   defaultVersion?: number;
   onSave: (offer: Offer) => void;
+  initialModules?: OfferModule[];
 }
 
 interface FormLine {
   id: string;
+  lineType: 'product' | 'white_label' | 'formulation';
   productId: string;
+  whiteLabelId: string;
+  formulationId: string;
   quantity: string; // kept as string for form input
   unit: UnitOfMeasure;
   pricePerUnit: string; // kept as string for form input
@@ -87,13 +101,19 @@ interface FormLine {
 
 // ------ Component ------
 
-export default function OfferForm({ dealId, customerId, offer, defaultName, defaultVersion, onSave }: OfferFormProps) {
+export default function OfferForm({ dealId, customerId, offer, defaultName, defaultVersion, onSave, initialModules }: OfferFormProps) {
   const products = useProductStore((s) => s.products);
   const getProductById = useProductStore((s) => s.getProductById);
   const getMSPForProduct = usePricingStore((s) => s.getMSPForProduct);
   const settings = useSettingsStore((s) => s.settings);
+  const wlProducts = useWhiteLabelStore((s) => s.products);
+  const wlBrands = useWhiteLabelStore((s) => s.brands);
+  const formulations = useFormulationStore((s) => s.formulations);
   const { computePrice } = usePricingEngine();
   const guardrails = usePricingEngineStore((s) => s.guardrails);
+  const allTemplates = useOfferTemplateStore((s) => s.templates);
+  const contentPresets = useOfferBuilderSettingsStore((s) => s.contentPresets);
+  const brandProfiles = useOfferBuilderSettingsStore((s) => s.brandProfiles);
 
   const currentMonth = format(new Date(), 'yyyy-MM');
 
@@ -111,7 +131,10 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
     if (offer && offer.lines.length > 0) {
       return offer.lines.map((line) => ({
         id: line.id,
+        lineType: line.lineType || 'product',
         productId: line.productId,
+        whiteLabelId: line.whiteLabelId || '',
+        formulationId: line.formulationId || '',
         quantity: line.quantity !== null ? String(line.quantity) : '',
         unit: line.unit,
         pricePerUnit: String(line.pricePerUnit),
@@ -127,17 +150,71 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
   }, []);
 
   const [lines, setLines] = useState<FormLine[]>(initialLines);
-  const [mode, setMode] = useState<'classic' | 'builder'>('classic');
-  const [builderModules, setBuilderModules] = useState<OfferModule[]>(offer?.modules ?? []);
+
+  // Auto-detect builder mode if modules present
+  const hasExistingModules = (offer?.modules && offer.modules.length > 0) || (initialModules && initialModules.length > 0);
+  const [mode, setMode] = useState<'classic' | 'builder'>(hasExistingModules ? 'builder' : 'classic');
+  const [builderModules, setBuilderModules] = useState<OfferModule[]>(() =>
+    migrateModules(offer?.modules ?? initialModules ?? [])
+  );
+  const [metadataOpen, setMetadataOpen] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
+
+  // Build modules from a template's slots + content blocks
+  const applyTemplate = useCallback((templateId: string) => {
+    setSelectedTemplateId(templateId);
+    if (!templateId) return;
+    const template = allTemplates.find((t) => t.id === templateId);
+    if (!template) return;
+
+    // Helper to create a default module for a type
+    const createModule = (type: OfferModuleType): OfferModule => {
+      const id = uuidv4();
+      switch (type) {
+        case 'hero': return { type, id, visible: true, title: '', customerName: '', date: '', intro: '', logoUrl: '' };
+        case 'products': return { type, id, visible: true, showQuantity: true, showUnit: true, showUnitPrice: true, showTotal: true, entries: [] };
+        case 'terms': return { type, id, visible: true, paymentTerms: '', incoterms: '', validity: '', delivery: '', legalNotes: '' };
+        case 'custom_text': return { type, id, visible: true, heading: '', body: '' };
+        case 'company_about': return { type, id, visible: true, mission: '', vision: '', values: [], certifications: [], differentiators: [] };
+        case 'certifications': return { type, id, visible: true, title: 'Certifications & Compliance', certifications: [] };
+        case 'testimonials': return { type, id, visible: true, testimonials: [] };
+        case 'cover_image': return { type, id, visible: true, backgroundImageUrl: '', title: '', subtitle: '', overlayOpacity: 0.5, overlayColor: '#000000' };
+        case 'divider': return { type, id, visible: true, style: 'line' as const, height: 32 };
+        case 'image': return { type, id, visible: true, imageUrl: '', caption: '', alt: '', width: 'full' as const, alignment: 'center' as const };
+        default: return { type: 'custom_text' as const, id, visible: true, heading: '', body: '' };
+      }
+    };
+
+    if (template.slots && template.slots.length > 0) {
+      // Build from slots + blocks
+      const newModules = template.slots.map((slot) => {
+        const baseModule = createModule(slot.moduleType);
+        if (slot.contentBlockId) {
+          const block = contentPresets.find((p) => p.id === slot.contentBlockId);
+          if (block) {
+            return { ...baseModule, ...block.data, id: baseModule.id, type: baseModule.type, visible: true };
+          }
+        }
+        return baseModule;
+      });
+      setBuilderModules(newModules as OfferModule[]);
+    } else if (template.modules.length > 0) {
+      // Legacy: use pre-built modules
+      setBuilderModules(template.modules.map((m) => ({ ...m, id: uuidv4() })));
+    }
+  }, [allTemplates, contentPresets]);
 
   // ------ Line Operations ------
 
-  const addLine = useCallback(() => {
+  const addLine = useCallback((lineType: 'product' | 'white_label' | 'formulation' = 'product') => {
     setLines((prev) => [
       ...prev,
       {
         id: uuidv4(),
+        lineType,
         productId: '',
+        whiteLabelId: '',
+        formulationId: '',
         quantity: '',
         unit: 'MT',
         pricePerUnit: '',
@@ -165,7 +242,6 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
       prev.map((l) => {
         if (l.id !== lineId) return l;
         const newProductId = product?.id ?? '';
-        // Auto-fill recommended price from price book when product is selected
         let newPrice = l.pricePerUnit;
         if (newProductId && customerId) {
           try {
@@ -267,20 +343,49 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
 
   const handleSave = () => {
     const now = new Date().toISOString();
-    const offerLines: OfferLine[] = lines
-      .filter((l) => l.productId) // only include lines with a product
-      .map((l) => ({
-        id: l.id,
-        productId: l.productId,
-        quantity: l.quantity !== '' ? parseFloat(l.quantity) : null,
-        unit: l.unit,
-        pricePerUnit: parseFloat(l.pricePerUnit) || 0,
-        currency: l.currency || currency,
-        incoterms: l.incoterms || incoterms,
-        paymentTerms: l.paymentTerms || paymentTerms,
-        belowMSPReason: l.belowMSPReason === '' ? null : l.belowMSPReason,
-        belowMSPNote: l.belowMSPNote,
-      }));
+
+    // Extract lines from ProductsModule if in builder mode
+    const productsModule = mode === 'builder'
+      ? builderModules.find((m): m is ProductsModule => m.type === 'products')
+      : undefined;
+
+    const offerLines: OfferLine[] = productsModule
+      ? productsModule.entries
+          .filter((e) => e.productId)
+          .map((e) => ({
+            id: e.id,
+            lineType: 'product' as const,
+            productId: e.productId,
+            whiteLabelId: '',
+            formulationId: '',
+            formulationParts: [],
+            quantity: e.quantity,
+            unit: e.unit,
+            pricePerUnit: e.pricePerUnit,
+            currency,
+            incoterms,
+            paymentTerms,
+            belowMSPReason: null,
+            belowMSPNote: '',
+          }))
+      : lines
+          .filter((l) => l.productId || l.whiteLabelId || l.formulationId)
+          .map((l) => ({
+            id: l.id,
+            lineType: l.lineType || 'product' as const,
+            productId: l.productId,
+            whiteLabelId: l.whiteLabelId || '',
+            formulationId: l.formulationId || '',
+            formulationParts: [],
+            quantity: l.quantity !== '' ? parseFloat(l.quantity) : null,
+            unit: l.unit,
+            pricePerUnit: parseFloat(l.pricePerUnit) || 0,
+            currency: l.currency || currency,
+            incoterms: l.incoterms || incoterms,
+            paymentTerms: l.paymentTerms || paymentTerms,
+            belowMSPReason: l.belowMSPReason === '' ? null : l.belowMSPReason,
+            belowMSPNote: l.belowMSPNote,
+          }));
 
     const offerData: Offer = {
       id: offer?.id ?? uuidv4(),
@@ -310,10 +415,14 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
   // ------ Product info for builder ------
   const builderProducts = products.map((p) => ({ id: p.id, name: p.name, code: p.code }));
   const builderOfferLines: import('@/types').OfferLine[] = lines
-    .filter((l) => l.productId)
+    .filter((l) => l.productId || l.whiteLabelId || l.formulationId)
     .map((l) => ({
       id: l.id,
+      lineType: l.lineType || 'product' as const,
       productId: l.productId,
+      whiteLabelId: l.whiteLabelId || '',
+      formulationId: l.formulationId || '',
+      formulationParts: [],
       quantity: l.quantity !== '' ? parseFloat(l.quantity) : null,
       unit: l.unit,
       pricePerUnit: parseFloat(l.pricePerUnit) || 0,
@@ -324,7 +433,178 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
       belowMSPNote: l.belowMSPNote,
     }));
 
-  // ------ Render ------
+  // ------ Builder Mode Layout ------
+
+  if (mode === 'builder') {
+    return (
+      <Box>
+        {/* Top Bar */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mb: 2,
+            flexWrap: 'wrap',
+          }}
+        >
+          <ToggleButtonGroup
+            size="small"
+            value={mode}
+            exclusive
+            onChange={(_, v) => { if (v) setMode(v); }}
+          >
+            <ToggleButton value="classic">
+              <ViewListIcon sx={{ fontSize: 18, mr: 0.5 }} />
+              Classic
+            </ToggleButton>
+            <ToggleButton value="builder">
+              <DashboardCustomizeIcon sx={{ fontSize: 18, mr: 0.5 }} />
+              Builder
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <TextField
+            select
+            size="small"
+            value={selectedTemplateId}
+            onChange={(e) => applyTemplate(e.target.value)}
+            label="Template"
+            sx={{ minWidth: 180 }}
+          >
+            <MenuItem value="">Start from scratch</MenuItem>
+            {allTemplates.map((t) => (
+              <MenuItem key={t.id} value={t.id}>{t.name}</MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            size="small"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Offer name"
+            sx={{ flex: 1, minWidth: 200 }}
+          />
+          <Button
+            variant="contained"
+            startIcon={<SaveIcon />}
+            onClick={handleSave}
+            sx={{ textTransform: 'none' }}
+          >
+            {offer ? 'Save Changes' : 'Save as Draft'}
+          </Button>
+        </Box>
+
+        {/* Collapsible Metadata */}
+        <Box sx={{ mb: 2 }}>
+          <Button
+            size="small"
+            variant="text"
+            startIcon={<TuneIcon />}
+            endIcon={metadataOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            onClick={() => setMetadataOpen(!metadataOpen)}
+            sx={{ textTransform: 'none', color: 'text.secondary', fontSize: '0.82rem' }}
+          >
+            {metadataOpen ? 'Hide' : 'Show'} Offer Details (currency, incoterms, payment terms...)
+          </Button>
+          <Collapse in={metadataOpen}>
+            <Card variant="outlined" sx={{ mt: 1, mb: 1 }}>
+              <CardContent sx={{ py: '12px !important' }}>
+                <Grid container spacing={2}>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <TextField
+                      select
+                      fullWidth
+                      size="small"
+                      label="Currency"
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value as Currency)}
+                    >
+                      {CURRENCIES.map((c) => (
+                        <MenuItem key={c} value={c}>{c}</MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <TextField
+                      select
+                      fullWidth
+                      size="small"
+                      label="Incoterms"
+                      value={incoterms}
+                      onChange={(e) => setIncoterms(e.target.value as Incoterms)}
+                    >
+                      {INCOTERMS_OPTIONS.map((i) => (
+                        <MenuItem key={i} value={i}>{i}</MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Payment Terms"
+                      value={paymentTerms}
+                      onChange={(e) => setPaymentTerms(e.target.value)}
+                      placeholder="e.g. Net 30"
+                    />
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Validity Date"
+                      type="date"
+                      value={validityDate}
+                      onChange={(e) => setValidityDate(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Incoterms Location"
+                      value={incotermsLocation}
+                      onChange={(e) => setIncotermsLocation(e.target.value)}
+                      placeholder="e.g. Rotterdam"
+                    />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Additional notes..."
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Collapse>
+        </Box>
+
+        {/* Split-View Builder */}
+        <OfferModuleBuilder
+          modules={builderModules}
+          onChange={setBuilderModules}
+          offerLines={builderOfferLines}
+          products={builderProducts}
+          pricingContext={customerId ? {
+            customerId,
+            incoterms,
+            paymentTerms,
+            currency,
+            computePrice,
+            allProducts: products,
+          } as PricingContext : undefined}
+          initialBrandProfileId={allTemplates.find((t) => t.id === selectedTemplateId)?.brandProfileId}
+        />
+      </Box>
+    );
+  }
+
+  // ------ Classic Mode (unchanged) ------
 
   return (
     <Grid container spacing={3}>
@@ -348,22 +628,6 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
           </ToggleButtonGroup>
         </Box>
       </Grid>
-
-      {/* Builder Mode */}
-      {mode === 'builder' && (
-        <Grid size={{ xs: 12 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <OfferModuleBuilder
-                modules={builderModules}
-                onChange={setBuilderModules}
-                offerLines={builderOfferLines}
-                products={builderProducts}
-              />
-            </CardContent>
-          </Card>
-        </Grid>
-      )}
 
       {/* Left Column: Metadata + Lines */}
       <Grid size={{ xs: 12, md: 8 }}>
@@ -469,16 +733,19 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
           <CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
               <Typography variant="h6">
-                Product Lines ({lines.length})
+                Offer Lines ({lines.length})
               </Typography>
-              <Button
-                variant="outlined"
-                size="small"
-                startIcon={<AddIcon />}
-                onClick={addLine}
-              >
-                Add Product Line
-              </Button>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => addLine('product')}>
+                  Product
+                </Button>
+                <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => addLine('white_label')} sx={{ borderColor: '#7C3AED', color: '#7C3AED' }}>
+                  White Label
+                </Button>
+                <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => addLine('formulation')} sx={{ borderColor: '#0891B2', color: '#0891B2' }}>
+                  Formulation
+                </Button>
+              </Box>
             </Box>
             <Divider sx={{ mb: 2 }} />
 
@@ -496,6 +763,9 @@ export default function OfferForm({ dealId, customerId, offer, defaultName, defa
                 line={line}
                 index={index}
                 products={products}
+                wlProducts={wlProducts}
+                wlBrands={wlBrands}
+                formulations={formulations}
                 getProductById={getProductById}
                 getMSPPrice={getMSPPrice}
                 getMargin={getMargin}
@@ -618,6 +888,9 @@ interface OfferLineItemProps {
   line: FormLine;
   index: number;
   products: Product[];
+  wlProducts: import('@/types/whiteLabel').WhiteLabelProduct[];
+  wlBrands: import('@/types/whiteLabel').WhiteLabelBrand[];
+  formulations: import('@/types/formulation').Formulation[];
   getProductById: (id: string) => Product | undefined;
   getMSPPrice: (productId: string) => number | null;
   getMargin: (priceStr: string, productId: string) => { abs: number; pct: number } | null;
@@ -637,6 +910,9 @@ function OfferLineItem({
   line,
   index,
   products,
+  wlProducts,
+  wlBrands,
+  formulations,
   getProductById,
   getMSPPrice,
   getMargin,
@@ -686,9 +962,17 @@ function OfferLineItem({
       <CardContent sx={{ pb: '16px !important' }}>
         {/* Header row */}
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
-          <Typography variant="subtitle2" color="text.secondary">
-            Line {index + 1}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Line {index + 1}
+            </Typography>
+            {line.lineType === 'white_label' && (
+              <Chip label="White Label" size="small" sx={{ fontSize: '0.6rem', fontWeight: 600, bgcolor: '#EDE9FE', color: '#7C3AED' }} />
+            )}
+            {line.lineType === 'formulation' && (
+              <Chip label="Formulation" size="small" sx={{ fontSize: '0.6rem', fontWeight: 600, bgcolor: '#ECFEFF', color: '#0891B2' }} />
+            )}
+          </Box>
           <IconButton size="small" color="error" onClick={() => onRemove(line.id)}>
             <DeleteIcon fontSize="small" />
           </IconButton>
@@ -697,29 +981,64 @@ function OfferLineItem({
         {/* Product picker + basic fields */}
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
-            <Autocomplete
-              size="small"
-              options={products}
-              value={selectedProduct}
-              onChange={(_, newValue) => onUpdateProduct(line.id, newValue)}
-              getOptionLabel={(option) => {
-                const legacy = option.legacyName ? ` (${option.legacyName})` : '';
-                return `${option.name}${legacy} - ${option.code}`;
-              }}
-              filterOptions={(options, { inputValue }) => {
-                const lower = inputValue.toLowerCase();
-                return options.filter(
-                  (o) =>
-                    o.name.toLowerCase().includes(lower) ||
-                    o.legacyName.toLowerCase().includes(lower) ||
-                    o.code.toLowerCase().includes(lower)
-                );
-              }}
-              renderInput={(params) => (
-                <TextField {...params} label="Product" placeholder="Search by name, legacy name, or code..." />
-              )}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-            />
+            {line.lineType === 'white_label' ? (
+              <Autocomplete
+                size="small"
+                options={wlProducts}
+                value={wlProducts.find((w) => w.id === line.whiteLabelId) || null}
+                onChange={(_, newValue) => {
+                  onUpdate(line.id, 'whiteLabelId', newValue?.id || '');
+                  if (newValue) onUpdate(line.id, 'productId', '');
+                }}
+                getOptionLabel={(option) => {
+                  const brand = wlBrands.find((b) => b.id === option.brandId);
+                  return `${brand?.name || ''} ${option.name} (${option.code})`;
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="White Label Product" placeholder="Search white label products..." />
+                )}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+              />
+            ) : line.lineType === 'formulation' ? (
+              <Autocomplete
+                size="small"
+                options={formulations}
+                value={formulations.find((f) => f.id === line.formulationId) || null}
+                onChange={(_, newValue) => {
+                  onUpdate(line.id, 'formulationId', newValue?.id || '');
+                  if (newValue) onUpdate(line.id, 'productId', '');
+                }}
+                getOptionLabel={(option) => `${option.name} (${option.code})`}
+                renderInput={(params) => (
+                  <TextField {...params} label="Formulation" placeholder="Search formulations..." />
+                )}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+              />
+            ) : (
+              <Autocomplete
+                size="small"
+                options={products}
+                value={selectedProduct}
+                onChange={(_, newValue) => onUpdateProduct(line.id, newValue)}
+                getOptionLabel={(option) => {
+                  const legacy = option.legacyName ? ` (${option.legacyName})` : '';
+                  return `${option.name}${legacy} - ${option.code}`;
+                }}
+                filterOptions={(options, { inputValue }) => {
+                  const lower = inputValue.toLowerCase();
+                  return options.filter(
+                    (o) =>
+                      o.name.toLowerCase().includes(lower) ||
+                      o.legacyName.toLowerCase().includes(lower) ||
+                      o.code.toLowerCase().includes(lower)
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Product" placeholder="Search by name, legacy name, or code..." />
+                )}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+              />
+            )}
           </Grid>
           <Grid size={{ xs: 6, sm: 3 }}>
             <TextField

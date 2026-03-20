@@ -8,9 +8,9 @@ function makeDefaultModules(variant: 'standard' | 'premium' | 'quick'): OfferMod
     type: 'hero', id: uuidv4(), visible: true,
     title: '', customerName: '', date: '', intro: '', logoUrl: '',
   };
-  const productLines: OfferModule = {
-    type: 'product_lines', id: uuidv4(), visible: true,
-    showQuantity: true, showUnit: true, showUnitPrice: true, showTotal: true, showMSP: false,
+  const products: OfferModule = {
+    type: 'products', id: uuidv4(), visible: true,
+    showQuantity: true, showUnit: true, showUnitPrice: true, showTotal: true, entries: [],
   };
   const terms: OfferModule = {
     type: 'terms', id: uuidv4(), visible: true,
@@ -20,10 +20,6 @@ function makeDefaultModules(variant: 'standard' | 'premium' | 'quick'): OfferMod
     type: 'custom_text', id: uuidv4(), visible: true,
     heading: '', body: '',
   };
-  const showcase: OfferModule = {
-    type: 'product_showcase', id: uuidv4(), visible: true,
-    products: [],
-  };
   const about: OfferModule = {
     type: 'company_about', id: uuidv4(), visible: true,
     mission: '', certifications: [], differentiators: [],
@@ -32,15 +28,23 @@ function makeDefaultModules(variant: 'standard' | 'premium' | 'quick'): OfferMod
     type: 'testimonials', id: uuidv4(), visible: true,
     testimonials: [],
   };
+  const coverImage: OfferModule = {
+    type: 'cover_image', id: uuidv4(), visible: true,
+    backgroundImageUrl: '', title: '', subtitle: '', overlayOpacity: 0.5, overlayColor: '#000000',
+  };
+  const divider: OfferModule = {
+    type: 'divider', id: uuidv4(), visible: true,
+    style: 'line', height: 32,
+  };
 
   if (variant === 'standard') {
-    return [hero, productLines, terms, customText];
+    return [hero, products, terms, customText];
   }
   if (variant === 'premium') {
-    return [hero, showcase, productLines, terms, about, testimonials, customText];
+    return [coverImage, products, { ...divider, id: uuidv4() }, terms, { ...divider, id: uuidv4() }, about, testimonials, customText];
   }
   // quick
-  return [productLines, terms];
+  return [products, terms];
 }
 
 const PRESET_TEMPLATES: OfferTemplate[] = [

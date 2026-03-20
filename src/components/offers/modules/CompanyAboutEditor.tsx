@@ -2,45 +2,57 @@
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import type { CompanyAboutModule } from '@/types/offerBuilder';
+import type { CompanyAboutModule, ContentPreset } from '@/types/offerBuilder';
 import { useState } from 'react';
 
 interface Props {
   module: CompanyAboutModule;
   onChange: (updated: CompanyAboutModule) => void;
+  presets?: ContentPreset[];
 }
 
-export default function CompanyAboutEditor({ module, onChange }: Props) {
-  const [certInput, setCertInput] = useState('');
-  const [diffInput, setDiffInput] = useState('');
+export default function CompanyAboutEditor({ module, onChange, presets }: Props) {
+  const [valueInput, setValueInput] = useState('');
 
-  const addCertification = () => {
-    if (!certInput.trim()) return;
-    onChange({ ...module, certifications: [...module.certifications, certInput.trim()] });
-    setCertInput('');
+  const addValue = () => {
+    if (!valueInput.trim()) return;
+    onChange({ ...module, values: [...(module.values || []), valueInput.trim()] });
+    setValueInput('');
   };
 
-  const removeCertification = (index: number) => {
-    onChange({ ...module, certifications: module.certifications.filter((_, i) => i !== index) });
+  const removeValue = (index: number) => {
+    onChange({ ...module, values: (module.values || []).filter((_, i) => i !== index) });
   };
 
-  const addDifferentiator = () => {
-    if (!diffInput.trim()) return;
-    onChange({ ...module, differentiators: [...module.differentiators, diffInput.trim()] });
-    setDiffInput('');
-  };
-
-  const removeDifferentiator = (index: number) => {
-    onChange({ ...module, differentiators: module.differentiators.filter((_, i) => i !== index) });
+  const handleLoadPreset = (presetId: string) => {
+    const preset = presets?.find((p) => p.id === presetId);
+    if (preset) {
+      onChange({ ...module, ...preset.data });
+    }
   };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Typography variant="subtitle2" color="text.secondary">
-        Company About
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Typography variant="subtitle2" color="text.secondary">
+          Company About
+        </Typography>
+        {presets && presets.length > 0 && (
+          <TextField
+            select
+            size="small"
+            label="Load Preset"
+            value=""
+            onChange={(e) => handleLoadPreset(e.target.value)}
+            sx={{ minWidth: 140 }}
+          >
+            {presets.map((p) => <MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>)}
+          </TextField>
+        )}
+      </Box>
       <TextField
         size="small"
         fullWidth
@@ -49,37 +61,32 @@ export default function CompanyAboutEditor({ module, onChange }: Props) {
         minRows={2}
         value={module.mission}
         onChange={(e) => onChange({ ...module, mission: e.target.value })}
+        placeholder="What is your company's mission?"
+      />
+      <TextField
+        size="small"
+        fullWidth
+        label="Vision"
+        multiline
+        minRows={2}
+        value={module.vision || ''}
+        onChange={(e) => onChange({ ...module, vision: e.target.value })}
+        placeholder="What is your company's vision for the future?"
       />
       <Box>
-        <Typography variant="caption" color="text.secondary">Certifications</Typography>
+        <Typography variant="caption" color="text.secondary">Values</Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1, mt: 0.5 }}>
-          {module.certifications.map((cert, i) => (
-            <Chip key={i} label={cert} size="small" onDelete={() => removeCertification(i)} />
+          {(module.values || []).map((val, i) => (
+            <Chip key={i} label={val} size="small" onDelete={() => removeValue(i)} />
           ))}
         </Box>
         <TextField
           size="small"
           fullWidth
-          placeholder="Add certification..."
-          value={certInput}
-          onChange={(e) => setCertInput(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addCertification(); } }}
-        />
-      </Box>
-      <Box>
-        <Typography variant="caption" color="text.secondary">Differentiators</Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1, mt: 0.5 }}>
-          {module.differentiators.map((diff, i) => (
-            <Chip key={i} label={diff} size="small" onDelete={() => removeDifferentiator(i)} />
-          ))}
-        </Box>
-        <TextField
-          size="small"
-          fullWidth
-          placeholder="Add differentiator..."
-          value={diffInput}
-          onChange={(e) => setDiffInput(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addDifferentiator(); } }}
+          placeholder="Add a value (press Enter)..."
+          value={valueInput}
+          onChange={(e) => setValueInput(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addValue(); } }}
         />
       </Box>
     </Box>

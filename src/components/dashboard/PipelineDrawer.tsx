@@ -19,19 +19,24 @@ import type { SelectChangeEvent } from '@mui/material/Select';
 import { useDealStore } from '@/stores/dealStore';
 import { useOfferStore } from '@/stores/offerStore';
 import { useCustomerStore } from '@/stores/customerStore';
+import { usePipelineStagesStore } from '@/stores/pipelineStagesStore';
 import type { DealStatus, Deal, Offer } from '@/types';
 import { classifyDeal } from './PipelineSankey';
 import type { SankeyStage } from './PipelineSankey';
 
 const DEAL_STATUSES: DealStatus[] = ['Draft', 'Active', 'Won', 'Lost', 'Expired'];
 
-const stageColorMap: Record<SankeyStage, { color: string; bg: string; label: string }> = {
-  Opportunity: { color: '#002855', bg: '#E8F0FE', label: 'Opportunity' },
-  Offer: { color: '#1D4ED8', bg: '#DBEAFE', label: 'Offer' },
-  Order: { color: '#059669', bg: '#D1FAE5', label: 'Order' },
-  Lost: { color: '#DC2626', bg: '#FEE2E2', label: 'Lost' },
-  Expired: { color: '#6B7280', bg: '#F3F4F6', label: 'Expired' },
-};
+// Dynamic color lookup — built from pipeline stages store in the component
+function getStageStyle(stage: string, pipelineStages: Array<{ name: string; color: string }>) {
+  const found = pipelineStages.find((s) => s.name === stage);
+  const color = found?.color || '#6B7280';
+  // Create a light background from the color
+  const r = parseInt(color.slice(1, 3), 16);
+  const g = parseInt(color.slice(3, 5), 16);
+  const b = parseInt(color.slice(5, 7), 16);
+  const bg = `rgba(${r},${g},${b},0.08)`;
+  return { color, bg, label: stage };
+}
 
 const statusDotColors: Record<DealStatus, string> = {
   Draft: '#6B7280',
@@ -69,15 +74,20 @@ export default function PipelineDrawer({ stage, onClose }: PipelineDrawerProps) 
   const updateDeal = useDealStore((s) => s.updateDeal);
   const offers = useOfferStore((s) => s.offers);
   const getCustomerById = useCustomerStore((s) => s.getCustomerById);
+  const pipelineStages = usePipelineStagesStore((s) => s.stages);
+  const progressionStages = useMemo(
+    () => pipelineStages.filter((s) => s.type === 'progression').sort((a, b) => a.order - b.order),
+    [pipelineStages]
+  );
 
   const stageDeals = useMemo(() => {
     if (!stage) return [];
     return deals
-      .filter((d) => classifyDeal(d, offers) === stage)
+      .filter((d) => classifyDeal(d, offers, progressionStages) === stage)
       .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
-  }, [deals, offers, stage]);
+  }, [deals, offers, stage, progressionStages]);
 
-  const stageConfig = stage ? stageColorMap[stage] : null;
+  const stageConfig = stage ? getStageStyle(stage, pipelineStages) : null;
 
   const totalRevenue = useMemo(() => {
     return stageDeals.reduce((sum, d) => sum + getDealMetrics(d, offers).revenue, 0);
@@ -87,9 +97,28 @@ export default function PipelineDrawer({ stage, onClose }: PipelineDrawerProps) 
     return stageDeals.reduce((sum, d) => sum + getDealMetrics(d, offers).volume, 0);
   }, [stageDeals, offers]);
 
-  const handleStatusChange = (dealId: string, event: SelectChangeEvent<string>) => {
-    const newStatus = event.target.value as DealStatus;
-    updateDeal(dealId, { status: newStatus, updatedAt: new Date().toISOString() });
+  const allStageNames = useMemo(() => {
+    const prog = progressionStages.map((s) => ({ name: s.name, color: s.color, isExit: false }));
+    const exit = pipelineStages.filter((s) => s.type === 'exit').sort((a, b) => a.order - b.order).map((s) => ({ name: s.name, color: s.color, isExit: true }));
+    return [...prog, ...exit];
+  }, [progressionStages, pipelineStages]);
+
+  // Derive DealStatus from pipeline stage
+  const deriveStatus = (stageName: string): DealStatus => {
+    const lastProgStage = progressionStages[progressionStages.length - 1];
+    if (stageName === 'Lost' || stageName === 'Cancelled') return 'Lost';
+    if (stageName === 'Expired') return 'Expired';
+    if (lastProgStage && stageName === lastProgStage.name) return 'Won';
+    return 'Active';
+  };
+
+  const handleStageChange = (dealId: string, newStage: string) => {
+    const newStatus = deriveStatus(newStage);
+    updateDeal(dealId, {
+      pipelineStage: newStage,
+      status: newStatus,
+      updatedAt: new Date().toISOString(),
+    } as any);
   };
 
   return (
@@ -232,14 +261,14 @@ export default function PipelineDrawer({ stage, onClose }: PipelineDrawerProps) 
                         />
                       </Box>
 
-                      {/* Status update */}
+                      {/* Pipeline stage selector */}
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
                         <Typography variant="caption" color="text.secondary" sx={{ whiteSpace: 'nowrap' }}>
                           Move to:
                         </Typography>
                         <Select
-                          value={deal.status}
-                          onChange={(e) => handleStatusChange(deal.id, e)}
+                          value={(deal as any).pipelineStage || 'Opportunity'}
+                          onChange={(e) => handleStageChange(deal.id, e.target.value)}
                           size="small"
                           sx={{
                             fontSize: '0.75rem',
@@ -248,18 +277,16 @@ export default function PipelineDrawer({ stage, onClose }: PipelineDrawerProps) 
                             '& .MuiSelect-select': { py: 0.5 },
                           }}
                         >
-                          {DEAL_STATUSES.map((s) => (
-                            <MenuItem key={s} value={s} sx={{ fontSize: '0.8rem' }}>
+                          {allStageNames.map((s, idx) => (
+                            <MenuItem
+                              key={s.name}
+                              value={s.name}
+                              sx={{ fontSize: '0.8rem' }}
+                              divider={!s.isExit && idx === progressionStages.length - 1}
+                            >
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Box
-                                  sx={{
-                                    width: 8,
-                                    height: 8,
-                                    borderRadius: '50%',
-                                    bgcolor: statusDotColors[s],
-                                  }}
-                                />
-                                {s}
+                                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: s.color }} />
+                                {s.name}
                               </Box>
                             </MenuItem>
                           ))}

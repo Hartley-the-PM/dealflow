@@ -183,11 +183,14 @@ export default function DealNotes({ dealId }: DealNotesProps) {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="subtitle1" fontWeight={600}>
-          Notes ({notes.length})
-        </Typography>
-        <Button variant="contained" startIcon={<AddIcon />} size="small" onClick={openCreate}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5, pb: 0.75, borderBottom: '1px solid #E5E7EB' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="subtitle2" fontWeight={700} sx={{ color: '#111827' }}>Notes</Typography>
+          <Box sx={{ height: 18, minWidth: 18, px: 0.5, borderRadius: '9px', bgcolor: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Typography sx={{ fontSize: '0.65rem', fontWeight: 600, color: '#6B7280' }}>{notes.length}</Typography>
+          </Box>
+        </Box>
+        <Button variant="contained" startIcon={<AddIcon />} size="small" onClick={openCreate} sx={{ fontSize: '0.7rem' }}>
           Add Note
         </Button>
       </Box>

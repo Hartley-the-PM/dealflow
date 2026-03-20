@@ -19,6 +19,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SendIcon from '@mui/icons-material/Send';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StatusChip from '@/components/shared/StatusChip';
 import EmptyState from '@/components/shared/EmptyState';
 import ConfirmDialog from '@/components/shared/ConfirmDialog';
@@ -50,6 +55,7 @@ export default function DealOffers({ dealId }: DealOffersProps) {
     offerId: string;
     version: number;
   } | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<{ el: HTMLElement; offer: typeof offers[0] } | null>(null);
 
   const offers = useMemo(() => {
     return getOffersByDeal(dealId).sort((a, b) => b.version - a.version);
@@ -208,9 +214,7 @@ export default function DealOffers({ dealId }: DealOffersProps) {
               <TableCell sx={{ fontWeight: 600 }} align="right">
                 Avg Margin vs MSP
               </TableCell>
-              <TableCell sx={{ fontWeight: 600 }} align="center">
-                Actions
-              </TableCell>
+              <TableCell width={50} />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -229,7 +233,7 @@ export default function DealOffers({ dealId }: DealOffersProps) {
               const canSend = offer.status === 'Draft';
 
               return (
-                <TableRow key={offer.id} hover>
+                <TableRow key={offer.id} hover sx={{ cursor: 'pointer' }} onClick={() => router.push(`/deals/${dealId}/offers/${offer.id}`)}>
                   <TableCell>V{offer.version}</TableCell>
                   <TableCell>{offer.name}</TableCell>
                   <TableCell>
@@ -257,94 +261,10 @@ export default function DealOffers({ dealId }: DealOffersProps) {
                       '\u2014'
                     )}
                   </TableCell>
-                  <TableCell align="center">
-                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
-                      <Tooltip title="View">
-                        <IconButton
-                          size="small"
-                          onClick={() =>
-                            router.push(`/deals/${dealId}/offers/${offer.id}`)
-                          }
-                        >
-                          <VisibilityIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      {canEdit && (
-                        <Tooltip title="Edit">
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              router.push(
-                                `/deals/${dealId}/offers/${offer.id}/edit`
-                              )
-                            }
-                          >
-                            <EditIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {canSend && (
-                        <Tooltip title="Send">
-                          <IconButton
-                            size="small"
-                            color="primary"
-                            onClick={() =>
-                              setConfirmAction({
-                                type: 'send',
-                                offerId: offer.id,
-                                version: offer.version,
-                              })
-                            }
-                          >
-                            <SendIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {canApproveReject && (
-                        <>
-                          <Tooltip title="Approve">
-                            <IconButton
-                              size="small"
-                              color="success"
-                              onClick={() =>
-                                setConfirmAction({
-                                  type: 'approve',
-                                  offerId: offer.id,
-                                  version: offer.version,
-                                })
-                              }
-                            >
-                              <CheckCircleIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="Reject">
-                            <IconButton
-                              size="small"
-                              color="error"
-                              onClick={() =>
-                                setConfirmAction({
-                                  type: 'reject',
-                                  offerId: offer.id,
-                                  version: offer.version,
-                                })
-                              }
-                            >
-                              <CancelIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                        </>
-                      )}
-                      {canDuplicate && (
-                        <Tooltip title="Duplicate as New Version">
-                          <IconButton
-                            size="small"
-                            onClick={() => handleDuplicate(offer.id)}
-                          >
-                            <ContentCopyIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                    </Box>
+                  <TableCell align="center" onClick={(e) => e.stopPropagation()}>
+                    <IconButton size="small" onClick={(e) => setMenuAnchor({ el: e.currentTarget, offer })}>
+                      <MoreVertIcon fontSize="small" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );
@@ -352,6 +272,43 @@ export default function DealOffers({ dealId }: DealOffersProps) {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Menu anchorEl={menuAnchor?.el} open={Boolean(menuAnchor)} onClose={() => setMenuAnchor(null)}>
+        <MenuItem onClick={() => { if (menuAnchor) router.push(`/deals/${dealId}/offers/${menuAnchor.offer.id}`); setMenuAnchor(null); }}>
+          <ListItemIcon><VisibilityIcon fontSize="small" /></ListItemIcon>
+          <ListItemText>View</ListItemText>
+        </MenuItem>
+        {menuAnchor?.offer.status === 'Draft' && (
+          <MenuItem onClick={() => { if (menuAnchor) router.push(`/deals/${dealId}/offers/${menuAnchor.offer.id}/edit`); setMenuAnchor(null); }}>
+            <ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>Edit</ListItemText>
+          </MenuItem>
+        )}
+        {menuAnchor?.offer.status === 'Draft' && (
+          <MenuItem onClick={() => { if (menuAnchor) { setConfirmAction({ type: 'send', offerId: menuAnchor.offer.id, version: menuAnchor.offer.version }); } setMenuAnchor(null); }}>
+            <ListItemIcon><SendIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>Send</ListItemText>
+          </MenuItem>
+        )}
+        {menuAnchor && settings.currentRole === 'sales_manager' && (menuAnchor.offer.status === 'Sent' || menuAnchor.offer.status === 'Pending') && (
+          <>
+            <MenuItem onClick={() => { setConfirmAction({ type: 'approve', offerId: menuAnchor.offer.id, version: menuAnchor.offer.version }); setMenuAnchor(null); }}>
+              <ListItemIcon><CheckCircleIcon fontSize="small" color="success" /></ListItemIcon>
+              <ListItemText>Approve</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => { setConfirmAction({ type: 'reject', offerId: menuAnchor.offer.id, version: menuAnchor.offer.version }); setMenuAnchor(null); }}>
+              <ListItemIcon><CancelIcon fontSize="small" color="error" /></ListItemIcon>
+              <ListItemText>Reject</ListItemText>
+            </MenuItem>
+          </>
+        )}
+        {menuAnchor && (menuAnchor.offer.status === 'Sent' || menuAnchor.offer.status === 'Rejected' || menuAnchor.offer.status === 'Approved') && (
+          <MenuItem onClick={() => { if (menuAnchor) handleDuplicate(menuAnchor.offer.id); setMenuAnchor(null); }}>
+            <ListItemIcon><ContentCopyIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>Duplicate</ListItemText>
+          </MenuItem>
+        )}
+      </Menu>
 
       <ConfirmDialog
         open={confirmAction !== null}

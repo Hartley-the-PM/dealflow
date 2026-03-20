@@ -23,9 +23,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Autocomplete from '@mui/material/Autocomplete';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -33,7 +30,6 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
-import ScienceIcon from '@mui/icons-material/Science';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningIcon from '@mui/icons-material/Warning';
 import BlockIcon from '@mui/icons-material/Block';
@@ -41,9 +37,7 @@ import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import { usePricingEngineStore } from '@/stores/pricingEngineStore';
 import { useProductStore } from '@/stores/productStore';
 import { useCustomerStore } from '@/stores/customerStore';
-import { usePricingEngine } from '@/hooks/usePricingEngine';
 import type { Guardrail, GuardrailType, GuardrailAction } from '@/types';
-import type { Incoterms } from '@/types/offer';
 import { v4 as uuidv4 } from 'uuid';
 
 const TYPE_LABELS: Record<GuardrailType, string> = {
@@ -66,7 +60,6 @@ export default function GuardrailsTab() {
   const addGuardrail = usePricingEngineStore((s) => s.addGuardrail);
   const updateGuardrail = usePricingEngineStore((s) => s.updateGuardrail);
   const deleteGuardrail = usePricingEngineStore((s) => s.deleteGuardrail);
-  const { computePrice } = usePricingEngine();
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingGR, setEditingGR] = useState<Guardrail | null>(null);
@@ -75,16 +68,6 @@ export default function GuardrailsTab() {
   const [grThreshold, setGrThreshold] = useState('');
   const [grAction, setGrAction] = useState<GuardrailAction>('warn');
 
-  // Test form state
-  const [testProductId, setTestProductId] = useState('');
-  const [testCustomerId, setTestCustomerId] = useState('');
-  const [testQty, setTestQty] = useState('50');
-  const [testIncoterms, setTestIncoterms] = useState<Incoterms>('FCA');
-  const [testPrice, setTestPrice] = useState('');
-  const [testResult, setTestResult] = useState<{
-    violations: { name: string; action: GuardrailAction; threshold: number; actual: number }[];
-    passed: boolean;
-  } | null>(null);
 
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'info' }>({
     open: false, message: '', severity: 'success',
@@ -126,38 +109,6 @@ export default function GuardrailsTab() {
     setDialogOpen(false);
   };
 
-  const handleTest = () => {
-    if (!testProductId || !testCustomerId) return;
-    const result = computePrice(testProductId, parseFloat(testQty) || 50, testCustomerId, testIncoterms, 'Net 30');
-    const violations = result.guardrailViolations.map((v) => ({
-      name: v.guardrailName,
-      action: v.action,
-      threshold: v.threshold,
-      actual: v.actualValue,
-    }));
-
-    // Also check if the manually entered price would trigger violations
-    const manualPrice = parseFloat(testPrice);
-    if (!isNaN(manualPrice) && manualPrice > 0) {
-      // Check price against cost/msp directly
-      if (result.cost != null) {
-        const costMargin = ((manualPrice - result.cost) / manualPrice) * 100;
-        const costGuardrail = guardrails.find((g) => g.active && g.type === 'min_margin_pct');
-        if (costGuardrail && costMargin < costGuardrail.threshold) {
-          if (!violations.find((v) => v.name === costGuardrail.name)) {
-            violations.push({
-              name: costGuardrail.name,
-              action: costGuardrail.action,
-              threshold: costGuardrail.threshold,
-              actual: Math.round(costMargin * 100) / 100,
-            });
-          }
-        }
-      }
-    }
-
-    setTestResult({ violations, passed: violations.length === 0 });
-  };
 
   return (
     <Box>
@@ -239,98 +190,6 @@ export default function GuardrailsTab() {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* Test a price */}
-      <Card variant="outlined">
-        <CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-            <ScienceIcon color="primary" />
-            <Typography variant="subtitle1" fontWeight={600}>Test a Price</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-            <Autocomplete
-              options={products}
-              getOptionLabel={(p) => `${p.name} (${p.code})`}
-              value={products.find((p) => p.id === testProductId) ?? null}
-              onChange={(_, v) => setTestProductId(v?.id ?? '')}
-              renderInput={(params) => <TextField {...params} label="Product" size="small" />}
-              size="small"
-              sx={{ minWidth: 260 }}
-            />
-            <Autocomplete
-              options={customers}
-              getOptionLabel={(c) => `${c.name} (Tier ${c.tier})`}
-              value={customers.find((c) => c.id === testCustomerId) ?? null}
-              onChange={(_, v) => setTestCustomerId(v?.id ?? '')}
-              renderInput={(params) => <TextField {...params} label="Customer" size="small" />}
-              size="small"
-              sx={{ minWidth: 240 }}
-            />
-            <TextField
-              label="Quantity (MT)"
-              value={testQty}
-              onChange={(e) => setTestQty(e.target.value)}
-              size="small"
-              type="number"
-              sx={{ width: 120 }}
-            />
-            <FormControl size="small" sx={{ minWidth: 100 }}>
-              <InputLabel>Incoterms</InputLabel>
-              <Select value={testIncoterms} label="Incoterms" onChange={(e) => setTestIncoterms(e.target.value as Incoterms)}>
-                {['FCA', 'FOB', 'CIF', 'CFR', 'EXW', 'DAP', 'DDP'].map((i) => (
-                  <MenuItem key={i} value={i}>{i}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              label="Test Price ($/MT)"
-              value={testPrice}
-              onChange={(e) => setTestPrice(e.target.value)}
-              size="small"
-              type="number"
-              sx={{ width: 140 }}
-              placeholder="Optional"
-            />
-            <Button variant="contained" onClick={handleTest} disabled={!testProductId || !testCustomerId}>
-              Test
-            </Button>
-          </Box>
-
-          {testResult && (
-            <>
-              <Divider sx={{ my: 2 }} />
-              {testResult.passed ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#059669' }}>
-                  <CheckCircleIcon />
-                  <Typography fontWeight={600}>All guardrails passed</Typography>
-                </Box>
-              ) : (
-                <Box>
-                  <Typography variant="body2" fontWeight={600} color="error" sx={{ mb: 1 }}>
-                    {testResult.violations.length} guardrail{testResult.violations.length !== 1 ? 's' : ''} triggered:
-                  </Typography>
-                  {testResult.violations.map((v, i) => {
-                    const cfg = ACTION_CONFIG[v.action];
-                    return (
-                      <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                        <Chip
-                          icon={cfg.icon as React.ReactElement}
-                          label={cfg.label}
-                          size="small"
-                          sx={{ bgcolor: cfg.bgcolor, color: cfg.color, fontWeight: 600 }}
-                        />
-                        <Typography variant="body2">
-                          {v.name}: threshold {v.threshold}%, actual {v.actual}%
-                        </Typography>
-                      </Box>
-                    );
-                  })}
-                </Box>
-              )}
-            </>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Guardrail Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>

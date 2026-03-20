@@ -1,0 +1,4 @@
+[
+  { "id": "wlb-001", "name": "Vinpol", "logoUrl": "", "prefix": "VNP", "description": "Vinmar's premium polymer brand", "createdAt": "2025-09-01T00:00:00Z", "updatedAt": "2025-09-01T00:00:00Z" },
+  { "id": "wlb-002", "name": "Cynpol", "logoUrl": "", "prefix": "CYN", "description": "Vinmar's specialty compounds brand", "createdAt": "2025-09-01T00:00:00Z", "updatedAt": "2025-09-01T00:00:00Z" }
+]
